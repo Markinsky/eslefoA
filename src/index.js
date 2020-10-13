@@ -28,7 +28,7 @@ next();
 //Rutas
 app.use(require("./routes/"));
 app.use(require("./routes/auth"));
-app.use("/links", require("./routes/"));
+app.use("/links", require("./routes/links"));
 
 //Public
 app.use(express.static(path.join(__dirname, "public")));

@@ -1,0 +1,297 @@
+.navbar-back {
+  background-color: #18476a !important;
+}
+.navbar-ext {
+  color: red !important;
+}
+
+.navbar-custom {
+  color: #ffffff !important;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 105%;
+}
+
+.nav-link:hover {
+  background: #023257;
+}
+
+.back {
+  background: #cfc9ba;
+}
+
+.body {
+  margin: 0;
+  padding: 0;
+  background: #cfc9ba;
+}
+
+.sliderMiddle {
+  width: 750px;
+  height: 450px;
+  overflow: hidden;
+}
+
+.middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-85%, -50%);
+}
+
+.navigation {
+  position: absolute;
+  bottom: 20px;
+  left: 50px;
+  transform: translateX(-10%);
+  display: flex;
+}
+
+.bar {
+  width: 50px;
+  height: 10px;
+  border: 2px solid black;
+  margin: 6px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.bar:hover {
+  background: black;
+}
+
+input[name="r"] {
+  position: absolute;
+  visibility: hidden;
+}
+
+.slides {
+  width: 500%;
+  height: 100%;
+  display: flex;
+}
+
+.slide {
+  width: 20%;
+  transition: 0.6s;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+}
+
+#r1:checked ~ .s1 {
+  margin-left: 0%;
+}
+#r2:checked ~ .s1 {
+  margin-left: -20%;
+}
+#r3:checked ~ .s1 {
+  margin-left: -40%;
+}
+#r4:checked ~ .s1 {
+  margin-left: -60%;
+}
+
+.position {
+  position: absolute;
+  top: 150px;
+  left: 900px;
+}
+
+.caja {
+  font-family: sans-serif;
+  font-size: 20px;
+  color: #ffffff;
+  background: #18476a;
+  padding-top: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 15px;
+  cursor: pointer;
+}
+
+.caja:hover {
+  background: #023257;
+  cursor: pointer;
+}
+.border-button {
+  box-shadow: 0px 0px 0px 1px #efb810;
+  transition: box-shadow 0.4s linear;
+  margin: 0.9em;
+}
+
+.border-button:hover {
+  box-shadow: 0px 0px 0px 10px #efb810;
+}
+
+.imgMargin {
+  margin-right: 15px;
+}
+
+.popup {
+  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  height: 250px;
+  width: 500px;
+  background: #18476a;
+  padding: 20px;
+  border-radius: 5px;
+  position: absolute;
+}
+
+.font-stuff {
+  color: white;
+  font-size: 25px;
+}
+
+.font-stuffs {
+  font-size: 23px;
+}
+
+.popup-botton {
+  align-items: center;
+}
+
+.butt {
+  margin-left: 200px;
+}
+
+.on-a-cross {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background: #18476a;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  box-shadow: 6px 6px 29px -4px rgba(0, 0, 0.75);
+  cursor: pointer;
+}
+
+.oculto {
+  display: none;
+}
+
+.logun {
+  position: absolute;
+  top: 50px;
+  left: 300px;
+  height: 410px;
+  width: 550px;
+  background: #18476a;
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.letters label {
+  color: white;
+  font-size: 25px;
+}
+
+.inputSettings {
+  height: 35px;
+  width: 300px;
+}
+
+.platinumButton {
+  margin-top: 20px;
+  margin-left: 210px;
+  background-color: tomato;
+  padding: 10px 15px;
+  border: none;
+  font-size: 20px;
+}
+
+.platinumButton:hover {
+  background: yellowgreen;
+}
+
+.titles {
+  color: black;
+  margin-top: 25px;
+}
+
+.reality label {
+  color: #282828;
+  font-size: 20px;
+}
+
+.signum {
+  position: absolute;
+  top: 110px;
+  left: 200px;
+  height: 660px;
+  margin-bottom: 20px;
+  width: 800px;
+  background: #18476a;
+  padding: 20px;
+}
+
+.signButton {
+  margin-top: 20px;
+  background-color: tomato;
+  padding: 10px 15px;
+  border: none;
+  font-size: 20px;
+}
+
+.signButton:hover {
+  background: yellowgreen;
+}
+
+.nana {
+  width: 220px;
+  height: 40px;
+}
+
+.accordion__button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin-top: 3%;
+  background: #d72921;
+  color: white;
+  text-align: left;
+  transition: background 0.2s;
+}
+
+.accordion__button::after {
+  content: "\25be";
+  float: right;
+  transform: scale(1.5);
+}
+
+.accordion__button--active {
+  background: #555555;
+}
+.accordion__button--active::after {
+  content: "\25b4";
+}
+
+.accordion__content {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.2s;
+  padding: 0 15px;
+  font-family: sans-serif;
+  background: #555555;
+}
+
+.para p {
+  color: white;
+  margin-top: 2%;
+}

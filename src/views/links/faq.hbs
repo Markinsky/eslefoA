@@ -1,0 +1,130 @@
+<div class="container accordion para">
+    <button type="button" class="accordion__button">
+        ¿Puedo revalidar mis conocimientos y habilidades si ya fui estudiante de
+        eslefo?
+    </button>
+    <div class="accordion__content">
+        <p>
+            Si se puede siempre y cuando no hayan pasado más de 6 meses sin
+            estudiar inglés con nosotros. De lo contrario, es necesario presentar
+            una evaluación diagnostica.
+        </p>
+    </div>
+</div>
+
+<div class="container accordion para">
+    <button type="button" class="accordion__button">
+        ¿Que pasa si no apruebo durante el curso?
+    </button>
+    <div class="accordion__content">
+        <p>
+            Se te brinda una segunda oportunidad para aprobar tus exámenes que
+            hayan quedado sin aprobar.
+        </p>
+    </div>
+</div>
+
+<div class="container accordion para">
+    <button type="button" class="accordion__button">¿Metodos de pago?</button>
+    <div class="accordion__content">
+        <p>En efectivo y transferencia bancaria.</p>
+    </div>
+</div>
+<div class="container accordion para">
+    <button type="button" class="accordion__button">
+        ¿Como puedo inscribirme?
+    </button>
+    <div class="accordion__content">
+        <p>
+            Acudiendo directamente a nuestro domicilio (Link de maps) o bien, en
+            línea postulándote en esta página y siguiendo los pasos.
+        </p>
+    </div>
+</div>
+<div class="container accordion para">
+    <button type="button" class="accordion__button">
+        ¿Cual es la calificacion minima?
+    </button>
+    <div class="accordion__content">
+        <p>La calificacion minima aprobatoria es 70/100.</p>
+    </div>
+</div>
+<div class="container accordion para">
+    <button type="button" class="accordion__button">
+        ¿Me pueden cambiar de horario?
+    </button>
+    <div class="accordion__content">
+        <p>
+            Si, siempre y cuando exista grupo disponible para realizar el cambio.
+        </p>
+    </div>
+</div>
+<div class="container accordion para">
+    <button type="button" class="accordion__button">¿Precios?</button>
+    <div class="accordion__content">
+        <p>
+            Son pagos mensuales de: <br>
+            Niños: 590. Adolecentes: 590 pesos mxn. <br>
+            Nivel básico para jóvenes y adultos: 750 pesos mxn.<br>
+            Nivel intermedio para jóvenes y adultos: 850 pesos mxn. <br>
+            Nivel pre-avanzado para jóvenes y adultos: 850 pesos mxn. <br>
+            Nivel avanzado para jóvenes y adultos: 950 pesos mxn. <br>
+            Curso intensivo nivel básico (10h por semana): 1590 pesos mxn. <br>
+            Si tiene alguna duda puede preguntar aquí: (link)
+        </p>
+    </div>
+</div>
+<div class="container accordion para">
+    <button type="button" class="accordion__button">
+        ¿Que material de trabajo?
+    </button>
+    <div class="accordion__content">
+        <p>
+            Niños de 6 -10 “Guess what!”. Editorial Cambridge. <br>
+            Adolecentes 11 – 14 “Move it!”. <br>
+            Editorial Pearson. Jóvenes y adultos “Interchange”. <br>
+            Editorial Cambridge. *Libreta y algo con que escribir.
+        </p>
+    </div>
+</div>
+<div class="container accordion para">
+    <button type="button" class="accordion__button">
+        ¿Cómo puedo certificar mis estudios de inglés?
+    </button>
+    <div class="accordion__content">
+        <p>
+            Un vez concluido todo tu proceso de aprendizaje del idioma, tomas el
+            “Test of English as a foreign lenguaje” (TOEFL). Www.ets.ord/toefl_itp
+            / www.ets.org/toefl
+        </p>
+    </div>
+</div>
+<div class="container accordion para">
+    <button type="button" class="accordion__button">
+        ¿Es obligatorio iniciar mi curso de ingles desde 0?
+    </button>
+    <div class="accordion__content">
+        <p>
+            Si solo cuentas con los conocimientos de nivel secundarias y
+            preparatorias si es recomendable iniciar tu proceso de aprendizaje
+            desde 0. Pero si tienes dudas y quieres poner a prueba tus
+            conocimientos y habilidades en el idioma ofrecemos un examen
+            diagnostico para evaluar tu nivel de desempeño y conforme el resultado
+            colocarte en el grupo que mas apropiado para ti.
+        </p>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll(".accordion__button").forEach((button) => {
+        button.addEventListener("click", () => {
+            const contenido = button.nextElementSibling;
+            button.classList.toggle("accordion__button--active");
+            if (button.classList.contains("accordion__button--active")) {
+                contenido.style.maxHeight = contenido.scrollHeight + "px";
+            } else {
+                contenido.style.maxHeight = 0;
+            }
+        });
+    });
+</script>

@@ -7,11 +7,11 @@ router.get("/add", (req, res) =>{
     res.render("links/add");
 });
 
-router.post("/add", (req, res) =>{
+router.post("/add", async(req, res) =>{
     const {nombre, apPat, apMat, nacimiento, contraA, contraB, email, numero} = req.body;
-    const hola = pool.query("INSERT INTO aspirante (nombre, apPat, apMat, birthday, celular, correo) values ($1, $2, $3, $4, $5, $6)",[nombre,apPat,apMat,nacimiento,numero,email]);
+   // const hola = await pool.query("INSERT INTO aspirante (nombre, apPat, apMat, birthday, celular, correo) values ($1, $2, $3, $4, $5, $6)",[nombre,apPat,apMat,nacimiento,numero,email]);
     console.log("CONSOLA: ",hola);
-    res.send("Recibido uwu");
+    res.send("Recibido");
 });
 
 router.get("/register", (req, res) =>{

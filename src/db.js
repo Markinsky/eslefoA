@@ -1,24 +1,17 @@
-const pg = require("mysql");
+const {Pool} = require("pg");
 const {promisify} = require("util");
-const {database}=require("./keys");
-const pool = pg.createPool(database);
 
-pool.getConnection((err, connection) =>{
-    if(err){
-        console.log(err);
-        if(err.code === "PROTOCOL_CONNECTION_LOST"){
-            console.error("Cerradoa");
-        }if(err.code === "ER_CON_COUNT_ERROR"){
-            console.error("Mucha conexion");
-        }if(err.code === "ECONNREFUSED"){
-            console.error("Rechazado");
-        }
-    }
-    if(connection){
-        connection.release();
-        console.log("Conectado correctamente");
-        return;    
-    }
+const pool = new Pool({
+    user: "postgres",
+    host: "localhost",
+    password: "7734",
+    database: "eslefodb"
+
 });
+
+const prueba = () =>{
+    console.log("funcioa");
+};
+
 pool.query = promisify(pool.query);
 module.exports=pool;

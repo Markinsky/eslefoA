@@ -9,9 +9,5 @@ const pool = new Pool({
 
 });
 
-const prueba = () =>{
-    console.log("funcioa");
-};
-
 pool.query = promisify(pool.query);
 module.exports=pool;

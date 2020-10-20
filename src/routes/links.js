@@ -24,7 +24,6 @@ router.post("/add", async (req, res) =>{
     ];
     const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo) values ($1, $2, $3, $4, $5, $6)";
     const efe = await pool.query(qq, yy);
-    await pool.end();
     }catch(e){
         console.log("catch:", e)
     }

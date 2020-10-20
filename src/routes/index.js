@@ -2,8 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) =>{
-res.send("Hola");
+res.render("index");
 });
 
+router.post("/", (req,res) =>{
+
+});
 
 module.exports = router;

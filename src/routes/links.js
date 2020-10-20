@@ -7,13 +7,13 @@ router.get("/add", (req, res) =>{
 });
 
 router.post("/add", async (req, res) =>{
-    const nombre = req.body.nombre;
+    try{
+        const nombre = req.body.nombre;
     const apPat = req.body.apPat;
     const apMat = req.body.apMat;
     const nacimiento = req.body.nacimiento;
     const numero = req.body.numero;
     const email = req.body.email;
-    const qq = "INSERT INTO aspirante (nombre,apPaterno, apMat, birthday, numero, correo) values ($1, $2, $3, $4, $5, $6);";
     const yy = [
         nombre,
         apPat,
@@ -22,9 +22,12 @@ router.post("/add", async (req, res) =>{
         numero,
         email,
     ];
-    //console.log("log", yy);
-    await pool.query(qq, yy);
-    pool.end();
+    const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo) values ($1, $2, $3, $4, $5, $6)";
+    const efe = await pool.query(qq, yy);
+    await pool.end();
+    }catch(e){
+        console.log("catch:", e)
+    }
 });
 
 router.get("/register", (req, res) =>{

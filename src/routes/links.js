@@ -8,7 +8,7 @@ router.get("/add", (req, res) =>{
 
 router.post("/add", async (req, res) =>{
     try{
-        const nombre = req.body.nombre;
+    const nombre = req.body.nombre;
     const apPat = req.body.apPat;
     const apMat = req.body.apMat;
     const nacimiento = req.body.nacimiento;

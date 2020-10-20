@@ -9,30 +9,37 @@
             <br />
             <div class="col">
                 <label> Nombres: </label>
-                <input class="form-control nana" type="text" placeholder="Escriba sus nombres" name="nombre" />
+                <input class="form-control nana" type="text" placeholder="Escriba sus nombres" name="nombre"
+                    required="required" />
                 <br />
-                <label> Primer apellido: </label>
-                <input class="form-control nana" type="text" placeholder="Escriba su apellido paterno" name="apPat" />
+                <label>Segundo apellido: </label>
+                <input class="form-control nana" type="text" placeholder="Escriba su apellido materno" name="apMat"
+                    required="required" />
                 <br />
                 <label>Fecha de nacimiento:</label>
                 <input class="form-control nana" type="date" name="nacimiento" />
                 <br />
                 <label>Contraseña:</label>
-                <input class="form-control nana" type="password" placeholder="Contraseña" name="contraA" />
-                <input type="submit" class="signButton" value="Registrarse" />
+                <input class="form-control nana" type="password" placeholder="Contraseña" name="contraA"
+                    required="required" />
             </div>
             <div class="col">
-                <label>Segundo apellido:</label>
-                <input class="form-control nana" type="text" placeholder="Escriba su apellido materno" name="apMat" />
+                <label>Primer apellido:</label>
+                <input class="form-control nana" type="text" placeholder="Escriba su apellido paterno" name="apPat"
+                    required="required" />
                 <br />
                 <label>Numero celular o telefono:</label>
-                <input class="form-control nana" type="text" placeholder="Escriba su numero" name="numero" />
+                <input class="form-control nana" type="text" placeholder="Escriba su numero" name="numero"
+                    required="required" />
                 <br />
                 <label>Correo electronico:</label>
-                <input class="form-control nana" type="text" placeholder="Escriba sus Email" name="email" />
+                <input class="form-control nana" type="email" placeholder="Escriba sus Email" name="email"
+                    required="required" />
                 <br />
                 <label>Confirma contraseña:</label>
-                <input class="form-control nana" type="password" placeholder="Confirma su contraseña" name="contraB" />
+                <input class="form-control nana" type="password" placeholder="Confirma su contraseña" name="contraB"
+                    required="required" />
+                <input type="submit" class="signButton" value="Registrarse" />
             </div>
         </div>
 </div>

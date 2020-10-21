@@ -27,10 +27,14 @@
 
 .sliderMiddle {
   overflow: hidden;
+  width: 100%;
+  max-width: 700px;
+  height: auto;
 }
 
 .middle {
   position: absolute;
+  margin-top: 3%;
 }
 
 .navigation {
@@ -90,6 +94,8 @@ input[name="r"] {
 
 .position {
   position: absolute;
+  margin-left: 3%;
+  display: flex;
 }
 
 .caja {
@@ -97,10 +103,10 @@ input[name="r"] {
   font-size: 20px;
   color: #ffffff;
   background: #18476a;
-  padding-top: 15px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 15px;
+  padding-top: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 5%;
   cursor: pointer;
 }
 
@@ -112,10 +118,6 @@ input[name="r"] {
   box-shadow: 0px 0px 0px 1px #efb810;
   transition: box-shadow 0.4s linear;
   margin: 0.9em;
-}
-
-.border-button:hover {
-  box-shadow: 0px 0px 0px 10px #efb810;
 }
 
 .imgMargin {

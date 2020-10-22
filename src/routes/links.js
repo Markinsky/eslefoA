@@ -14,7 +14,7 @@ router.get("/register", (req, res) =>{
     res.render("links/register");
 });
 
-router.post("/register",(req, res)=>{
+router.post("/register", async(req, res)=>{
     try{
         const nombre = req.body.nombre;
         const apPat = req.body.apPat;
@@ -27,7 +27,7 @@ router.post("/register",(req, res)=>{
         var numeroLenght = numero.length;
         const id = lastID();
         const codigo = newCode();
-        if(passA != passB){
+        if(passA != passB ){
             console.log("Contraseña erronea");
         }else{
             if(numeroLenght==10){
@@ -44,9 +44,10 @@ router.post("/register",(req, res)=>{
                     passA,
                     id,
                 ];
-               // const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo) values ($1, $2, $3, $4, $5, $6)";
-                //const pp = "INSERT INTO login(usser, pass,id,funcion) values ($1, $2, $3,'aspirante')";
-                //const efe = await pool.query(qq, yy);
+               const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo) values ($1, $2, $3, $4, $5, $6)";
+                const pp = "INSERT INTO login(usser, pass,id,funcion) values ($1, $2, $3,'aspirante')";
+                const efeA = await pool.query(qq, yy);
+                const efeB = await pool.query(pp, ww);
             }else{
                console.log("Error")
                 
@@ -76,8 +77,9 @@ const lastID = async(req, res) =>{
 const newCode = async(req,res) =>{
     try{
         const getCode = await pool.query('SELECT codigo from aspirante ORDER BY id_aspirante DESC LIMIT 1');
-        const code = getCode.rows;
-        console.log("codigo" , getCode);
+        var count = getCode.rows[0].codigo;
+        var sum = parseInt(count);
+        var code = sum + 1;
         return code +1;
     }catch(e){
         console.log("error newCode", e)

@@ -38,13 +38,14 @@ router.post("/register", async(req, res)=>{
                     nacimiento,
                     numero,
                     email,
+                    codigo
                 ];
                 const ww =[
                     email,
                     passA,
                     id,
                 ];
-               const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo) values ($1, $2, $3, $4, $5, $6)";
+               const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo, codigo) values ($1, $2, $3, $4, $5, $6)";
                 const pp = "INSERT INTO login(usser, pass,id,funcion) values ($1, $2, $3,'aspirante')";
                 const efeA = await pool.query(qq, yy);
                 const efeB = await pool.query(pp, ww);

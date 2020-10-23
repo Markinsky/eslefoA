@@ -25,14 +25,14 @@ router.post("/register", async(req, res)=>{
         const passA = req.body.contraA;
         const passB = req.body.contraB;
         var numeroLenght = numero.length;
-        const id = lastID();
-        const codigo = newCode();
-        var verE = verEmail();
-        console.log("bere", verE)
+        const id = await lastID();
+        const codigo = await newCode();
+        var verE = await verEmail(email);
         if(passA != passB || verE === false){
-            console.log("Contraseña erronea");
+            console.log("Contraseña erronea o correo repetido");
         }else{
             if(numeroLenght==10){
+                console.log("entramos");
                 const yy = [
                     nombre,
                     apPat,
@@ -43,12 +43,12 @@ router.post("/register", async(req, res)=>{
                     codigo
                 ];
                 const ww =[
-                    email,
+                    codigo,
                     passA,
                     id,
                 ];
-               const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo, codigo) values ($1, $2, $3, $4, $5, $6)";
-                const pp = "INSERT INTO login(usser, pass,id,funcion) values ($1, $2, $3,'aspirante')";
+               const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo, codigo) values ($1, $2, $3, $4, $5, $6, $7)";
+               const pp = "INSERT INTO login(usser, pass,id,funcion) values ($1, $2, $3,'aspirante')";
                 const efeA = await pool.query(qq, yy);
                 const efeB = await pool.query(pp, ww);
             }else{
@@ -70,7 +70,7 @@ router.get("/login", (req, res) =>{
 const lastID = async(req, res) =>{
     try{
         const queryGet = await pool.query('SELECT id_aspirante from aspirante ORDER BY id_aspirante DESC LIMIT 1;');
-        const id = queryGet.rows;
+        const id = queryGet.rows[0].id_aspirante;
         return id;
     }catch(e){
         console.log("error lastId", e)
@@ -83,16 +83,16 @@ const newCode = async(req,res) =>{
         var count = getCode.rows[0].codigo;
         var sum = parseInt(count);
         var code = sum + 1;
-        return code +1;
+        return code;
     }catch(e){
         console.log("error newCode", e)
     }
 };
 
-const verEmail = async(req, res) =>{
+var verEmail = async(email) =>{
     try{
         const query = ('SELECT count(*) from aspirante where correo = $1;');
-        const correo = [ email];
+        const correo = [email];
         const qq = await pool.query(query, correo);
         var count = qq.rows[0].count;
         var res = parseInt(count);

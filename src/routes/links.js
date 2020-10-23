@@ -27,7 +27,9 @@ router.post("/register", async(req, res)=>{
         var numeroLenght = numero.length;
         const id = lastID();
         const codigo = newCode();
-        if(passA != passB ){
+        var verE = verEmail();
+        console.log("bere", verE)
+        if(passA != passB || verE === false){
             console.log("Contraseña erronea");
         }else{
             if(numeroLenght==10){
@@ -84,6 +86,25 @@ const newCode = async(req,res) =>{
         return code +1;
     }catch(e){
         console.log("error newCode", e)
+    }
+};
+
+const verEmail = async(req, res) =>{
+    try{
+        const query = ('SELECT count(*) from aspirante where correo = $1;');
+        const correo = [ email];
+        const qq = await pool.query(query, correo);
+        var count = qq.rows[0].count;
+        var res = parseInt(count);
+        if(res != 0){
+            //console.log("Mas de uno" , res);
+            return false;
+        }else{
+            //console.log("Resultado:" , res);
+            return true;
+        }   
+    }catch(e){
+        console.log("error en el verEmail", e)
     }
 };
 module.exports = router;

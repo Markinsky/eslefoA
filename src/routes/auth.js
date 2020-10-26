@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../db");
+
 router.get ("/sign" , (req, res) =>{
     res.render("auth/register");
 });

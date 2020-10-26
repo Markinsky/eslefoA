@@ -3,7 +3,10 @@ const morgan = require("morgan");
 const app = express();
 const exhbs = require("express-handlebars");
 const path = require("path");
+const passport = require("passport");
 
+//init
+require("./lib/passport");
 //Configuraciones
 app.set("port", process.env.PORT || 3500);
 app.set("views", path.join(__dirname,"views"));
@@ -20,6 +23,8 @@ app.set("view engine", ".hbs");
 app.use(morgan("dev"));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(passport.initialize());
+app.use(passport.session());
 //Global
 app.use((req, res, next) =>{
 next();

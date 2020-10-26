@@ -25,14 +25,12 @@ router.post("/register", async(req, res)=>{
         const passA = req.body.contraA;
         const passB = req.body.contraB;
         var numeroLenght = numero.length;
-        const id = await lastID();
         const codigo = await newCode();
         var verE = await verEmail(email);
         if(passA != passB || verE === false){
             console.log("Contraseña erronea o correo repetido");
         }else{
             if(numeroLenght==10){
-                console.log("entramos");
                 const yy = [
                     nombre,
                     apPat,
@@ -42,14 +40,15 @@ router.post("/register", async(req, res)=>{
                     email,
                     codigo
                 ];
+               const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo, codigo) values ($1, $2, $3, $4, $5, $6, $7)";
+            const pp = "INSERT INTO login(usser, pass,id,funcion) values ($1, $2, $3,'aspirante')";
+                const efeA = await pool.query(qq, yy);
+                const id = await lastID();
                 const ww =[
                     codigo,
                     passA,
                     id,
                 ];
-               const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo, codigo) values ($1, $2, $3, $4, $5, $6, $7)";
-               const pp = "INSERT INTO login(usser, pass,id,funcion) values ($1, $2, $3,'aspirante')";
-                const efeA = await pool.query(qq, yy);
                 const efeB = await pool.query(pp, ww);
             }else{
                console.log("Error")

@@ -1,0 +1,45 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3> Registrate </h3>
+                    <label>
+                        Registrarse tiene sus beneficios como poder postularse a los cursos,
+                        ya que estes un grupo podras leer la bitacora.
+                    </label>
+                </div>
+                <div class="class-body">
+                    <form action="/sign" method="POST">
+                        <div class="cardBack letters">
+                            <label> Nombres: </label>
+                            <input class="form-control" type="text" placeholder="Escriba sus nombres" name="nombre"
+                                required="required" />
+                            <label>Primer apellido:</label>
+                            <input class="form-control" type="text" placeholder="Escriba su apellido paterno"
+                                name="apPat" required="required" />
+                            <label>Segundo apellido: </label>
+                            <input class="form-control" type="text" placeholder="Escriba su apellido materno"
+                                name="apMat" required="required" />
+                            <label>Fecha de nacimiento:</label>
+                            <input class="form-control" type="date" name="nacimiento" />
+                            <label>Numero celular o telefono:</label>
+                            <input class="form-control" type="text" placeholder="Escriba su numero" name="numero"
+                                required="required" />
+                            <label>Correo electronico:</label>
+                            <input class="form-control" type="email" placeholder="Escriba su Email" name="email"
+                                required="required" />
+                            <label>Contraseña:</label>
+                            <input class="form-control" type="password" placeholder="Contraseña" name="contraA"
+                                required="required" />
+                            <label>Confirma contraseña:</label>
+                            <input class="form-control " type="password" placeholder="Confirma su contraseña"
+                                name="contraB" required="required" />
+                            <input type="submit" class="signButton " value="Registrarse" />
+                        </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

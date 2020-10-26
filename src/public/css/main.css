@@ -192,6 +192,7 @@ input[name="r"] {
 .letters label {
   color: white;
   font-size: 25px;
+  margin-top: 5%;
 }
 
 .inputSettings {
@@ -230,7 +231,8 @@ input[name="r"] {
 }
 
 .signButton {
-  margin-top: 20px;
+  margin-top: 5%;
+  margin-bottom: 5%;
   background-color: tomato;
   padding: 10px 15px;
   border: none;
@@ -285,4 +287,8 @@ input[name="r"] {
 .para p {
   color: white;
   margin-top: 2%;
+}
+
+.cardBack {
+  background: #023257;
 }

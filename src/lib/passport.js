@@ -38,7 +38,7 @@ passport.use("local.sign", new LocalStrategy({
                     codigo
                 ];
             const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo, codigo) values ($1, $2, $3, $4, $5, $6, $7)";
-            const efeA = await pool.query(qq, yy);
+            //const efeA = await pool.query(qq, yy);
             const id = await lastID();
                 const ww ={
                     usuario,
@@ -47,8 +47,9 @@ passport.use("local.sign", new LocalStrategy({
                     funcion
                 };
                 ww.passA = await helpers.encrypt(passA); 
-                const pp = await pool.query( "INSERT INTO login SET ?",[ww]);
-                console.log("EfeB" , pp);
+                console.log("cifrado" , ww.passA);
+                const pp = await pool.query( "INSERT INTO login (usser, pass, id, funcion) values ($1, $2, $3, 'aspirante')");
+                console.log("pp" , pp);
             }else{
                console.log("Error tamaño e.e", e)
                 

@@ -7,8 +7,8 @@ const helpers = require ("../lib/helpers");
 
 passport.use("local.sign", new LocalStrategy({
     usernameField: "usuario",
-    passwordField: "contraA",
-    passReqToCallback: true
+    passwordField: "contras",
+    passReqToCallback : true
 }, async (req, username, password, done) =>{
     try{
         const nombre = req.body.nombre;
@@ -20,12 +20,12 @@ passport.use("local.sign", new LocalStrategy({
         const passA = req.body.contraA;
         const passB = req.body.contraB;
         const usuario = req.body.usuario;
-        const funcion = "aspirante";
         var numeroLenght = numero.length;
         const codigo = await newCode();
         var verE = await verEmail(email);
-        if(passA != passB || verE === false){
-            console.log("Contraseña erronea o correo repetido");
+        var verU = await verUsser(usuario);
+        if(passA != passB || verE === false || verU===false){
+            console.log("Contraseña erronea, correo repetido o usuario invalido");
         }else{
             if(numeroLenght==10){
                 const yy = [
@@ -38,18 +38,17 @@ passport.use("local.sign", new LocalStrategy({
                     codigo
                 ];
             const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo, codigo) values ($1, $2, $3, $4, $5, $6, $7)";
-            //const efeA = await pool.query(qq, yy);
+            const efeA = await pool.query(qq, yy);
             const id = await lastID();
-                const ww ={
+            const contras = await helpers.encrypt(passA);
+                const ww =[
                     usuario,
-                    passA,
-                    id,
-                    funcion
-                };
-                ww.passA = await helpers.encrypt(passA); 
-                console.log("cifrado" , ww.passA);
-                const pp = await pool.query( "INSERT INTO login (usser, pass, id, funcion) values ($1, $2, $3, 'aspirante')");
-                console.log("pp" , pp);
+                    contras,
+                    id
+                ];
+                const pp = "INSERT INTO login (usser, pass, id, funcion) values ($1, $2, $3, 'aspirante')";
+                const xd = await pool.query(pp, ww);
+                return done(null, id);
             }else{
                console.log("Error tamaño e.e", e)
                 
@@ -60,9 +59,14 @@ passport.use("local.sign", new LocalStrategy({
         }
 }));
 
-//passport.serializeUser((usr, done) =>{
-//
-//});
+passport.serializeUser((id, done) =>{
+    done (null, id);
+});
+
+passport.deserializeUser(async(id, done) =>{
+   const row = await pool.query("select * from login where id = ?", [id]);
+   done(null, row[0]);
+});
 
 const lastID = async(req, res) =>{
     try{
@@ -102,5 +106,24 @@ var verEmail = async(email) =>{
         }   
     }catch(e){
         console.log("error en el verEmail", e)
+    }
+};
+
+var verUsser = async(usuario) =>{
+    try{
+        const query = ('SELECT count(*) from login where usser = $1;');
+        const usser = [usuario];
+        const qq = await pool.query(query, usser);
+        var count = qq.rows[0].count;
+        var res = parseInt(count);
+        if(res != 0){
+            //console.log("Mas de uno" , res);
+            return false;
+        }else{
+            //console.log("Resultado:" , res);
+            return true;
+        }   
+    }catch(e){
+        console.log("error en el verUsser", e)
     }
 };

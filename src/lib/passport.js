@@ -18,7 +18,7 @@ passport.use("local.signup", new LocalStrategy({
         const email = req.body.email;
         const passA = contraA;
         const passB = req.body.contraB;
-        const usser = req.body.usuario;
+        const usser = usuario;
         const funcion = "aspirante";
         var numeroLenght = numero.length;
         const codigo = await newCode();
@@ -28,7 +28,6 @@ passport.use("local.signup", new LocalStrategy({
             console.log("Contraseña erronea, correo repetido o usuario invalido");
         }else{
             if(numeroLenght==10){
-                const pass = passA;
                 const yy = [
                     nombre,
                     apPat,
@@ -41,16 +40,17 @@ passport.use("local.signup", new LocalStrategy({
             const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo, codigo) values ($1, $2, $3, $4, $5, $6, $7)";
             const efeA = await pool.query(qq, yy);
             const id = await lastID();
-                const login ={
+            const pass = await helpers.encrypt(passA);
+                const login =[
                     usser,
                     pass,
                     id,
                     funcion
-                };
-                login.pass = await helpers.encrypt(pass);
-                const pp = await pool.query("INSERT INTO login SET ?", [login]);
-                login.id_login = pp.id_login;
-                return done(null, login);
+                ];
+                const pp =("INSERT INTO login (usser, pass, id, funcion) VALUES ($1, $2, $3, $4)");
+                const aa = await pool.query(pp, login)
+                const id_login = await getId_login(id);
+                return done(null, id_login);
             }else{
                console.log("Error tamaño e.e", e)
                 
@@ -61,17 +61,18 @@ passport.use("local.signup", new LocalStrategy({
         }
 }));
 
-passport.serializeUser((user, done) =>{
-    done (null, user.id_login);
-    console.log("done: ", done);
+passport.serializeUser((id_login, done) =>{
+    done (null, id_login);
 });
 
 passport.deserializeUser(async(id_login, done) =>{
     console.log("id dese", id_login);
-   const row = await pool.query("SELECT * FROM login WHERE id = ?", [id_login]);
-   console.log("ROW ALGO:", rows);
-   console.log("ROW ROW" , rows[0]);
-   done(null, rows[0]);
+    const query = "SELECT * FROM login WHERE id_login = $1";
+    const data = [id_login];
+    const res = pool.query(query, data);
+    console.log("ROW ALGO:", res);
+    console.log("ROW ROW" , res[0]);
+    done(null, res[0]);
 });
 
 const lastID = async(req, res) =>{
@@ -131,5 +132,19 @@ var verUsser = async(usuario) =>{
         }   
     }catch(e){
         console.log("error en el verUsser", e)
+    }
+};
+
+const getId_login = async(ida) =>{
+    try{
+        const getCode = 'SELECT id_login FROM login where id = $1';
+        const id = [ida];
+        const qq = await pool.query(getCode, id);
+        var gg = qq.rows[0].id_login;
+        var res = parseInt(gg);
+        //console.log("ressss" , res)
+        return res;
+    }catch(e){
+        console.log("error newCode", e)
     }
 };

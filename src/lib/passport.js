@@ -19,6 +19,7 @@ passport.use("local.signup", new LocalStrategy({
         const passA = contraA;
         const passB = req.body.contraB;
         const usser = usuario;
+        const pass ="";
         const funcion = "aspirante";
         var numeroLenght = numero.length;
         const codigo = await newCode();
@@ -38,19 +39,19 @@ passport.use("local.signup", new LocalStrategy({
                     codigo
                 ];
             const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo, codigo) values ($1, $2, $3, $4, $5, $6, $7)";
-            const efeA = await pool.query(qq, yy);
+           //  const efeA = await pool.query(qq, yy);
             const id = await lastID();
-            const pass = await helpers.encrypt(passA);
-                const login =[
+                let newLogin = {
                     usser,
                     pass,
                     id,
                     funcion
-                ];
-                const pp =("INSERT INTO login (usser, pass, id, funcion) VALUES ($1, $2, $3, $4)");
-                const aa = await pool.query(pp, login)
-                const id_login = await getId_login(id);
-                return done(null, id_login);
+                };
+                newLogin.pass = await helpers.encrypt(passA);
+                console.log("pass", newLogin.pass);
+                const result = await pool.query('INSERT INTO login SET ? ', [newLogin]);
+                newLogin.id = result.id_login;
+                return done(null, newLogin);
             }else{
                console.log("Error tamaño e.e", e)
                 
@@ -61,18 +62,27 @@ passport.use("local.signup", new LocalStrategy({
         }
 }));
 
-passport.serializeUser((id_login, done) =>{
-    done (null, id_login);
+passport.serializeUser((user, done) =>{
+    try{
+     done (null, user.id_login);
+    }catch(e){
+        console.log("Error serial ", e);
+    }
+    
 });
 
 passport.deserializeUser(async(id_login, done) =>{
-    console.log("id dese", id_login);
+    try{
+        console.log("id dese", id_login);
     const query = "SELECT * FROM login WHERE id_login = $1";
     const data = [id_login];
     const res = pool.query(query, data);
     console.log("ROW ALGO:", res);
     console.log("ROW ROW" , res[0]);
     done(null, res[0]);
+    }catch(e){
+        console.log("Error en Desereialize", e)
+    }
 });
 
 const lastID = async(req, res) =>{

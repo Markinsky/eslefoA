@@ -292,3 +292,21 @@ input[name="r"] {
 .cardBack {
   background: #023257;
 }
+
+footer {
+  margin-top: 2%;
+  text-align: center;
+  padding: 5px;
+  background-color: #323232;
+  color: white;
+}
+
+.removeList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.removeList i {
+  color: white;
+}

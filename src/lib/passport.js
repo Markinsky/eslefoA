@@ -19,7 +19,7 @@ passport.use("local.signup", new LocalStrategy({
         const passA = contraA;
         const passB = req.body.contraB;
         const usser = usuario;
-        const pass ="";
+        const pass = await helpers.encrypt(passA);
         const funcion = "aspirante";
         var numeroLenght = numero.length;
         const codigo = await newCode();
@@ -39,19 +39,20 @@ passport.use("local.signup", new LocalStrategy({
                     codigo
                 ];
             const qq = "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo, codigo) values ($1, $2, $3, $4, $5, $6, $7)";
-           //  const efeA = await pool.query(qq, yy);
+           const efeA = await pool.query(qq, yy);
             const id = await lastID();
-                let newLogin = {
+                let newLogin = [
                     usser,
                     pass,
                     id,
                     funcion
-                };
-                newLogin.pass = await helpers.encrypt(passA);
-                console.log("pass", newLogin.pass);
-                const result = await pool.query('INSERT INTO login SET ? ', [newLogin]);
-                newLogin.id = result.id_login;
-                return done(null, newLogin);
+                ];
+                const pp =("INSERT INTO login (usser, pass, id, funcion) VALUES ($1, $2, $3, $4)");
+                const result = await pool.query(pp, newLogin);
+                newLogin.id_login = await getId_login(id);
+                console.log("done", done);
+                console.log("usser", usser);
+                return done(null, usser);
             }else{
                console.log("Error tamaño e.e", e)
                 
@@ -64,7 +65,9 @@ passport.use("local.signup", new LocalStrategy({
 
 passport.serializeUser((user, done) =>{
     try{
-     done (null, user.id_login);
+        console.log("TODO: ", user)
+        console.log("user:", user);
+     done (null, user);
     }catch(e){
         console.log("Error serial ", e);
     }
@@ -74,7 +77,7 @@ passport.serializeUser((user, done) =>{
 passport.deserializeUser(async(id_login, done) =>{
     try{
         console.log("id dese", id_login);
-    const query = "SELECT * FROM login WHERE id_login = $1";
+    const query = "SELECT * FROM login WHERE usser = $1";
     const data = [id_login];
     const res = pool.query(query, data);
     console.log("ROW ALGO:", res);
@@ -129,8 +132,8 @@ var verEmail = async(email) =>{
 var verUsser = async(usuario) =>{
     try{
         const query = ('SELECT count(*) from login where usser = $1;');
-        const usser = [usuario];
-        const qq = await pool.query(query, usser);
+        const ussera = [usuario];
+        const qq = await pool.query(query, ussera);
         var count = qq.rows[0].count;
         var res = parseInt(count);
         if(res != 0){

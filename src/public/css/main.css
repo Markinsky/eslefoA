@@ -27,9 +27,6 @@
 
 .sliderMiddle {
   overflow: hidden;
-  width: 100%;
-  max-width: 700px;
-  height: auto;
 }
 
 .middle {
@@ -41,7 +38,6 @@
   position: absolute;
   bottom: 20px;
   left: 50px;
-  transform: translateX(-10%);
   display: flex;
 }
 
@@ -309,4 +305,8 @@ footer {
 
 .removeList i {
   color: white;
+}
+
+.marginTop3 {
+  margin-top: 3%;
 }

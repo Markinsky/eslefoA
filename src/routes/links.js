@@ -24,4 +24,7 @@ router.get("/login", (req, res) =>{
     res.render("links/login");
 });
 
+router.get("/aboutus", (req, res) =>{
+    res.render("links/aboutus");
+});
 module.exports = router;

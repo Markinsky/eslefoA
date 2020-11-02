@@ -1,12 +1,16 @@
 const express = require("express");
 const morgan = require("morgan");
-const app = express();
 const exhbs = require("express-handlebars");
 const path = require("path");
+//const flash = require("connect-flash");
+const session = require("express-session");
 const passport = require("passport");
-
+const pgSession = require("express-pg-session")(session);
+const {database} = require("./keys");
+var pg = require('pg');
 //init
-require("./lib/passport");
+const app = express();
+
 //Configuraciones
 app.set("port", process.env.PORT || 3500);
 app.set("views", path.join(__dirname,"views"));
@@ -20,19 +24,23 @@ app.engine(".hbs", exhbs({
 app.set("view engine", ".hbs");
 
 //Midleware
+
 app.use(morgan("dev"));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+//app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
 //Global
-app.use((req, res, next) =>{
-next();
-});
+//app.use((req, res, next) =>{
+//   app.locals.success = req.flash("success")
+//next();
+//});
 
 //Rutas
 app.use(require("./routes/"));
-app.use(require("./routes/auth"));
+app.use(require("./routes/authentication"));
 app.use("/links", require("./routes/links"));
 
 //Public

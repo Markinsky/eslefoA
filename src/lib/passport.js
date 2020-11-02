@@ -67,7 +67,7 @@ passport.serializeUser((user, done) =>{
     try{
         console.log("TODO: ", user)
         console.log("user:", user);
-     done (null, user);
+     done (user);
     }catch(e){
         console.log("Error serial ", e);
     }

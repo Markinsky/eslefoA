@@ -6,8 +6,8 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
 
-var pg = require("pg"),
-  pgSession = require("connect-pg-simple")(session);
+var pg = require("pg");
+var pgSession = require("connect-pg-simple")(session);
 
 var pgPool = new pg.Pool({
   user: "postgres",
@@ -16,7 +16,7 @@ var pgPool = new pg.Pool({
 });
 //init
 const app = express();
-
+require("./lib/passport");
 //Configuraciones
 app.set("port", process.env.PORT || 3500);
 app.set("views", path.join(__dirname, "views"));

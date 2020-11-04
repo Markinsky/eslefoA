@@ -1,23 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("../lib/passport");
+const passport = require("passport");
 
-
-router.get ("/signup" , (req, res) =>{
-    res.render("auth/register");
+router.get("/signup", (req, res) => {
+  res.render("auth/register");
 });
 
-//router.post("/signup", passport.authenticate("local-signup", {
-//    successRedirect: "/profile",
-//    failureRedirect: "/signup",
-//    failureFlash: true
-//  }));
-  
+router.post(
+  "/signup",
+  passport.authenticate("local-signup", {
+    successRedirect: "/profile",
+    failureRedirect: "/signup",
+    failureFlash: true,
+  })
+);
 
-
-router.get ("/profile", (req, res) =>{
-    res.send("Perfil uwu");
+router.get("/profile", (req, res) => {
+  res.send("Perfil uwu");
 });
-
 
 module.exports = router;

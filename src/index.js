@@ -6,50 +6,54 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
 
-var pg = require('pg')
-  , pgSession = require('connect-pg-simple')(session);
+var pg = require("pg"),
+  pgSession = require("connect-pg-simple")(session);
 
-  var pgPool = new pg.Pool({
-    user: "postgres",
-    password: "7734",
-    database: "eslefodb"
+var pgPool = new pg.Pool({
+  user: "postgres",
+  password: "7734",
+  database: "eslefodb",
 });
 //init
 const app = express();
 
 //Configuraciones
 app.set("port", process.env.PORT || 3500);
-app.set("views", path.join(__dirname,"views"));
-app.engine(".hbs", exhbs({
+app.set("views", path.join(__dirname, "views"));
+app.engine(
+  ".hbs",
+  exhbs({
     defaultLayout: "main",
-    layoutsDir: path.join(app.get("views"),"layouts"),
-    partialsDir: path.join(app.get("views"),"partials"),
+    layoutsDir: path.join(app.get("views"), "layouts"),
+    partialsDir: path.join(app.get("views"), "partials"),
     extname: ".hbs",
-    helpers: require("./lib/handlebars")
-}));
+    helpers: require("./lib/handlebars"),
+  })
+);
 app.set("view engine", ".hbs");
 
 //Midleware
 
 app.use(morgan("dev"));
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
 //Global
-app.use(session({
+app.use(
+  session({
     store: new pgSession({
-      pool : pgPool,                // Connection pool
-      tableName : 'cookie'   // Use another table-name than the default "session" one
+      pool: pgPool, // Connection pool
+      tableName: "cookie", // Use another table-name than the default "session" one
     }),
     secret: "usserSession",
     saveUninitialized: false,
     resave: false,
-    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
-  }));
-
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
+  })
+);
 
 //Rutas
 app.use(require("./routes/"));
@@ -60,6 +64,6 @@ app.use("/links", require("./routes/links"));
 app.use(express.static(path.join(__dirname, "public")));
 
 //Servidor
-app.listen(app.get("port"),()=>{
-console.log("server en ", app.get("port"));
+app.listen(app.get("port"), () => {
+  console.log("server en ", app.get("port"));
 });

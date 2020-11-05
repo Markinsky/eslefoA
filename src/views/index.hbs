@@ -1,37 +1,50 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8" style="padding:0">
-            <div>
-                <div class="sliderMiddle  middle">
-                    <div class="slides">
-                        <input type="radio" name="r" id="r1" checked>
-                        <input type="radio" name="r" id="r2">
-                        <input type="radio" name="r" id="r3">
-                        <input type="radio" name="r" id="r4">
-                        <div class="slide s1">
-                            <img src="/img/1.png">
-                        </div>
-                        <div class="slide">
-                            <img src="/img/2.png">
-                        </div>
-                        <div class="slide">
-                            <img src="/img/3.png">
-                        </div>
-                        <div class="slide">
-                            <img src="/img/4.png">
-                        </div>
-
-                    </div>
-                    <div class="navigation">
-                        <label for="r1" class="bar"></label>
-                        <label for="r2" class="bar"></label>
-                        <label for="r3" class="bar"></label>
-                        <label for="r4" class="bar"></label>
-                    </div>
-                </div>
-                <div class="mask rgba-white-light"></div>
-            </div>
-        </div>
+         <div id = "slider">
+             <input type="radio" name="slider" id="slide1" checked>
+              <input type="radio" name="slider" id="slide2">
+              <input type="radio" name="slider" id="slide3">
+              <input type="radio" name="slider" id="slide4">
+              <div id="slides">
+                  <div id = "overflow">
+                      <div class = "inner">
+                          <div class ="slide slide_1">
+                              <div class = "slide-content">
+                                    <img src="/img/1.png">
+                              </div>
+                          </div>
+                               <div class ="slide slide_2">
+                              <div class = "slide-content">
+                                    <img src="/img/2.png">
+                              </div>
+                          </div>
+                             <div class ="slide slide_3">
+                              <div class = "slide-content">
+                                    <img src="/img/3.png">
+                              </div>
+                          </div>
+                                <div class ="slide slide_4">
+                              <div class = "slide-content">
+                                    <img src="/img/4.png">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div id="controls">
+                  <label for = "slide1"></label>
+                  <label for = "slide2"></label>
+                  <label for = "slide3"></label>
+                  <label for = "slide4"></label>
+              </div>
+              <div id ="bullets">
+                  <label for="slide1"></label>
+                  <label for="slide2"></label>
+                  <label for="slide3"></label>
+                  <label for="slide4"></label>
+              </div>
+         </div>   
 
     </div>
 

@@ -5,14 +5,30 @@ const pool = require("../db");
 const helpers = require("../lib/helpers");
 
 passport.use(
+  "local-signin",
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "pass",
+      passReqToCallback: true,
+    },
+    async (req, usser, pass, done) => {
+      console.log("req", req.body);
+      console.log("usser", usser);
+      console.log("pass", pass);
+    }
+  )
+);
+
+passport.use(
   "local-signup",
   new LocalStrategy(
     {
-      usernameField: "usuario",
+      usernameField: "email",
       passwordField: "contraA",
       passReqToCallback: true,
     },
-    async (req, usuario, contraA, done) => {
+    async (req, email, contraA, done) => {
       try {
         const nombre = req.body.nombre;
         const apPat = req.body.apPat;
@@ -22,14 +38,12 @@ passport.use(
         const email = req.body.email;
         const passA = req.body.contraA;
         const passB = req.body.contraB;
-        const usser = req.body.usuario;
         const pass = await helpers.encrypt(passA);
         const funcion = "aspirante";
         var numeroLenght = numero.length;
         const codigo = await newCode();
         var verE = await verEmail(email);
-        var verU = await verUsser(usser);
-        if (passA != passB || verE === false || verU === false) {
+        if (passA != passB || verE === false) {
           console.log("Contraseña erronea, correo repetido o usuario invalido");
         } else {
           if (numeroLenght == 10) {
@@ -46,7 +60,7 @@ passport.use(
               "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo, codigo) values ($1, $2, $3, $4, $5, $6, $7)";
             const efeA = await pool.query(qq, yy);
             const id = await lastID();
-            let login = [usser, pass, id, funcion];
+            let login = [email, pass, id, funcion];
             const pp =
               "INSERT INTO login (usser, pass, id, funcion) VALUES ($1, $2, $3, $4)";
             const aa = await pool.query(pp, login);
@@ -129,25 +143,6 @@ var verEmail = async (email) => {
     }
   } catch (e) {
     console.log("error en el verEmail", e);
-  }
-};
-
-var verUsser = async (usuario) => {
-  try {
-    const query = "SELECT count(*) from login where usser = $1;";
-    const ussera = [usuario];
-    const qq = await pool.query(query, ussera);
-    var count = qq.rows[0].count;
-    var res = parseInt(count);
-    if (res != 0) {
-      //console.log("Mas de uno" , res);
-      return false;
-    } else {
-      //console.log("Resultado:" , res);
-      return true;
-    }
-  } catch (e) {
-    console.log("error en el verUsser", e);
   }
 };
 

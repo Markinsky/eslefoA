@@ -13,9 +13,36 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, usser, pass, done) => {
-      console.log("req", req.body);
-      console.log("usser", usser);
-      console.log("pass", pass);
+      try {
+        const arra = [usser];
+        const password = [pass];
+        const queryRows =
+          "SELECT count(*) FROM login WHERE usser = $1 AND funcion = 'aspirante'";
+        const qq = await pool.query(queryRows, arra);
+        var count = qq.rows[0].count;
+        var res = parseInt(count);
+        if (res > 0) {
+          const queryPass =
+            "SELECT pass FROM login WHERE usser = $1 AND funcion = 'aspirante'";
+          const bb = await pool.query(queryPass, password);
+          const passRes = bb.rows[0];
+          console.log("Entra", passRes);
+          const user = usser;
+          const validPass = await helpers.matchPass(pass, passRes);
+          console.log("VALID PASS", validPass);
+          if (validPass) {
+            done(null, user);
+          } else {
+            console.log("ERROR PASS");
+            done(null, false);
+          }
+        } else {
+          console.log("ERROR USSER");
+          return done(null, false);
+        }
+      } catch (e) {
+        console.log("Error signing" + e);
+      }
     }
   )
 );

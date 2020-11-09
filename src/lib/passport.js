@@ -24,20 +24,17 @@ passport.use(
         if (res > 0) {
           const queryPass =
             "SELECT pass FROM login WHERE usser = $1 AND funcion = 'aspirante'";
-          const bb = await pool.query(queryPass, password);
-          const passRes = bb.rows[0];
-          console.log("Entra", passRes);
-          const user = usser;
+          const bb = await pool.query(queryPass, arra);
+          const passRes = bb.rows[0].pass;
           const validPass = await helpers.matchPass(pass, passRes);
-          console.log("VALID PASS", validPass);
           if (validPass) {
-            done(null, user);
+            done(null, usser);
           } else {
-            console.log("ERROR PASS");
+            req.flash("error", "Error contraseña");
             done(null, false);
           }
         } else {
-          console.log("ERROR USSER");
+          req.flash("error", "Error usuario");
           return done(null, false);
         }
       } catch (e) {

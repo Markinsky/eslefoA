@@ -33,7 +33,6 @@ app.engine(
 app.set("view engine", ".hbs");
 
 //Midleware
-
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -55,6 +54,11 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  app.locals.success = req.flash("success");
+  app.locals.error = req.flash("error");
+  next();
+});
 //Rutas
 app.use(require("./routes/"));
 app.use(require("./routes/authentication"));

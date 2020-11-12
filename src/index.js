@@ -50,14 +50,15 @@ app.use(
     secret: "usserSession",
     saveUninitialized: false,
     resave: false,
-    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
+    //cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
   })
 );
 
 app.use((req, res, next) => {
+  app.locals.user = req.user;
   app.locals.success = req.flash("success");
   app.locals.error = req.flash("error");
-  app.locals.user = req.user;
+  console.log("Req user", req.user);
   next();
 });
 //Rutas

@@ -110,18 +110,20 @@ passport.use(
 
 passport.serializeUser((user, done) => {
   try {
-    console.log("ola", user);
-    done(null, user);
+    console.log("ola", user.id_aspirante);
+    done(null, user.id_aspirante);
   } catch (e) {
     console.log("Error serial ", e);
   }
 });
 
-passport.deserializeUser(async (id_login, done) => {
+passport.deserializeUser(async (id_aspirante, done) => {
   try {
-    const query = "SELECT * FROM login WHERE usser = $1";
-    const data = [id_login];
-    const res = pool.query(query, data);
+    console.log("ENTRA A DES");
+    const query = "SELECT * FROM login WHERE id_aspirante = $1";
+    const data = [id_aspirante];
+    const res = await pool.query(query, data);
+    console.log("RES", res[0]);
     done(null, res[0]);
   } catch (e) {
     console.log("Error en Desereialize", e);

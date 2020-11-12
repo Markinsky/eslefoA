@@ -23,12 +23,19 @@ passport.use(
         var res = parseInt(count);
         if (res > 0) {
           const queryPass =
-            "SELECT pass FROM login WHERE usser = $1 AND funcion = 'aspirante'";
+            "SELECT * FROM login WHERE usser = $1 AND funcion = 'aspirante'";
           const bb = await pool.query(queryPass, arra);
           const passRes = bb.rows[0].pass;
+          const idRes = bb.rows[0].id_aspirante;
+          console.log("id_:ress", idRes);
           const validPass = await helpers.matchPass(pass, passRes);
           if (validPass) {
-            done(null, usser);
+            const stuffy = "SELECT * FROM aspirante WHERE id_aspirante = $1";
+            const ac = [idRes];
+            const ussers = await pool.query(stuffy, ac);
+            const user = ussers.rows[0];
+            console.log("wq", user);
+            done(null, user);
           } else {
             req.flash("error", "Error contraseña");
             done(null, false);
@@ -86,7 +93,7 @@ passport.use(
             const id = await lastID();
             let login = [email, pass, id, funcion];
             const pp =
-              "INSERT INTO login (usser, pass, id, funcion) VALUES ($1, $2, $3, $4)";
+              "INSERT INTO login (usser, pass, id_aspirante, funcion) VALUES ($1, $2, $3, $4)";
             const aa = await pool.query(pp, login);
             const id_login = await getId_login(id);
             return done(null, id_login);
@@ -103,6 +110,7 @@ passport.use(
 
 passport.serializeUser((user, done) => {
   try {
+    console.log("ola", user);
     done(null, user);
   } catch (e) {
     console.log("Error serial ", e);
@@ -167,7 +175,7 @@ var verEmail = async (email) => {
 
 const getId_login = async (ida) => {
   try {
-    const getCode = "SELECT id_login FROM login where id = $1";
+    const getCode = "SELECT id_login FROM login where id_aspirante = $1";
     const id = [ida];
     const qq = await pool.query(getCode, id);
     var gg = qq.rows[0].id_login;

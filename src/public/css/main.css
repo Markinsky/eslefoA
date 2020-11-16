@@ -94,18 +94,6 @@ input[name="r"] {
   display: flex;
 }
 
-.caja {
-  font-family: sans-serif;
-  font-size: 20px;
-  color: #ffffff;
-  background: #18476a;
-  padding-top: 5%;
-  padding-left: 10%;
-  padding-right: 10%;
-  padding-bottom: 5%;
-  cursor: pointer;
-}
-
 .caja:hover {
   background: #023257;
   cursor: pointer;

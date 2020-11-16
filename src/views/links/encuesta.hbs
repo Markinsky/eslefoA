@@ -1,0 +1,48 @@
+<div class = "container p-4">
+    <div class = "row">
+        <div class = "col-md-6 mx-auto">
+            <div class = "card">
+                <div class = "card-header text-center"> 
+                  <h1> Hola, favor de llenar la encuesta</h1>
+                  <h3> ¿Que calificacion le daria en general a la Escuela de lenguas foraneas?</h3>
+                </div>
+                <div class = "card-body cardBack letters">
+             <form action ="#" method="POST">
+             <label> Calificacion:</label>
+            <select class="font-stuffs" id="selectEncuesta" onclick="mostrar()" name="calificacion">
+                <option value=null> -Selecciona- </option>
+                <option value="10"> 10 </option>
+                <option value="9"> 9 </option>
+                <option value="8"> 8 </option>
+                <option value="7"> 7 </option>
+                <option value="6"> 6 </option>
+                <option value="5"> 5 </option>
+                <option value="4"> 4 </option>
+                <option value="3"> 3 </option>
+                <option value="2"> 2 </option>
+                <option value="1"> 1 </option>
+            </select>
+            <div class="oculto">
+                <div>
+                    <label> Por favor escribe en que podemos mejorar:</label>
+                    <input class ="form-control"type="text" id="inputEncuesta" name="respuesta" placeholder="Area a mejorar">
+                    <label>Selecciona que campos podriamos mejorar</label>
+                    <label><input type="checkbox" id="cbox1" value="Instalaciones">
+                        Instalaciones</label> <br>
+                    <label><input type="checkbox" id="cbox2" value="web"> Pagina web</label> <br>
+                    <label><input type="checkbox" id="cbox3" value="servicios"> Servicios</label> <br>
+                    <label><input type="checkbox" id="cbox4" value="contacto"> Contacto</label>
+                </div>
+
+            </div>
+            <br>
+            <div class = "text-center">
+                 <input class="normalButton" type="submit" value="Enviar" id="subirEncuesta">
+            </div>
+           
+                    </form>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>

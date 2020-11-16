@@ -343,3 +343,28 @@ input[name="r"] {
   width: 100%;
   height: 100%;
 }
+
+.cardColor {
+  background: #18476a;
+}
+
+.cardColor p {
+  color: white;
+  font-size: 20px;
+  margin-top: 2%;
+}
+
+.normalButton {
+  margin-top: 1%;
+  margin-bottom: 1%;
+  background-color: rgb(155, 11, 40);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  font-size: 20px;
+}
+
+.normalButton:hover {
+  background: rgb(130, 172, 47);
+  color: black;
+}

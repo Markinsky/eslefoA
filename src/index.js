@@ -50,7 +50,7 @@ app.use(
     secret: "usserSession",
     saveUninitialized: false,
     resave: false,
-    //cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
   })
 );
 

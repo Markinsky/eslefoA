@@ -12,10 +12,9 @@ passport.use(
       passwordField: "pass",
       passReqToCallback: true,
     },
-    async (req, usser, pass, done) => {
+    async (req, email, pass, done) => {
       try {
-        const arra = [usser];
-        const password = [pass];
+        const arra = [email];
         const queryRows =
           "SELECT count(*) FROM login WHERE usser = $1 AND funcion = 'aspirante'";
         const qq = await pool.query(queryRows, arra);
@@ -27,7 +26,6 @@ passport.use(
           const bb = await pool.query(queryPass, arra);
           const passRes = bb.rows[0].pass;
           const idRes = bb.rows[0].id_aspirante;
-          console.log("id_:ress", idRes);
           const validPass = await helpers.matchPass(pass, passRes);
           if (validPass) {
             const stuffy = "SELECT * FROM aspirante WHERE id_aspirante = $1";
@@ -35,10 +33,10 @@ passport.use(
             const ussers = await pool.query(stuffy, ac);
             const user = ussers.rows[0];
             console.log("wq", user);
-            done(null, user);
+            return done(null, user);
           } else {
             req.flash("error", "Error contraseña");
-            done(null, false);
+            return done(null, false);
           }
         } else {
           req.flash("error", "Error usuario");
@@ -110,26 +108,35 @@ passport.use(
 
 passport.serializeUser((user, done) => {
   try {
-    console.log("ola", user.id_aspirante);
-    done(null, user.id_aspirante);
+    var id = parseInt(user.id_aspirante);
+    console.log("ID", id);
+    return done(null, id);
   } catch (e) {
     console.log("Error serial ", e);
   }
 });
 
-passport.deserializeUser(async (id_aspirante, done) => {
+passport.deserializeUser((id_aspirante, done) => {
   try {
-    console.log("ENTRA A DES");
-    const query = "SELECT * FROM login WHERE id_aspirante = $1";
-    const data = [id_aspirante];
-    const res = await pool.query(query, data);
-    console.log("RES", res[0]);
-    done(null, res[0]);
+    const rea = aspirante(id_aspirante);
+    return done(null, rea);
   } catch (e) {
     console.log("Error en Desereialize", e);
   }
 });
 
+const aspirante = async (id) => {
+  try {
+    console.log("HOLA");
+    const query = "SELECT * FROM aspirante WHERE id_aspirante = $1";
+    const data = [id];
+    const res = await pool.query(query, data);
+    console.log("RES", res.rows[0]);
+    return res.rows[0];
+  } catch (e) {
+    console.log("Error aspirante", e);
+  }
+};
 const lastID = async (req, res) => {
   try {
     const queryGet = await pool.query(

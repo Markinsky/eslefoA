@@ -32,4 +32,24 @@ router.get("/rules", (req, res) => {
 router.get("/encuesta", (req, res) => {
   res.render("links/encuesta");
 });
+
+router.post("/encuesta", async (req, res) => {
+  try {
+    const calificacion = req.body.calificacion;
+    const respuesta = req.body.respuesta || "nulo";
+    const check = req.body.check || "nulo";
+    if (calificacion) {
+      req.flash("error", "Error!");
+      return null;
+    } else {
+      const data = [calificacion, respuesta, check];
+      const query =
+        "INSERT INTO encuestainbox (calificacion, respuesta, checkbox) VALUES ($1, $2, $3)";
+      const res = await pool.query(query, data);
+    }
+  } catch (e) {
+    console.log("Error post encuesta", e);
+  }
+});
+
 module.exports = router;

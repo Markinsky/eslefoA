@@ -7,7 +7,7 @@
                   <h3> ¿Que calificacion le daria en general a la Escuela de lenguas foraneas?</h3>
                 </div>
                 <div class = "card-body cardBack letters">
-             <form action ="#" method="POST">
+             <form action ="/links/encuesta" method="POST">
              <label> Calificacion:</label>
             <select class="font-stuffs" id="selectEncuesta" onclick="mostrar()" name="calificacion">
                 <option value=null> -Selecciona- </option>
@@ -27,11 +27,11 @@
                     <label> Por favor escribe en que podemos mejorar:</label>
                     <input class ="form-control"type="text" id="inputEncuesta" name="respuesta" placeholder="Area a mejorar">
                     <label>Selecciona que campos podriamos mejorar</label>
-                    <label><input type="checkbox" id="cbox1" value="Instalaciones">
+                    <label><input name = "check" type="checkbox" id="cbox1" value="Instalaciones">
                         Instalaciones</label> <br>
-                    <label><input type="checkbox" id="cbox2" value="web"> Pagina web</label> <br>
-                    <label><input type="checkbox" id="cbox3" value="servicios"> Servicios</label> <br>
-                    <label><input type="checkbox" id="cbox4" value="contacto"> Contacto</label>
+                    <label><input name = "check" type="checkbox" id="cbox2" value="web"> Pagina web</label> <br>
+                    <label><input name = "check" type="checkbox" id="cbox3" value="servicios"> Servicios</label> <br>
+                    <label><input name = "check" type="checkbox" id="cbox4" value="contacto"> Contacto</label>
                 </div>
 
             </div>

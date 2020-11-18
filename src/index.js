@@ -5,6 +5,7 @@ const path = require("path");
 const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
+const bodyParser = require("body-parser");
 
 var pg = require("pg");
 var pgSession = require("connect-pg-simple")(session);

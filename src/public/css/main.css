@@ -273,12 +273,15 @@ input[name="r"] {
 
 .removeList {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
+  font-size: 15px;
 }
 
 .removeList i {
+  margin: 0;
+  padding: 0;
   color: white;
+  font-weight: lighter;
+  font-family: Arial;
 }
 
 .margin3 {
@@ -293,7 +296,7 @@ input[name="r"] {
 
 .normalFont {
   font-family: Arial, Helvetica, sans-serif;
-  font-weight: normal;
+  font-size: 18px;
 }
 
 .footer-links {

@@ -48,7 +48,7 @@ app.use(
       pool: pgPool, // Connection pool
       tableName: "cookie", // Use another table-name than the default "session" one
     }),
-    secret: "usserSession",
+    secret: "user",
     saveUninitialized: false,
     resave: false,
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days

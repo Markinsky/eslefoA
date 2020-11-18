@@ -33,7 +33,7 @@ passport.use(
             const ussers = await pool.query(stuffy, ac);
             const user = ussers.rows[0];
             console.log("wq", user);
-            return done(null, user);
+            return done(null, user.id_aspirante);
           } else {
             req.flash("error", "Error contraseña");
             return done(null, false);
@@ -106,11 +106,9 @@ passport.use(
   )
 );
 
-passport.serializeUser((user, done) => {
+passport.serializeUser((id_aspirante, done) => {
   try {
-    var id = parseInt(user.id_aspirante);
-    console.log("ID", id);
-    return done(null, id);
+    return done(null, id_aspirante);
   } catch (e) {
     console.log("Error serial ", e);
   }

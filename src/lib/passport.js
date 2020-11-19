@@ -54,11 +54,11 @@ passport.serializeUser((user, done) => {
   done(null, user.id_aspirante);
 });
 
-passport.deserializeUser(async (user, done) => {
-  console.log("TRUNK");
+passport.deserializeUser(async (id, done) => {
+  console.log("TRUNK", id);
   const sel = await pool.query(
     "SELECT * FROM aspirante WHERE id_aspirante = $1",
-    [user.id_aspirante]
+    [id]
   );
   console.log("row", sel.rows[0]);
   done(null, sel.rows[0]);

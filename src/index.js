@@ -9,11 +9,14 @@ const bodyParser = require("body-parser");
 
 var pg = require("pg");
 var pgSession = require("connect-pg-simple")(session);
+var { pool } = require("./keys");
 
 var pgPool = new pg.Pool({
+  host: "localhost",
   user: "postgres",
   password: "7734",
   database: "eslefodb",
+  port: 5432,
 });
 
 //init
@@ -39,22 +42,17 @@ app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
 
 //Global
 app.use(
   session({
-    store: new pgSession({
-      pool: pgPool, // Connection pool
-      tableName: "cookie", // Use another table-name than the default "session" one
-    }),
-    secret: "secretoso",
-    saveUninitialized: false,
+    secret: "SECRETO",
     resave: false,
-    cookie: { secure: true },
+    saveUninitialized: false,
   })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use((req, res, next) => {
   app.locals.user = req.user;

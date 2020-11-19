@@ -234,7 +234,7 @@ input[name="r"] {
   outline: none;
   cursor: pointer;
   margin-top: 3%;
-  background: #d72921;
+  background: #103b5e;
   color: white;
   text-align: left;
   transition: background 0.2s;
@@ -247,7 +247,7 @@ input[name="r"] {
 }
 
 .accordion__button--active {
-  background: #555555;
+  background: #0a1f30;
 }
 .accordion__button--active::after {
   content: "\25b4";
@@ -259,7 +259,7 @@ input[name="r"] {
   transition: max-height 0.2s;
   padding: 0 15px;
   font-family: sans-serif;
-  background: #555555;
+  background: #0a1f30;
 }
 
 .para p {

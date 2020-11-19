@@ -6,7 +6,7 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
 const bodyParser = require("body-parser");
-
+var helpers = require("handlebars-helpers")(["eq"]);
 var pg = require("pg");
 var pgSession = require("connect-pg-simple")(session);
 var { pool } = require("./keys");

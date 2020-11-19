@@ -27,6 +27,7 @@
     "express-pg-session": "^1.1.0",
     "express-session": "^1.17.1",
     "express-validator": "^6.6.1",
+    "handlebars-helpers": "^0.10.0",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4",

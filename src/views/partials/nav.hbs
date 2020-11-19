@@ -4,13 +4,18 @@
             <img src="/img/icon.png" />
         </a>
         <ul class="navbar-nav mr-auto">
+            {{#eq user.funcion "aspirante"}}
+                        <li class="nav-item">
+                <a class="nav-link navbar-custom" href="/crud/uuu.html">PITO</a>
+            </li>
+
+            {{/eq}}
             <li class="nav-item">
                 <a class="nav-link navbar-custom" href="/crud/uuu.html">Cursos</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link navbar-custom" href="/crud/uuu.html">Videos</a>
             </li>
-
             <li class="nav-item">
                 <a class="nav-link navbar-custom" href="/links/faq">Preguntas frecuentes</a>
             </li>
@@ -37,3 +42,4 @@
         </ul>
     </nav>
 </div>
+

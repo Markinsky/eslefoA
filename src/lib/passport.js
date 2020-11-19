@@ -114,7 +114,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async (id, done) => {
   console.log("TRUNK", id);
   const sel = await pool.query(
-    "SELECT * FROM aspirante WHERE id_aspirante = $1",
+    "SELECT * FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = $1 AND x.id_aspirante = $1",
     [id]
   );
   console.log("row", sel.rows[0]);

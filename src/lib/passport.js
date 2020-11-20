@@ -62,14 +62,23 @@ passport.use(
               const funcion = "aspirante";
               const codigo = await newCode();
               const insertAspirante = await pool.query(
-                "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo, codigo) values ($1, $2, $3, $4, $5, $6, $7)",
-                [nombre, apPat, apMat, nacimiento, numero, email, codigo]
+                "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,correo, codigo, funcion) values ($1, $2, $3, $4, $5, $6, $7, $8)",
+                [
+                  nombre,
+                  apPat,
+                  apMat,
+                  nacimiento,
+                  numero,
+                  email,
+                  codigo,
+                  funcion,
+                ]
               );
               if (insertAspirante.rowCount > 0) {
                 const id = await lastID();
                 const insertLogin = await pool.query(
-                  "INSERT INTO login (usser, pass, id_aspirante, funcion) VALUES ($1, $2, $3, $4)",
-                  [email, pass, id, funcion]
+                  "INSERT INTO login (usser, pass, id_aspirante) VALUES ($1, $2, $3)",
+                  [email, pass, id]
                 );
                 if (insertLogin.rowCount > 0) {
                   const last = await lastID();

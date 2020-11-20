@@ -2,13 +2,15 @@
     <nav class="navbar navbar-expand-lg navbar-back">
         <a class="navbar-brand" href="/">
             <img src="/img/icon.png" />
-        </a>
-        <ul class="navbar-nav mr-auto">
+        </a>  
             {{#if (eq user.funcion "aspirante")}}
-                        <li class="nav-item">
+              <ul class="navbar-nav mr-auto">
+             <li class="nav-item">
                 <a class="nav-link navbar-custom" href="/crud/uuu.html">PITO</a>
             </li>
+            </ul>   
             {{else}}
+            <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link navbar-custom" href="/crud/uuu.html">Cursos</a>
             </li>
@@ -26,19 +28,25 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link navbar-custom" href="/links/aboutus">Acerca de nosotros</a>
-            </li>
+            </li> 
+            </ul>
     {{/if}}
-
-        </ul>
-        <ul class="navbar-nav ml-auto">
+        {{#if user}}
+         <ul class="navbar-nav ml-auto">
+               <li class="nav-item">
+                <a class="nav-link navbar-custom " href="/logout"> Salir</a>
+            </li>
+            </ul>
+        {{else}}
+            <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link navbar-custom" href="/signin"> Inicia sesion </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link navbar-custom " href="/signup"> Registrate </a>
-
             </li>
         </ul>
+        {{/if}}
     </nav>
 </div>
 

@@ -6,7 +6,6 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
 const bodyParser = require("body-parser");
-var helpers = require("handlebars-helpers")(["eq"]);
 var pg = require("pg");
 var pgSession = require("connect-pg-simple")(session);
 var { pool } = require("./keys");
@@ -32,7 +31,15 @@ app.engine(
     layoutsDir: path.join(app.get("views"), "layouts"),
     partialsDir: path.join(app.get("views"), "partials"),
     extname: ".hbs",
-    helpers: require("./lib/handlebars"),
+    helpers: {
+      eq(dato, funcion) {
+        if (dato == funcion) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    },
   })
 );
 app.set("view engine", ".hbs");

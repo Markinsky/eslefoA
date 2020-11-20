@@ -4,12 +4,11 @@
             <img src="/img/icon.png" />
         </a>
         <ul class="navbar-nav mr-auto">
-            {{#eq user.funcion "aspirante"}}
+            {{#if (eq user.funcion "aspirante")}}
                         <li class="nav-item">
                 <a class="nav-link navbar-custom" href="/crud/uuu.html">PITO</a>
             </li>
-
-            {{/eq}}
+            {{else}}
             <li class="nav-item">
                 <a class="nav-link navbar-custom" href="/crud/uuu.html">Cursos</a>
             </li>
@@ -28,7 +27,7 @@
             <li class="nav-item">
                 <a class="nav-link navbar-custom" href="/links/aboutus">Acerca de nosotros</a>
             </li>
-
+    {{/if}}
 
         </ul>
         <ul class="navbar-nav ml-auto">

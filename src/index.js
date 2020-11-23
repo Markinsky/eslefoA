@@ -71,6 +71,9 @@ app.use((req, res, next) => {
 //Rutas
 app.use(require("./routes/"));
 app.use(require("./routes/authentication"));
+app.use(require("./routes/aspirante"));
+app.use(require("./routes/maestro"));
+app.use(require("./routes/admin"));
 app.use("/links", require("./routes/links"));
 
 //Public

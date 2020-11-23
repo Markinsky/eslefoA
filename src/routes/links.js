@@ -35,10 +35,11 @@ router.get("/encuesta", (req, res) => {
 
 router.post("/encuesta", async (req, res) => {
   try {
-    const calificacion = req.body.calificacion;
+    const calificacion = req.body.calificacion || "nulo";
     const respuesta = req.body.respuesta || "nulo";
     const check = req.body.check || "nulo";
-    if (calificacion) {
+    console.log("Cal", calificacion);
+    if (calificacion || calificacion === "nulo") {
       req.flash("error", "Error!");
       res.redirect("/links/encuesta");
     } else {

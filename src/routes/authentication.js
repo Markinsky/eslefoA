@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const { isLoggedIn } = require("../lib/auth");
 
 router.get("/signup", (req, res) => {
   res.render("auth/register");
@@ -27,7 +28,7 @@ router.post("/signin", (req, res, next) => {
   })(req, res, next);
 });
 
-router.get("/profile", (req, res) => {
+router.get("/profile", isLoggedIn, (req, res) => {
   res.render("profile");
 });
 

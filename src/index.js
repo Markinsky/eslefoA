@@ -65,7 +65,7 @@ app.use((req, res, next) => {
   app.locals.user = req.user;
   app.locals.success = req.flash("success");
   app.locals.error = req.flash("error");
-  console.log("Req user", req.user);
+  //console.log("Req user", req.user);
   next();
 });
 //Rutas

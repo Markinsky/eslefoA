@@ -1,0 +1,47 @@
+<script>
+    const pool = require("../db");
+    function selfmade() =>{
+         const self = pool.query("SELECT * FROM aspirante WHERE funcion = 'maestro'");
+         console.log("SELFMADE", selfmade.rows[0].nombre)
+         return self.rows[0].nombre;
+    }
+   
+
+    </script>
+<div class = "container p-4">
+    <div class = "row">
+        <div class = "col-md-6 mx-auto">
+            <div class = "card">
+                <div class = "card-header text-center"> 
+                  <h1> Crear nuevo curso </h1>
+                </div>
+                <div class = "card-body cardBack letters">
+             <form action ="/nuevocurso" method="POST">
+                 <label>Nombre del curso: </label>
+                 <input type="text" placeholder="Nombre del curso" class="form-control" name="nombre" required="required" />
+                <label>Codigo:</label>
+                 <input type="email"  placeholder="Codigo" class="form-control" name="email" required="required" />
+                <label>Maestro:</label>
+                 <select class="font-stuffs" id="selectEncuesta" name="calificacion">
+                     <option value="10"> <script> selfmade()</script> </option>
+                 </select>
+                  <label>Vacantes:</label>
+                 <input type="number" placeholder="Numero de vacantes" class="form-control" name="vacantes" required="required" />  
+                  <label>Horario:</label>
+                 <input type="text" placeholder="Horario" class="form-control" name="horario" required="required" />
+                  <label>Dias:</label>
+                 <input type="text" placeholder="Dias" class="form-control" name="dias" required="required" />
+                  <label>Descripcion:</label>
+                 <input type="text" placeholder="Descripcion" class="form-control" name="descripcion" required="required" />
+                    <br>
+            <div class = "text-center">
+                 <input class="normalButton" type="submit" value="Enviar" id="subirEncuesta">
+            </div>
+                       </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+

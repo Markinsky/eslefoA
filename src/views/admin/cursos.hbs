@@ -22,9 +22,11 @@
                 <label>Codigo:</label>
                  <input type="email"  placeholder="Codigo" class="form-control" name="email" required="required" />
                 <label>Maestro:</label>
-                 <select class="font-stuffs" id="selectEncuesta" name="calificacion" onclick="selfmade()">
-                     <option value="">  </option>
-                 </select>
+                <select>
+        {{ for (const i in dropdownVals)  }}
+            <option value="{{= dropdownVals[i].ID }}"> {{= dropdownVals[i].nombre }} </option>
+        {{ } }}
+    </select>
                   <label>Vacantes:</label>
                  <input type="number" placeholder="Numero de vacantes" class="form-control" name="vacantes" required="required" />  
                   <label>Horario:</label>

@@ -11,7 +11,8 @@ router.get("/verasp", async (req, res) => {
     "SELECT * FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = x.id_aspirante AND x.id_aspirante = l.id_aspirante AND funcion = 'aspirante'"
   );
   const hola = ver.rows;
-  console.log(hola);
-  res.render("admin/verp", { hola });
+  const hhhh = JSON.stringify(hola);
+  //console.log("hhh", hhhh);
+  res.render("admin/verp", { hola, strings: hhhh });
 });
 module.exports = router;

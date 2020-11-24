@@ -39,6 +39,9 @@ app.engine(
           return false;
         }
       },
+      json(content) {
+        return JSON.stringify(content);
+      },
     },
   })
 );

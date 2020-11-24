@@ -1,0 +1,39 @@
+<div class="contaier p-4">
+<div class = "row">
+    <table class = "table table-bordered table-striped" >
+          <thead class="thead table-Color">
+              <tr>
+                  <th> Nombre</th>
+                  <th> Apellido paterno</th>
+                  <th> Apellido Materno</th>
+                  <th> Fecha de nacimiento</th>
+                  <th> Numero</th>
+                  <th> Codigo</th>
+                  <th> Email </th>
+                  <th>Acciones</th>
+              </tr>
+          </thead>
+          <tbody>
+              {{#each hola}}
+              <tr>
+                <td>{{nombre}}</td>
+                <td>{{appat}}</td>
+                <td>{{apmat}}</td>
+                <td>{{birthday}}</td>
+                <td>{{numero}}</td>
+                <td>{{codigo}}</td>
+                <td>{{usser}}</td>
+                <td>       
+            <a href="" class = "btn btn-success">
+            <i class = "fas fa-user-edit"></i>
+            </a>
+             <a href="" class = "btn btn-danger">
+              <i class = "far fa-trash-alt" ></i>
+              </a>
+            </td>
+              </tr>
+              {{/each}}
+          </tbody>
+    </table>
+</div>
+</div>

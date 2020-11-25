@@ -2,9 +2,20 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../db");
 
-//router.get("/newcurso", (req, res) => {
-//  res.render("admin/cursos");
-//});
+router.get("/newcurso", async (req, res) => {
+  const master = await pool.query(
+    "SELECT nombre, appat from aspirante WHERE funcion = 'maestro';"
+  );
+  const maestro = master.rows[0].nombre;
+  var out = [];
+  for (var i = 0; i < master.rowCount; i++) {
+    var nombre = master.rows[i].nombre;
+    var apellido = master.rows[i].appat;
+    out[i] = nombre + " " + apellido;
+    console.log(out[i]);
+  }
+  res.render("admin/cursos");
+});
 
 router.get("/verasp", async (req, res) => {
   const ver = await pool.query(

@@ -1,8 +1,3 @@
-<script> 
-window.onload = formatt();
-
- <{{!}}/script>
-
 <div class="contaier p-4">
 <div class = "row">
     <table class = "table table-bordered table-striped" >
@@ -24,7 +19,7 @@ window.onload = formatt();
                 <td>{{nombre}}</td>
                 <td>{{appat}}</td>
                 <td>{{apmat}}</td>
-                <td></td>
+                <td>{{{#formatdate birthday}}}</td>
                 <td>{{numero}}</td>
                 <td>{{codigo}}</td>
                 <td>{{usser}}</td>
@@ -47,17 +42,3 @@ window.onload = formatt();
 
 </div>
 </div>
-
-<script>   
- 
-            function format(birthday) =>{
-                          const fr = birthday;
-                    console.log("fr", fr););
-                    return fr;
-    }
-    function formatt() =>{
-        console.log("SASAGEYO");
-        return "sasageyo";
-    }
-    
- <{{!}}/script>

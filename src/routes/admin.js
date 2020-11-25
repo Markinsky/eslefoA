@@ -12,9 +12,16 @@ router.get("/newcurso", async (req, res) => {
     var nombre = master.rows[i].nombre;
     var apellido = master.rows[i].appat;
     out[i] = nombre + " " + apellido;
-    console.log(out[i]);
   }
-  res.render("admin/cursos");
+  var jsonArray = JSON.parse(JSON.stringify(out));
+  res.render("admin/cursos", { maestros: jsonArray });
+});
+
+router.post("/newcurso", async (req, res) => {
+  try {
+  } catch (e) {
+    console.log("ERROR NEW CURSO", e);
+  }
 });
 
 router.get("/verasp", async (req, res) => {
@@ -22,8 +29,6 @@ router.get("/verasp", async (req, res) => {
     "SELECT * FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = x.id_aspirante AND x.id_aspirante = l.id_aspirante AND funcion = 'aspirante'"
   );
   const hola = ver.rows;
-  const hhhh = JSON.stringify(hola);
-  //console.log("hhh", hhhh);
-  res.render("admin/verp", { hola, strings: hhhh });
+  res.render("admin/verp", { hola });
 });
 module.exports = router;

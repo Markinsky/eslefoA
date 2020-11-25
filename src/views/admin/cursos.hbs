@@ -16,16 +16,19 @@
                   <h1> Crear nuevo curso </h1>
                 </div>
                 <div class = "card-body cardBack letters">
-             <form action ="/nuevocurso" method="POST">
+             <form action ="/newcurso" method="POST" autocomplete="off">
                  <label>Nombre del curso: </label>
                  <input type="text" placeholder="Nombre del curso" class="form-control" name="nombre" required="required" />
                 <label>Codigo:</label>
                  <input type="email"  placeholder="Codigo" class="form-control" name="email" required="required" />
                 <label>Maestro:</label>
-                <select>
-            <option> </option>
-
+                <select class="font-stuffs" id="maestro" name="maestro"> 
+                    <option value = null> -Selecciona maestro- </option>
+                    {{#each maestros}}
+                    <option value = {{this}}>{{this}}</option>
+                    {{/each}}
                    </select>
+                    <br>
                   <label>Vacantes:</label>
                  <input type="number" placeholder="Numero de vacantes" class="form-control" name="vacantes" required="required" />  
                   <label>Horario:</label>
@@ -36,7 +39,7 @@
                  <input type="text" placeholder="Descripcion" class="form-control" name="descripcion" required="required" />
                     <br>
             <div class = "text-center">
-                 <input class="normalButton" type="submit" value="Enviar" id="subirEncuesta">
+                 <input class="normalButton" type="submit" value="Enviar" id="newcurso">
             </div>
                        </div>
                     </form>

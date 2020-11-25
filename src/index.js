@@ -39,8 +39,9 @@ app.engine(
           return false;
         }
       },
-      json(content) {
-        return JSON.stringify(content);
+      formatdate(date) {
+        console.log("date", date);
+        return date;
       },
     },
   })

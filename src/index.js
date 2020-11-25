@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 var pg = require("pg");
 var pgSession = require("connect-pg-simple")(session);
 var { pool } = require("./keys");
+var moment = require("moment");
 
 var pgPool = new pg.Pool({
   host: "localhost",
@@ -39,9 +40,9 @@ app.engine(
           return false;
         }
       },
-      formatdate(date) {
-        console.log("date", date);
-        return date;
+      formatdate: function (date, format) {
+        var mmnt = moment(date);
+        return mmnt.format(format);
       },
     },
   })

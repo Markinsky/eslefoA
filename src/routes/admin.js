@@ -31,4 +31,12 @@ router.get("/verasp", async (req, res) => {
   const hola = ver.rows;
   res.render("admin/verp", { hola });
 });
+
+router.get("/adminpreg", async (req, res) => {
+  const pregjson = await pool.query(
+    "SELECT * FROM preguntasinbox WHERE estado = 'pendiente';"
+  );
+  const preg = pregjson.rows;
+  res.render("admin/preg", { preg });
+});
 module.exports = router;

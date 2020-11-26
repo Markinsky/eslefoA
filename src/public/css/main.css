@@ -355,3 +355,12 @@ input[name="r"] {
   background: rgb(130, 172, 47);
   color: black;
 }
+
+.table-Color {
+  background: #174a74;
+  color: white;
+}
+
+.table-bordered {
+  color: black;
+}

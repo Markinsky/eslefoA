@@ -1,5 +1,11 @@
 <div class="contaier p-4">
-<div class = "row">
+    <div class = "row">
+        <a href="/verm/add" class = "btn btn-success">
+              <i class = "fas fa-user-plus" ></i>
+            <label> Agregar nuevo maestro</label>
+        </a>
+    </div>
+<div class = "row p-2">
     <table class = "table table-bordered table-striped" >
           <thead class="table-Color">
               <tr>
@@ -8,7 +14,6 @@
                   <th> Apellido Materno</th>
                   <th> Fecha de nacimiento</th>
                   <th> Numero</th>
-                  <th> Codigo</th>
                   <th> Email </th>
                   <th>Acciones</th>
               </tr>
@@ -21,9 +26,7 @@
                 <td>{{apmat}}</td>
                 <td>{{{formatdate birthday "MM-DD-YYYY"}}} </td>
                 <td>{{numero}}</td>
-                <td>{{codigo}}</td>
                 <td>{{usser}}</td>
-               
                 <td>       
             <a href="/verasp/edit/{{id_aspirante}}" class = "btn btn-success">
             <i class = "fas fa-user-edit"></i>

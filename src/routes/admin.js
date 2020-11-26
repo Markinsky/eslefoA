@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../db");
 
+//Cursos
 router.get("/newcurso", async (req, res) => {
   const master = await pool.query(
     "SELECT nombre, appat from aspirante WHERE funcion = 'maestro';"
@@ -24,6 +25,7 @@ router.post("/newcurso", async (req, res) => {
   }
 });
 
+//Aspirante
 router.get("/verasp", async (req, res) => {
   const ver = await pool.query(
     "SELECT * FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = x.id_aspirante AND x.id_aspirante = l.id_aspirante AND funcion = 'aspirante'"
@@ -56,6 +58,20 @@ router.post("/verasp/edit/:id_aspirante", async (req, res) => {
   res.redirect("/verasp");
 });
 
+router.get("/verasp/drop/:id_aspirante", async (req, res) => {
+  try {
+    const { id_aspirante } = req.params;
+    const dropy = await pool.query(
+      "DELETE FROM aspirante WHERE id_aspirante = $1",
+      [id_aspirante]
+    );
+    req.flash("success", "Borrado con exito");
+    res.redirect("/verasp");
+  } catch (e) {
+    console.log("Error drop", e);
+  }
+});
+//Preguntas
 router.get("/adminpreg", async (req, res) => {
   const pregjson = await pool.query(
     "SELECT * FROM preguntasinbox WHERE estado = 'pendiente';"
@@ -63,4 +79,70 @@ router.get("/adminpreg", async (req, res) => {
   const preg = pregjson.rows;
   res.render("admin/preg", { preg });
 });
+
+//Maestros
+router.get("/verm", async (req, res) => {
+  const ver = await pool.query(
+    "SELECT * FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = x.id_aspirante AND x.id_aspirante = l.id_aspirante AND funcion = 'maestro'"
+  );
+  const hola = ver.rows;
+  res.render("admin/verm", { hola });
+});
+
+router.get("/verm/add", (req, res) => {
+  res.render("admin/vermad");
+});
+
+router.post("/vermad", async (req, res) => {
+  try {
+    const {
+      nombre,
+      apPat,
+      apMat,
+      nacimiento,
+      numero,
+      email,
+      contra,
+    } = req.body;
+    const codigo = await newCode();
+    const qAspira = await pool.query(
+      "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,codigo, funcion) values ($1, $2, $3, $4, $5, $6, 'maestro')",
+      [nombre, apPat, apMat, nacimiento, numero, codigo]
+    );
+    if (qAspira.rowCount > 0) {
+      const id = await lastID();
+      const qLogin = await pool.query(
+        "INSERT INTO login (usser, pass, id_aspirante) VALUES ($1, $2, $3)",
+        [email, contra, id]
+      );
+      if (qLogin.rowCount > 0) {
+        req.flash("success", "Nuevo maestro agregado correctamente");
+        res.redirect("/verm");
+      } else {
+        req.flash("error", "Error login");
+        res.redirect("/verm");
+      }
+    } else {
+      req.flash("error", "Error aspirante");
+      res.redirect("/verm");
+    }
+  } catch (e) {
+    console.log("ERRRO vermad", e);
+  }
+});
+
+//Extras
+const newCode = async (req, res) => {
+  try {
+    const getCode = await pool.query(
+      "SELECT codigo from aspirante ORDER BY id_aspirante DESC LIMIT 1"
+    );
+    var count = getCode.rows[0].codigo;
+    var sum = parseInt(count);
+    var code = sum + 1;
+    return code;
+  } catch (e) {
+    console.log("error newCode", e);
+  }
+};
 module.exports = router;

@@ -32,6 +32,30 @@ router.get("/verasp", async (req, res) => {
   res.render("admin/verp", { hola });
 });
 
+router.get("/verasp/edit/:id_aspirante", async (req, res) => {
+  const { id_aspirante } = req.params;
+  const search = await pool.query(
+    "SELECT l.usser,l.id_aspirante,x.nombre, x.appat, x.apmat, x.numero  FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = $1 AND x.id_aspirante = $1 AND funcion = 'aspirante'",
+    [id_aspirante]
+  );
+  const returnasp = search.rows[0];
+  res.render("admin/editasp", { returnasp });
+});
+
+router.post("/verasp/edit/:id_aspirante", async (req, res) => {
+  const { id_aspirante } = req.params;
+  const { nombre, apPat, apMat, numero, email, nacimiento } = req.body;
+  const editquery = await pool.query(
+    "UPDATE aspirante SET nombre = $1, appat=$2, apmat=$3, birthday=$4,numero=$5 WHERE id_aspirante = $6",
+    [nombre, apPat, apMat, nacimiento, numero, id_aspirante]
+  );
+  const editlogin = await pool.query(
+    "UPDATE login SET usser = $1 WHERE id_aspirante = $2",
+    [email, id_aspirante]
+  );
+  res.redirect("/verasp");
+});
+
 router.get("/adminpreg", async (req, res) => {
   const pregjson = await pool.query(
     "SELECT * FROM preguntasinbox WHERE estado = 'pendiente';"

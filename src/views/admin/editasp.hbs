@@ -1,0 +1,36 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3> Editar aspirante </h3>
+                     <img src="/img/asc.png">
+                </div>
+                <div class="class-body">
+                    <form action="/verasp/edit/{{returnasp.id_aspirante}}" method="POST">
+                        <div class="cardBack letters">
+                            <label> Nombres: </label>
+                            <input class="form-control" type="text" value="{{{returnasp.nombre}}}" name="nombre"
+                                required="required" />
+                            <label>Primer apellido:</label>
+                            <input class="form-control" type="text" value="{{{returnasp.appat}}}"
+                                name="apPat" required="required" />
+                            <label>Segundo apellido: </label>
+                            <input class="form-control" type="text" value="{{{returnasp.apmat}}}"
+                                name="apMat" required="required" />
+                            <label>Fecha de nacimiento:</label>
+                            <input class="form-control" type="date" name="nacimiento" required="required"/>
+                            <label>Numero celular o telefono:</label>
+                            <input class="form-control" type="text" value="{{{returnasp.numero}}}"
+                                name = "numero" required="required" />
+                            <label>Correo electronico:</label>
+                            <input class="form-control" type="email"value="{{{returnasp.usser}}}" name="email"
+                                required="required" />
+                            <input type="submit" class="signButton" value="Registrarse" />
+                        </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

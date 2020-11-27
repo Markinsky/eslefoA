@@ -99,6 +99,42 @@ router.get("/adminpreg", async (req, res) => {
   res.render("admin/preg", { preg });
 });
 
+router.get("/adminpreg/respondidos", async (req, res) => {
+  const pregjson = await pool.query(
+    "SELECT * FROM preguntasinbox WHERE estado = 'respondido'"
+  );
+  const preg = pregjson.rows;
+  res.render("admin/pregres", { preg });
+});
+
+router.get("/adminpreg/drop/:id_pregunta", async (req, res) => {
+  try {
+    const { id_pregunta } = req.params;
+    const dropy = await pool.query(
+      "DELETE FROM preguntasinbox WHERE id_pregunta = $1",
+      [id_pregunta]
+    );
+    req.flash("success", "Borrado con exito");
+    res.redirect("/adminpreg");
+  } catch (e) {
+    console.log("Error drop", e);
+  }
+});
+
+router.get("/adminpreg/res/:id_pregunta", async (req, res) => {
+  try {
+    const { id_pregunta } = req.params;
+    const dropy = await pool.query(
+      "UPDATE preguntasinbox SET estado = 'respondido'  WHERE id_pregunta = $1",
+      [id_pregunta]
+    );
+    req.flash("success", "Pregunta movida a la otra lista");
+    res.redirect("/adminpreg");
+  } catch (e) {
+    console.log("Error drop", e);
+  }
+});
+
 //Maestros
 router.get("/verm", async (req, res) => {
   const ver = await pool.query(
@@ -196,6 +232,38 @@ router.post("/verm/editpass/:id_aspirante", async (req, res) => {
   );
   req.flash("success", "Contraseña cambiada correctamentee");
   res.redirect("/verm");
+});
+
+router.get("/verm/drop/:id_aspirante", async (req, res) => {
+  try {
+    const { id_aspirante } = req.params;
+    const dropy = await pool.query(
+      "DELETE FROM aspirante WHERE id_aspirante = $1",
+      [id_aspirante]
+    );
+    req.flash("success", "Borrado con exito");
+    res.redirect("/verm");
+  } catch (e) {
+    console.log("Error drop", e);
+  }
+});
+
+//Encuestas
+
+router.get("/verencuestas", async (req, res) => {
+  const qEncuesta = await pool.query("SELECT * FROM encuestainbox");
+  const encuesta = qEncuesta.rows;
+  res.render("admin/verencuestas", { encuesta });
+});
+
+router.get("/verncuesta/drop/:id_encuesta", async (req, res) => {
+  const { id_encuesta } = req.params;
+  const dropy = await pool.query(
+    "DELETE FROM encuestainbox WHERE id_encuesta = $1",
+    [id_encuesta]
+  );
+  req.flash("success", "Borrado con exito");
+  res.redirect("/verencuestas");
 });
 
 //Extras

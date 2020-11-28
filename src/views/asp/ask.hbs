@@ -9,9 +9,9 @@
                 <div class = "card-body cardBack letters">
              <form action ="/ask" method="POST">
                  <label>Nombre: </label>
-                 <input type="text" placeholder="Nombre" class="form-control" name="nombre" required="required" />
+                 <input type="text" value="{{user.nombre}}" class="form-control" name="nombre" required="required" disabled/>
                 <label>Email:</label>
-                 <input type="email"  placeholder="Email" class="form-control" name="email" required="required" />
+                 <input type="email" value="{{user.usser}}" class="form-control" name="email" required="required" disabled />
                 <label>¿Cual es tú pregunta?</label>
                  <input type="text" placeholder="Pregunta" class="form-control" name="pregunta" required="required" />
                     <br>

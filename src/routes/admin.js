@@ -6,21 +6,43 @@ const helpers = require("../lib/helpers");
 //Cursos
 router.get("/newcurso", async (req, res) => {
   const master = await pool.query(
-    "SELECT nombre, appat from aspirante WHERE funcion = 'maestro';"
+    "SELECT id_aspirante, nombre, appat from aspirante WHERE funcion = 'maestro';"
   );
-  const maestro = master.rows[0].nombre;
-  var out = [];
-  for (var i = 0; i < master.rowCount; i++) {
-    var nombre = master.rows[i].nombre;
-    var apellido = master.rows[i].appat;
-    out[i] = nombre + " " + apellido;
-  }
-  var jsonArray = JSON.parse(JSON.stringify(out));
-  res.render("admin/cursos", { maestros: jsonArray });
+  const maestro = master.rows;
+  const verNiv = await pool.query("SELECT * FROM nivel");
+  const nivel = verNiv.rows;
+  console.log("NIVEL", nivel);
+  res.render("admin/cursos", { maestro, nivel });
 });
 
 router.post("/newcurso", async (req, res) => {
   try {
+    const {
+      nombre,
+      codigo,
+      maestro,
+      vacantes,
+      horario,
+      dias,
+      descripcion,
+      nivel,
+    } = req.body;
+    const verCodigoCurso = verCodigo(codigo);
+    const verNombreCurso = verNombre(nombre);
+    if (verNombreCurso === true && verCodigoCurso === true) {
+      //SI ES VERDADERO
+    } else {
+      //SI ES FALSO
+    }
+    const queryCurso = await pool.query(
+      "INSERT INTO detalle_curso (horario, dias, descripcion, id_nivel) VALUES ($1, $2, $3, $4)",
+      [horario, dias, descripcion, nivel]
+    );
+    if (queryCurso > 0) {
+    } else {
+      req.flash("error", "Error en detalle Curso");
+    }
+    console.log("Id_aspiante: ", maestro);
   } catch (e) {
     console.log("ERROR NEW CURSO", e);
   }
@@ -310,6 +332,27 @@ var verEmail = async (email) => {
     }
   } catch (e) {
     console.log("error en el verEmail", e);
+  }
+};
+
+var verNombre = async (nombre) => {
+  try {
+    const query = await pool.query(
+      "SELECT count(*) from curso where nombre = $1;",
+      [nombre]
+    );
+    var count = qq.rows[0].count;
+    var res = parseInt(count);
+    console.log(res);
+    if (res != 0) {
+      //console.log("No es igual" , res);
+      return false;
+    } else {
+      //console.log("Si es igual:" , res);
+      return true;
+    }
+  } catch (e) {
+    console.log("Error verNombre", e);
   }
 };
 module.exports = router;

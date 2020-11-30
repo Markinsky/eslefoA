@@ -20,12 +20,12 @@
                  <label>Nombre del curso: </label>
                  <input type="text" placeholder="Nombre del curso" class="form-control" name="nombre" required="required" />
                 <label>Codigo:</label>
-                 <input type="email"  placeholder="Codigo" class="form-control" name="email" required="required" />
+                 <input type="text"  placeholder="Codigo" class="form-control" name="codigo" required="required" />
                 <label>Maestro:</label>
                 <select class="font-stuffs" id="maestro" name="maestro"> 
                     <option value = null> -Selecciona maestro- </option>
-                    {{#each maestros}}
-                    <option value = {{this}}>{{this}}</option>
+                    {{#each maestro}}
+                    <option value = {{id_aspirante}}>{{nombre}} {{appat}}</option>
                     {{/each}}
                    </select>
                     <br>
@@ -38,6 +38,13 @@
                   <label>Descripcion:</label>
                  <input type="text" placeholder="Descripcion" class="form-control" name="descripcion" required="required" />
                     <br>
+                    <label>Nivel:</label>
+                     <select class="font-stuffs" id="nivel" name="nivel"> 
+                    <option value = null> -Selecciona nivel- </option>
+                    {{#each nivel}}
+                    <option value = {{id_nivel}}>{{nivel}}</option>
+                    {{/each}}
+                   </select>
             <div class = "text-center">
                  <input class="normalButton" type="submit" value="Enviar" id="newcurso">
             </div>

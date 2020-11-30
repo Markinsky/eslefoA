@@ -75,4 +75,7 @@ router.post("/askus", async (req, res) => {
   }
 });
 
+router.get("/ubication", async (req, res) => {
+  res.render("links/ubication");
+});
 module.exports = router;

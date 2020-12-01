@@ -39,7 +39,7 @@ router.post("/encuesta", async (req, res) => {
     const respuesta = req.body.respuesta || "nulo";
     const check = req.body.check || "nulo";
     console.log("Cal", calificacion);
-    if (calificacion || calificacion === "nulo") {
+    if (calificacion === "nulo") {
       req.flash("error", "Error!");
       res.redirect("/links/encuesta");
     } else {

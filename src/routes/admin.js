@@ -11,7 +11,6 @@ router.get("/newcurso", async (req, res) => {
   const maestro = master.rows;
   const verNiv = await pool.query("SELECT * FROM nivel");
   const nivel = verNiv.rows;
-  console.log("NIVEL", nivel);
   res.render("admin/cursos", { maestro, nivel });
 });
 
@@ -27,18 +26,22 @@ router.post("/newcurso", async (req, res) => {
       descripcion,
       nivel,
     } = req.body;
-    const verCodigoCurso = verCodigo(codigo);
-    const verNombreCurso = verNombre(nombre);
+    const verCodigoCurso = await verCodigo(codigo);
+    const verNombreCurso = await verNombre(nombre);
     if (verNombreCurso === true && verCodigoCurso === true) {
       //SI ES VERDADERO
       const queryDetalleCurso = await pool.query(
-        "INSERT INTO detalle_curso (horario, dias, descripcion, id_nivel) VALUES ($1, $2, $3, $4)",
+        "INSERT INTO detalles_curso (horario, dias, des, id_nivel) VALUES ($1, $2, $3, $4)",
         [horario, dias, descripcion, nivel]
       );
       if (queryDetalleCurso.rowCount > 0) {
+        const id_Detalles = await idDetalles();
+        console.log("Codigo", codigo);
+        console.log("Maestro", maestro);
+        console.log("detalles", id_Detalles);
         const queryCurso = await pool.query(
-          "INSERT INTO curso (codigo, nombre, id_maestro, estado, vacantes, id_detalles) VALUES ($1, $2, $3, 'abierto', $4, $5)",
-          [codigo, nombre, maestro, vacantes, idDetalles()]
+          "INSERT INTO curso (codigo, nombre, id_maestro, estado, vacantes, id_detalles) VALUES ($1, $2, $3, $4, $5, $6)",
+          [codigo, nombre, maestro, "abierto", vacantes, id_Detalles]
         );
         if (queryCurso.rowCount > 0) {
           req.flash("success", "Curso agregado con exito");
@@ -48,12 +51,12 @@ router.post("/newcurso", async (req, res) => {
           res.redirect("/newcurso");
         }
       } else {
-        req.flash("error", "Error en detalle Curso");
+        req.flash("error", "Error en detalle Curso A");
         res.redirect("/newcurso");
       }
     } else {
       //SI ES FALSO
-      req.flash("error", "Error en detalle Curso");
+      req.flash("error", "Error en detalle Curso B");
       res.redirect("/newcurso");
     }
   } catch (e) {
@@ -369,11 +372,11 @@ var verNombre = async (nombre) => {
   }
 };
 
-var verCodigo = async (nombre) => {
+var verCodigo = async (codigo) => {
   try {
     const query = await pool.query(
       "SELECT count(*) from curso where codigo = $1;",
-      [nombre]
+      [codigo]
     );
     var count = query.rows[0].count;
     var res = parseInt(count);
@@ -393,10 +396,12 @@ var verCodigo = async (nombre) => {
 var idDetalles = async () => {
   try {
     const queryID = await pool.query(
-      "SELECT id_detalles from aspirante ORDER BY id_detalles DESC LIMIT 1;"
+      "SELECT id_detalles from detalles_curso ORDER BY id_detalles DESC LIMIT 1;"
     );
-    const id = queryID.rows[0].id_detalles;
-    return id;
+    var count = queryID.rows[0].id_detalles;
+    var res = parseInt(count);
+    console.log("RESULTADI", res);
+    return res;
   } catch (e) {
     console.log("Error idDetalles", e);
   }

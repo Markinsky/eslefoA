@@ -31,18 +31,31 @@ router.post("/newcurso", async (req, res) => {
     const verNombreCurso = verNombre(nombre);
     if (verNombreCurso === true && verCodigoCurso === true) {
       //SI ES VERDADERO
+      const queryDetalleCurso = await pool.query(
+        "INSERT INTO detalle_curso (horario, dias, descripcion, id_nivel) VALUES ($1, $2, $3, $4)",
+        [horario, dias, descripcion, nivel]
+      );
+      if (queryDetalleCurso.rowCount > 0) {
+        const queryCurso = await pool.query(
+          "INSERT INTO curso (codigo, nombre, id_maestro, estado, vacantes, id_detalles) VALUES ($1, $2, $3, 'abierto', $4, $5)",
+          [codigo, nombre, maestro, vacantes, idDetalles()]
+        );
+        if (queryCurso.rowCount > 0) {
+          req.flash("success", "Curso agregado con exito");
+          res.redirect("/newcurso");
+        } else {
+          req.flash("error", "Error en Curso");
+          res.redirect("/newcurso");
+        }
+      } else {
+        req.flash("error", "Error en detalle Curso");
+        res.redirect("/newcurso");
+      }
     } else {
       //SI ES FALSO
-    }
-    const queryCurso = await pool.query(
-      "INSERT INTO detalle_curso (horario, dias, descripcion, id_nivel) VALUES ($1, $2, $3, $4)",
-      [horario, dias, descripcion, nivel]
-    );
-    if (queryCurso > 0) {
-    } else {
       req.flash("error", "Error en detalle Curso");
+      res.redirect("/newcurso");
     }
-    console.log("Id_aspiante: ", maestro);
   } catch (e) {
     console.log("ERROR NEW CURSO", e);
   }
@@ -341,7 +354,7 @@ var verNombre = async (nombre) => {
       "SELECT count(*) from curso where nombre = $1;",
       [nombre]
     );
-    var count = qq.rows[0].count;
+    var count = query.rows[0].count;
     var res = parseInt(count);
     console.log(res);
     if (res != 0) {
@@ -353,6 +366,39 @@ var verNombre = async (nombre) => {
     }
   } catch (e) {
     console.log("Error verNombre", e);
+  }
+};
+
+var verCodigo = async (nombre) => {
+  try {
+    const query = await pool.query(
+      "SELECT count(*) from curso where codigo = $1;",
+      [nombre]
+    );
+    var count = query.rows[0].count;
+    var res = parseInt(count);
+    console.log(res);
+    if (res != 0) {
+      //console.log("No es igual" , res);
+      return false;
+    } else {
+      //console.log("Si es igual:" , res);
+      return true;
+    }
+  } catch (e) {
+    console.log("Error verNombre", e);
+  }
+};
+
+var idDetalles = async () => {
+  try {
+    const queryID = await pool.query(
+      "SELECT id_detalles from aspirante ORDER BY id_detalles DESC LIMIT 1;"
+    );
+    const id = queryID.rows[0].id_detalles;
+    return id;
+  } catch (e) {
+    console.log("Error idDetalles", e);
   }
 };
 module.exports = router;

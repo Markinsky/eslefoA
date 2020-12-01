@@ -1,0 +1,48 @@
+<div class="contaier p-4">
+            <div class = "row">
+        <a href="/newcurso" class = "btn btn-success">
+              <i class = "fas fa-users" ></i>
+            <label> Agregar nuevo curso</label>
+        </a>
+    </div>
+<div class = "row p-2">
+    <table class = "table table-bordered table-striped" >
+          <thead class="table-Color">
+              <tr>
+                  <th>Nombre</th>
+                  <th> Codigo </th>
+                  <th> Maestro</th>
+                  <th> Estado</th>
+                  <th> Vacantes</th>
+                  <th> Horario</th>
+                  <th> Dias</th>
+                  <th> Descripcion</th>
+                  <th> Acciones </th>
+              </tr>
+          </thead>
+          <tbody >
+              {{#each returnCursos}}
+              <tr>
+                <td >{{nombre_curso}}</td>
+                <td>{{codigo}}</td>
+                <td>{{nombre}} {{appat}}</td>
+                <td>{{estado}}</td>  
+                <td>{{vacantes}}</td>   
+                <td>{{horario}}</td>    
+                <td>{{dias}}</td>
+                <td>{{des}}</td> 
+                 <td>
+              <a href="/newcurso/edit/{{id_encuesta}}" class = "btn btn-success">
+              <i class = "fas fa-edit" ></i>
+              </a>
+             <a href="/newcurso/drop/{{id_encuesta}}" class = "btn btn-danger">
+              <i class = "far fa-trash-alt" ></i>
+              </a>
+            </td>
+              </tr>
+              {{/each}}
+          </tbody>
+    </table>
+
+</div>
+</div>

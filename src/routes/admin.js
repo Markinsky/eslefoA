@@ -4,6 +4,13 @@ const pool = require("../db");
 const helpers = require("../lib/helpers");
 
 //Cursos
+
+router.get("/cursos", async (req, res) => {
+  const query = await pool.query("SELECT * FROM vercurso");
+  const returnCursos = query.rows;
+  res.render("admin/vercursos", { returnCursos });
+});
+
 router.get("/newcurso", async (req, res) => {
   const master = await pool.query(
     "SELECT id_aspirante, nombre, appat from aspirante WHERE funcion = 'maestro';"
@@ -40,12 +47,12 @@ router.post("/newcurso", async (req, res) => {
         console.log("Maestro", maestro);
         console.log("detalles", id_Detalles);
         const queryCurso = await pool.query(
-          "INSERT INTO curso (codigo, nombre, id_maestro, estado, vacantes, id_detalles) VALUES ($1, $2, $3, $4, $5, $6)",
+          "INSERT INTO curso (codigo, nombre_curso, id_maestro, estado, vacantes, id_detalles) VALUES ($1, $2, $3, $4, $5, $6)",
           [codigo, nombre, maestro, "abierto", vacantes, id_Detalles]
         );
         if (queryCurso.rowCount > 0) {
           req.flash("success", "Curso agregado con exito");
-          res.redirect("/newcurso");
+          res.redirect("/cursos");
         } else {
           req.flash("error", "Error en Curso");
           res.redirect("/newcurso");
@@ -354,7 +361,7 @@ var verEmail = async (email) => {
 var verNombre = async (nombre) => {
   try {
     const query = await pool.query(
-      "SELECT count(*) from curso where nombre = $1;",
+      "SELECT count(*) from curso where nombre_curso = $1;",
       [nombre]
     );
     var count = query.rows[0].count;

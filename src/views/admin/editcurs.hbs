@@ -1,0 +1,56 @@
+<div class = "container p-4">
+    <div class = "row">
+        <div class = "col-md-6 mx-auto">
+            <div class = "card">
+                <div class = "card-header text-center"> 
+                  <h1> Editar curso </h1>
+                </div>
+                <div class = "card-body cardBack letters">
+             <form action ="/newcurso/edit/{{codigo}}" method="POST" autocomplete="off">
+                 <label>Nombre del curso: </label>
+                 <input type="text" value={{{vista.nombre_curso}}} class="form-control" name="nombre" required="required" />
+                <label>Codigo:</label>
+                 <input type="text"  value={{{vista.codigo}}} class="form-control" name="codigo" required="required" disabled />
+                <label>Maestro:</label>
+                <select class="font-stuffs" id="maestro" name="maestro"> 
+                    <option value = "pendiente"> -Selecciona maestro- </option>
+                    {{#each maestro}}
+                    <option value = {{id_aspirante}}>{{nombre}} {{appat}}</option>
+                    {{/each}}
+                   </select>
+                    <br>
+                  <label>Vacantes:</label>
+                 <input type="number" value={{{vista.vacantes}}} class="form-control" name="vacantes" required="required" />  
+                  <label>Horario:</label>
+                 <input type="text" value={{{vista.horario}}} class="form-control" name="horario" required="required" />
+                  <label>Dias:</label>
+                 <input type="text" value={{{vista.dias}}} class="form-control" name="dias" required="required" />
+                  <label>Estado:</label>
+                <select class="font-stuffs" id="estado" name="estado"> 
+                    <option value = "pendiente"> -Selecciona estado- </option>
+                    <option value = "abierto "> Abierto</option>
+                    <option value = "cancelado"> Cancelado</option>
+                    <option value = "pausado "> Pausado </option>
+                    <option value = "cerrado"> Cerrado </option>
+                    <option value = "finalizado"> Finalizado </option>
+                   </select>
+                  <label>Descripcion:</label>
+                 <input type="text" value={{{vista.des}}} class="form-control" name="descripcion" required="required" />
+                    <label>Nivel:</label>
+                     <select class="font-stuffs" id="nivel" name="nivel"> 
+                    <option value = "pendiente"> -Selecciona nivel- </option>
+                    {{#each nivel}}
+                    <option value = {{id_nivel}}>{{nivel}}</option>
+                    {{/each}}
+                   </select>
+            <div class = "text-center">
+                 <input class="normalButton" type="submit" value="Enviar" id="newcurso">
+            </div>
+                       </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+

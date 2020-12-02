@@ -18,7 +18,8 @@
 .back {
   background: #cfc9ba;
   position: relative;
-  min-height: 75vh;
+  min-height: 100vh;
+  padding-bottom: 2%;
 }
 
 .fot {

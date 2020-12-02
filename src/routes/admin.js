@@ -43,9 +43,6 @@ router.post("/newcurso", async (req, res) => {
       );
       if (queryDetalleCurso.rowCount > 0) {
         const id_Detalles = await idDetalles();
-        console.log("Codigo", codigo);
-        console.log("Maestro", maestro);
-        console.log("detalles", id_Detalles);
         const queryCurso = await pool.query(
           "INSERT INTO curso (codigo, nombre_curso, id_maestro, estado, vacantes, id_detalles) VALUES ($1, $2, $3, $4, $5, $6)",
           [codigo, nombre, maestro, "abierto", vacantes, id_Detalles]
@@ -68,6 +65,46 @@ router.post("/newcurso", async (req, res) => {
     }
   } catch (e) {
     console.log("ERROR NEW CURSO", e);
+  }
+});
+
+router.get("/newcurso/edit/:codigo", async (req, res) => {
+  const { codigo } = req.params;
+  const search = await pool.query("SELECT * FROM vercurso WHERE codigo = $1", [
+    codigo,
+  ]);
+  const master = await pool.query(
+    "SELECT id_aspirante, nombre, appat from aspirante WHERE funcion = 'maestro';"
+  );
+  const maestro = master.rows;
+  const verNiv = await pool.query("SELECT * FROM nivel");
+  const nivel = verNiv.rows;
+  const vista = search.rows[0];
+  res.render("admin/editcurs", { vista, maestro, nivel });
+});
+
+router.post("/newcurso/edit/:codigo", async (req, res) => {
+  try {
+    const {
+      nombre,
+      maestro,
+      estado,
+      vacantes,
+      horario,
+      dias,
+      descripcion,
+      nivel,
+    } = req.body;
+    const { codigo } = req.params;
+    const up = await pool.query(
+      "UPDATE curso SET nombre_curso=$1, id_maestro=$2, estado=$3, vacantes=$4  WHERE codigo = $5;",
+      [nombre, maestro, estado, vacantes, codigo]
+    );
+    const detup = await pool.query(
+      "UPDATE detalles_curso SET  horario=$1, dias=$2, des=$3, id_nivel=$4 WHERE <condition>;"
+    );
+  } catch (e) {
+    console.log("ERROR EDITAR CURSO", e);
   }
 });
 
@@ -345,7 +382,6 @@ var verEmail = async (email) => {
     const qq = await pool.query(query, correo);
     var count = qq.rows[0].count;
     var res = parseInt(count);
-    console.log(res);
     if (res != 0) {
       //console.log("No es igual" , res);
       return false;
@@ -366,7 +402,6 @@ var verNombre = async (nombre) => {
     );
     var count = query.rows[0].count;
     var res = parseInt(count);
-    console.log(res);
     if (res != 0) {
       //console.log("No es igual" , res);
       return false;
@@ -387,7 +422,6 @@ var verCodigo = async (codigo) => {
     );
     var count = query.rows[0].count;
     var res = parseInt(count);
-    console.log(res);
     if (res != 0) {
       //console.log("No es igual" , res);
       return false;
@@ -407,7 +441,6 @@ var idDetalles = async () => {
     );
     var count = queryID.rows[0].id_detalles;
     var res = parseInt(count);
-    console.log("RESULTADI", res);
     return res;
   } catch (e) {
     console.log("Error idDetalles", e);

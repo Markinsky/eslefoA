@@ -44,6 +44,10 @@ app.engine(
         var mmnt = moment(date);
         return mmnt.format(format);
       },
+      fulldata: function (data) {
+        console.log("Data helper", data);
+        return data;
+      },
     },
   })
 );

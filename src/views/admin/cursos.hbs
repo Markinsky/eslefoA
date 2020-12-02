@@ -13,7 +13,7 @@
                  <input type="text"  placeholder="Codigo" class="form-control" name="codigo" required="required" />
                 <label>Maestro:</label>
                 <select class="font-stuffs" id="maestro" name="maestro"> 
-                    <option value = null> -Selecciona maestro- </option>
+                    <option value = "error"> -Selecciona maestro- </option>
                     {{#each maestro}}
                     <option value = {{id_aspirante}}>{{nombre}} {{appat}}</option>
                     {{/each}}
@@ -29,7 +29,7 @@
                  <input type="text" placeholder="Descripcion" class="form-control" name="descripcion" required="required" />
                     <label>Nivel:</label>
                      <select class="font-stuffs" id="nivel" name="nivel"> 
-                    <option value = null> -Selecciona nivel- </option>
+                    <option value = "error"> -Selecciona nivel- </option>
                     {{#each nivel}}
                     <option value = {{id_nivel}}>{{nivel}}</option>
                     {{/each}}

@@ -35,7 +35,12 @@ router.post("/newcurso", async (req, res) => {
     } = req.body;
     const verCodigoCurso = await verCodigo(codigo);
     const verNombreCurso = await verNombre(nombre);
-    if (verNombreCurso === true && verCodigoCurso === true) {
+    if (
+      verNombreCurso === true &&
+      verCodigoCurso === true &&
+      maestro != "error" &&
+      nivel != "error"
+    ) {
       //SI ES VERDADERO
       const queryDetalleCurso = await pool.query(
         "INSERT INTO detalles_curso (horario, dias, des, id_nivel) VALUES ($1, $2, $3, $4)",
@@ -60,7 +65,7 @@ router.post("/newcurso", async (req, res) => {
       }
     } else {
       //SI ES FALSO
-      req.flash("error", "Error en detalle Curso B");
+      req.flash("error", "Error, Se presenta un dato invalido");
       res.redirect("/newcurso");
     }
   } catch (e) {
@@ -96,13 +101,26 @@ router.post("/newcurso/edit/:codigo", async (req, res) => {
       nivel,
     } = req.body;
     const { codigo } = req.params;
-    const up = await pool.query(
-      "UPDATE curso SET nombre_curso=$1, id_maestro=$2, estado=$3, vacantes=$4  WHERE codigo = $5;",
-      [nombre, maestro, estado, vacantes, codigo]
-    );
-    const detup = await pool.query(
-      "UPDATE detalles_curso SET  horario=$1, dias=$2, des=$3, id_nivel=$4 WHERE <condition>;"
-    );
+    if (maestro != "error" && nivel != "error") {
+      const up = await pool.query(
+        "UPDATE curso SET nombre_curso=$1, id_maestro=$2, estado=$3, vacantes=$4  WHERE codigo = $5;",
+        [nombre, maestro, estado, vacantes, codigo]
+      );
+      const sle = await pool.query(
+        "SELECT id_detalles FROM curso WHERE codigo = $1",
+        [codigo]
+      );
+      var sel = sle.rows[0].id_detalles;
+      var id_detalles = parseInt(sel);
+      const detup = await pool.query(
+        "UPDATE detalles_curso SET  horario=$1, dias=$2, des=$3, id_nivel=$4 WHERE id_detalles = $5;",
+        [horario, dias, descripcion, nivel, id_detalles]
+      );
+      res.redirect("/cursos");
+    } else {
+      req.flash("error", "Error, Se presenta un dato invalido");
+      res.redirect("/newcurso");
+    }
   } catch (e) {
     console.log("ERROR EDITAR CURSO", e);
   }

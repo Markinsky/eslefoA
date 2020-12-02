@@ -75,6 +75,86 @@ router.post("/askus", async (req, res) => {
   }
 });
 
+//cursos
+
+router.get("/watchcursos", async (req, res) => {
+  //A
+  const countCursosA = await pool.query(
+    "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 1"
+  );
+  const getCursosA = await pool.query(
+    "SELECT * FROM vercurso_espe WHERE id_nivel = 1"
+  );
+  var countA = countCursosA.rows[0].count;
+  var cursosA = parseInt(countA);
+  const resCursoA = getCursosA.rows;
+  //B
+  const countCursosB = await pool.query(
+    "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 2"
+  );
+  const getCursosB = await pool.query(
+    "SELECT * FROM vercurso_espe WHERE id_nivel = 2"
+  );
+  var countB = countCursosB.rows[0].count;
+  var cursosB = parseInt(countB);
+  const resCursoB = getCursosB.rows;
+  //C
+  const countCursosC = await pool.query(
+    "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 3"
+  );
+  const getCursosC = await pool.query(
+    "SELECT * FROM vercurso_espe WHERE id_nivel = 3"
+  );
+  var countC = countCursosC.rows[0].count;
+  var cursosC = parseInt(countC);
+  const resCursoC = getCursosC.rows;
+  //D
+  const countCursosD = await pool.query(
+    "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 4"
+  );
+  const getCursosD = await pool.query(
+    "SELECT * FROM vercurso_espe WHERE id_nivel = 4"
+  );
+  var countD = countCursosD.rows[0].count;
+  var cursosD = parseInt(countD);
+  const resCursoD = getCursosD.rows;
+  //E
+  const countCursosE = await pool.query(
+    "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 5"
+  );
+  const getCursosE = await pool.query(
+    "SELECT * FROM vercurso_espe WHERE id_nivel = 5"
+  );
+  var countE = countCursosE.rows[0].count;
+  var cursosE = parseInt(countE);
+  const resCursoE = getCursosE.rows;
+  //F
+  const countCursosF = await pool.query(
+    "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 6"
+  );
+  const getCursosF = await pool.query(
+    "SELECT * FROM vercurso_espe WHERE id_nivel = 6"
+  );
+  var countF = countCursosF.rows[0].count;
+  var cursosF = parseInt(countF);
+  const resCursoF = getCursosF.rows;
+  res.render("links/cursos", {
+    cursosA,
+    resCursoA,
+    cursosB,
+    resCursoB,
+    cursosC,
+    resCursoC,
+    cursosD,
+    resCursoD,
+    cursosE,
+    resCursoE,
+    cursosF,
+    resCursoF,
+  });
+});
+
+//ubicacion
 router.get("/ubication", async (req, res) => {
   res.render("links/ubication");
 });

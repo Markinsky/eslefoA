@@ -341,6 +341,11 @@ input[name="r"] {
   color: white;
 }
 
+.table-curso {
+  background: #0a1f30;
+  color: white;
+}
+
 .table-bordered {
   color: black;
 }

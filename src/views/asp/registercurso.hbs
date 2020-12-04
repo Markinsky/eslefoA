@@ -1,17 +1,3 @@
-<div class = "container p-2">
-<div class = "row">
-    <div class = "col-md-6">
-         <div class="card  border-dark">
-        <div class = "card-body">
-            <h3>NOTA:</h3>
-                <p class = "card-text"> La unica forma de inscribirse en los cursos es con una cuenta, esta seccion esta dedicada solo para ver los cursos disponibles</p>
-        </div>
-    </div>
-    </div>
-</div>
-</div>
-
-
 <div class="container accordion para">
     <button type="button" class="accordion__button">
         Nivel: Niños. Numero de vacantes: {{cursosA}}
@@ -21,12 +7,13 @@
           <thead class="table-curso">
               <tr>
                   <th>Nombre</th>
-                  <th> Maestro/a</th>
-                  <th> Estado</th>
-                  <th> Vacantes</th>
-                  <th> Horario</th>
-                  <th> Dias</th>
-                  <th> Descripcion</th>
+                  <th>Maestro/a</th>
+                  <th>Estado</th>
+                  <th>Vacantes</th>
+                  <th>Horario</th>
+                  <th>Dias</th>
+                  <th>Descripcion</th>
+                <th>Acciones</th>
               </tr>
           </thead>
           <tbody class="table-curso">
@@ -39,7 +26,11 @@
                 <td>{{horario}}</td>    
                 <td>{{dias}}</td>
                 <td>{{des}}</td> 
-            </td>
+                <td>             
+               <a href="/newcurso/edit/{{codigo}}" class = "btn btn-success">
+              <i class = "fas fa-sign-in-alt" ></i>
+              </a>
+              </td>
               </tr>
               {{/each}}
           </tbody>
@@ -56,12 +47,13 @@
           <thead class="table-curso">
               <tr>
                   <th>Nombre</th>
-                  <th> Maestro/a</th>
-                  <th> Estado</th>
-                  <th> Vacantes</th>
-                  <th> Horario</th>
-                  <th> Dias</th>
-                  <th> Descripcion</th>
+                  <th>Maestro/a</th>
+                  <th>Estado</th>
+                  <th>Vacantes</th>
+                  <th>Horario</th>
+                  <th>Dias</th>
+                  <th>Descripcion</th>
+                  <th>Acciones</th>
               </tr>
           </thead>
           <tbody class="table-curso">
@@ -74,6 +66,10 @@
                 <td>{{horario}}</td>    
                 <td>{{dias}}</td>
                 <td>{{des}}</td> 
+                  <td>             
+               <a href="/newcurso/edit/{{codigo}}" class = "btn btn-success">
+              <i class = "fas fa-sign-in-alt" ></i>
+              </a>
             </td>
               </tr>
               {{/each}}
@@ -91,12 +87,13 @@
           <thead class="table-curso">
               <tr>
                   <th>Nombre</th>
-                  <th> Maestro/a</th>
-                  <th> Estado</th>
-                  <th> Vacantes</th>
-                  <th> Horario</th>
-                  <th> Dias</th>
-                  <th> Descripcion</th>
+                  <th>Maestro/a</th>
+                  <th>Estado</th>
+                  <th>Vacantes</th>
+                  <th>Horario</th>
+                  <th>Dias</th>
+                  <th>Descripcion</th>
+                  <th>Acciones</th>
               </tr>
           </thead>
           <tbody class="table-curso">
@@ -109,6 +106,10 @@
                 <td>{{horario}}</td>    
                 <td>{{dias}}</td>
                 <td>{{des}}</td> 
+                  <td>             
+               <a href="/newcurso/edit/{{codigo}}" class = "btn btn-success">
+              <i class = "fas fa-sign-in-alt" ></i>
+              </a>
             </td>
               </tr>
               {{/each}}
@@ -126,12 +127,13 @@
           <thead class="table-curso">
               <tr>
                   <th>Nombre</th>
-                  <th> Maestro/a</th>
-                  <th> Estado</th>
-                  <th> Vacantes</th>
-                  <th> Horario</th>
-                  <th> Dias</th>
-                  <th> Descripcion</th>
+                  <th>Maestro/a</th>
+                  <th>Estado</th>
+                  <th>Vacantes</th>
+                  <th>Horario</th>
+                  <th>Dias</th>
+                  <th>Descripcion</th>
+                  <th>Acciones</th>
               </tr>
           </thead>
           <tbody class="table-curso">
@@ -144,6 +146,10 @@
                 <td>{{horario}}</td>    
                 <td>{{dias}}</td>
                 <td>{{des}}</td> 
+              <td>             
+               <a href="/newcurso/edit/{{codigo}}" class = "btn btn-success">
+              <i class = "fas fa-sign-in-alt" ></i>
+              </a>
             </td>
               </tr>
               {{/each}}
@@ -161,12 +167,13 @@
           <thead class="table-curso">
               <tr>
                   <th>Nombre</th>
-                  <th> Maestro/a</th>
-                  <th> Estado</th>
-                  <th> Vacantes</th>
-                  <th> Horario</th>
-                  <th> Dias</th>
-                  <th> Descripcion</th>
+                  <th>Maestro/a</th>
+                  <th>Estado</th>
+                  <th>Vacantes</th>
+                  <th>Horario</th>
+                  <th>Dias</th>
+                  <th>Descripcion</th>
+                  <th>Acciones</th>
               </tr>
           </thead>
           <tbody class="table-curso">
@@ -178,7 +185,11 @@
                 <td>{{vacantes}}</td>   
                 <td>{{horario}}</td>    
                 <td>{{dias}}</td>
-                <td>{{des}}</td> 
+                <td>{{des}}</td>
+                  <td>             
+               <a href="/newcurso/edit/{{codigo}}" class = "btn btn-success">
+              <i class = "fas fa-sign-in-alt" ></i>
+              </a> 
             </td>
               </tr>
               {{/each}}
@@ -196,12 +207,13 @@
           <thead class="table-curso">
               <tr>
                   <th>Nombre</th>
-                  <th> Maestro/a</th>
-                  <th> Estado</th>
-                  <th> Vacantes</th>
-                  <th> Horario</th>
-                  <th> Dias</th>
-                  <th> Descripcion</th>
+                  <th>Maestro/a</th>
+                  <th>Estado</th>
+                  <th>Vacantes</th>
+                  <th>Horario</th>
+                  <th>Dias</th>
+                  <th>Descripcion</th>
+                  <th>Acciones</th>
               </tr>
           </thead>
           <tbody class="table-curso">
@@ -214,6 +226,10 @@
                 <td>{{horario}}</td>    
                 <td>{{dias}}</td>
                 <td>{{des}}</td> 
+                  <td>             
+               <a href="/newcurso/edit/{{codigo}}" class = "btn btn-success">
+              <i class = "fas fa-sign-in-alt" ></i>
+              </a>
             </td>
               </tr>
               {{/each}}

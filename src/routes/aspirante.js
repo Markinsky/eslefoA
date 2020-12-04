@@ -106,4 +106,18 @@ router.get("/registercurso", async (req, res) => {
   });
 });
 
+router.get("/registercurso/edit/:id_curso", async (req, res) => {
+  try {
+    const { id_curso } = req.params;
+    const id_aspirante = req.user.id_aspirante;
+    const qA = await pool.query(
+      "SELECT * FROM vercurso_espe WHERE id_curso = $1",
+      [id_curso]
+    );
+    const cursBack = qA.rows[0];
+    res.render("asp/showcurso", { id_aspirante, id_curso, cursBack });
+  } catch (e) {
+    console.log("ERROR REGISTER CURSO SOLICITAR", e);
+  }
+});
 module.exports = router;

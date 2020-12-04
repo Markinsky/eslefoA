@@ -1,0 +1,32 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h1> Solicitar entrar al curso </h1>
+                    <label> Revisa los datos, si este curso es el que quieres ingresar dale click a aceptar, una vez aceptado se generara un adeudo para apartar tu lugar dentro del curso, si no es el caso dale click a cancelar.</label>
+                     <img src="/img/asc.png">
+                </div>
+                <div class="class-body">
+                    <form action="/vermad" method="POST">
+                        <div class="cardBack letters">
+                            <label>Nombre curso</label>
+                            <input class="form-control" type="text" value = "{{cursBack.nombre_curso}}" name="nombre" required="required" disabled/>
+                             <label>Nivel</label>
+                            <input class="form-control" type="text" value = "{{cursBack.nivel}}" name="nombre" required="required" disabled/>
+                            <label>Vacantes dispobnibles:</label>
+                            <input class="form-control" type="text" value = "{{cursBack.vacantes}}" name="nombre" required="required" disabled/>
+                            <label>ID:</label>
+                            <input class="form-control" type="text" value = "{{id_aspirante}}" name="nombre"
+                                required="required" />
+                            <label> id del curso:</label>
+                            <input class="form-control" type="text" value = "{{id_curso}}"
+                                name="apPat" required="required" />
+                            <input type="submit" class="signButton" value="Crear" />
+                        </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

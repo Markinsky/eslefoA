@@ -8,21 +8,22 @@
                      <img src="/img/asc.png">
                 </div>
                 <div class="class-body">
-                    <form action="/vermad" method="POST">
+                    <form action="/registercurso" method="POST">
                         <div class="cardBack letters">
                             <label>Nombre curso</label>
-                            <input class="form-control" type="text" value = "{{cursBack.nombre_curso}}" name="nombre" required="required" disabled/>
+                            <input class="form-control" type="text" value = "{{cursBack.nombre_curso}}" name="nombre_curso" required="required" disabled/>
                              <label>Nivel</label>
-                            <input class="form-control" type="text" value = "{{cursBack.nivel}}" name="nombre" required="required" disabled/>
-                            <label>Vacantes dispobnibles:</label>
-                            <input class="form-control" type="text" value = "{{cursBack.vacantes}}" name="nombre" required="required" disabled/>
-                            <label>ID:</label>
-                            <input class="form-control" type="text" value = "{{id_aspirante}}" name="nombre"
-                                required="required" />
-                            <label> id del curso:</label>
+                            <input class="form-control" type="text" value = "{{cursBack.nivel}}" name="nivel_curso" required="required" disabled/>
+                            <label>Vacantes disponibles:</label>
+                            <input class="form-control" type="text" value = "{{cursBack.vacantes}}" name="vacantes" required="required" disabled/>
+                            <label>Id:</label>
+                            <input class="form-control" type="text" value = "{{id_aspirante}}" name="ID"
+                                required="required" disabled/>
+                            <label> Id del curso:</label>
                             <input class="form-control" type="text" value = "{{id_curso}}"
-                                name="apPat" required="required" />
-                            <input type="submit" class="signButton" value="Crear" />
+                             name="id_curso" required="required" disabled />                          
+                            <a href="/registercurso" class = "buttonF btn btn-danger btn-lg" >Cancelar</a>
+                            <input type="submit" class = "btn btn-success btn-lg" value="Aceptar" />
                         </div>
                 </div>
             </div>

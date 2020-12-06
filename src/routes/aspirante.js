@@ -120,4 +120,18 @@ router.get("/registercurso/edit/:id_curso", async (req, res) => {
     console.log("ERROR REGISTER CURSO SOLICITAR", e);
   }
 });
+
+router.post("/registercurso", async (req, res) => {
+  try {
+    const { nombre_curso, nivel_curso, vacantes, ID, id_curso } = req.body;
+    const email = req.user.usser;
+
+    const qq = await pool.query(
+      "INSERT INTO pago (fecha, correo, id_nivel, estado, id_aspirante) VALUES (CURRENT_DATE, $1, $2,'Pendiente',$3)",
+      [email, nivel_curso, ID]
+    );
+  } catch (e) {
+    console.log("Error solicitud grupo", e);
+  }
+});
 module.exports = router;

@@ -15,12 +15,12 @@
                              <label>Nivel</label>
                             <input class="form-control" type="text" value = "{{cursBack.nivel}}" name="nivel_curso" required="required" disabled/>
                             <label>Vacantes disponibles:</label>
-                            <input class="form-control" type="text" value = "{{cursBack.vacantes}}" name="vacantes" required="required" disabled/>
+                            <input class="form-control" type="number" value = "{{cursBack.vacantes}}" name="vacantes" required="required" disabled/>
                             <label>Id:</label>
-                            <input class="form-control" type="text" value = "{{id_aspirante}}" name="ID"
+                            <input class="form-control" type="number" value = "{{id_aspirante}}" name="ID"
                                 required="required" disabled/>
                             <label> Id del curso:</label>
-                            <input class="form-control" type="text" value = "{{id_curso}}"
+                            <input class="form-control" type="number" value = "{{cursBack.id_curso}}"
                              name="id_curso" required="required" disabled />                          
                             <a href="/registercurso" class = "buttonF btn btn-danger btn-lg" >Cancelar</a>
                             <input type="submit" class = "btn btn-success btn-lg" value="Aceptar" />

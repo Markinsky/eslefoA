@@ -115,6 +115,7 @@ router.get("/registercurso/edit/:id_curso", async (req, res) => {
       [id_curso]
     );
     const cursBack = qA.rows[0];
+    console.log("cursBack", cursBack);
     res.render("asp/showcurso", { id_aspirante, id_curso, cursBack });
   } catch (e) {
     console.log("ERROR REGISTER CURSO SOLICITAR", e);
@@ -123,13 +124,19 @@ router.get("/registercurso/edit/:id_curso", async (req, res) => {
 
 router.post("/registercurso", async (req, res) => {
   try {
-    const { nombre_curso, nivel_curso, vacantes, ID, id_curso } = req.body;
+    //const { nombre_curso, nivel_curso, vacantes, ID, id_curso } = req.body;
+    const nivel_curso = req.body.nivel_curso;
+    const ID = req.body.ID;
     const email = req.user.usser;
-
-    const qq = await pool.query(
-      "INSERT INTO pago (fecha, correo, id_nivel, estado, id_aspirante) VALUES (CURRENT_DATE, $1, $2,'Pendiente',$3)",
-      [email, nivel_curso, ID]
-    );
+    var id_usuario = parseInt(ID);
+    var id_nivel = parseInt(nivel_curso);
+    console.log("POST", nivel_curso, ID);
+    console.log("PRE", id_nivel, id_usuario);
+    //const qq = await pool.query(
+    //  "INSERT INTO pago (fecha, correo, id_nivel, estado, id_aspirante) VALUES (CURRENT_DATE, $1, $2,'Pendiente',$3)",
+    //  [email, id_nivel, id_usuario]
+    //);
+    res.redirect("asp/showcurso");
   } catch (e) {
     console.log("Error solicitud grupo", e);
   }

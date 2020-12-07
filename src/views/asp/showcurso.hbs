@@ -1,33 +1,34 @@
 <div class="container p-4">
     <div class="row">
         <div class="col-md-6 mx-auto">
-            <div class="card text-center">
-                <div class="card-header">
+            <div class="card">
+                <div class="card-header text-center">
                     <h1> Solicitar entrar al curso </h1>
                     <label> Revisa los datos, si este curso es el que quieres ingresar dale click a aceptar, una vez aceptado se generara un adeudo para apartar tu lugar dentro del curso, si no es el caso dale click a cancelar.</label>
                      <img src="/img/asc.png">
                 </div>
-                <div class="class-body">
-                    <form action="/registercurso" method="POST">
-                        <div class="cardBack letters">
+                <div class="card-body cardBack letters">
+                    <form action="/registercurso/debt" method="POST">
                             <label>Nombre curso</label>
-                            <input class="form-control" type="text" value = "{{cursBack.nombre_curso}}" name="nombre_curso" required="required" disabled/>
+                            <input class="form-control" type="text" value = "{{cursBack.nombre_curso}}" name="nombre_curso" required="required" readonly/>
                              <label>Nivel</label>
-                            <input class="form-control" type="text" value = "{{cursBack.nivel}}" name="nivel_curso" required="required" disabled/>
+                            <input class="form-control" type="text" value = "{{cursBack.nivel}}" name="nivel_curso" required="required" readonly/>
                             <label>Vacantes disponibles:</label>
-                            <input class="form-control" type="number" value = "{{cursBack.vacantes}}" name="vacantes" required="required" disabled/>
+                            <input class="form-control" type="number" value = "{{cursBack.vacantes}}" name="vacantes" required="required" readonly/>
+                             <label>Descripcion: </label>
+                            <input class="form-control" type="text" value = "{{cursBack.des}}" name="des" required="required" readonly/>
                             <label>Id:</label>
                             <input class="form-control" type="number" value = "{{id_aspirante}}" name="ID"
-                                required="required" disabled/>
+                                required="required" readonly/>
                             <label> Id del curso:</label>
                             <input class="form-control" type="number" value = "{{cursBack.id_curso}}"
-                             name="id_curso" required="required" disabled />                          
+                             name="id_curso" required="required" readonly /> 
+                             <input type = "hidden" name="id_nivel" value = "{{cursBack.id_nivel}}">                         
                             <a href="/registercurso" class = "buttonF btn btn-danger btn-lg" >Cancelar</a>
-                            <input type="submit" class = "btn btn-success btn-lg" value="Aceptar" />
-                        </div>
-                </div>
-            </div>
+                            <input type="submit" class = "btn btn-success btn-lg" value="Aceptar" id="subir" />  
             </form>
+            </div>
+            </div>
         </div>
     </div>
 </div>

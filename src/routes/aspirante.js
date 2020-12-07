@@ -122,23 +122,45 @@ router.get("/registercurso/edit/:id_curso", async (req, res) => {
   }
 });
 
-router.post("/registercurso", async (req, res) => {
+router.post("/registercurso/debt", async (req, res) => {
   try {
-    //const { nombre_curso, nivel_curso, vacantes, ID, id_curso } = req.body;
-    const nivel_curso = req.body.nivel_curso;
-    const ID = req.body.ID;
-    const email = req.user.usser;
+    const {
+      nombre_curso,
+      id_nivel,
+      nivel_curso,
+      vacantes,
+      ID,
+      id_curso,
+    } = req.body;
     var id_usuario = parseInt(ID);
-    var id_nivel = parseInt(nivel_curso);
-    console.log("POST", nivel_curso, ID);
-    console.log("PRE", id_nivel, id_usuario);
-    //const qq = await pool.query(
-    //  "INSERT INTO pago (fecha, correo, id_nivel, estado, id_aspirante) VALUES (CURRENT_DATE, $1, $2,'Pendiente',$3)",
-    //  [email, id_nivel, id_usuario]
-    //);
-    res.redirect("asp/showcurso");
+    const email = req.user.usser;
+    const qqa = await pool.query(
+      "INSERT INTO pago (fecha, correo, id_nivel, estado, id_aspirante) VALUES (CURRENT_DATE, $1, $2,'Pendiente',$3)",
+      [email, id_nivel, id_usuario]
+    );
+    const qq = await pool.query(
+      "INSERT INTO lista_curso (id_curso, id_aspirante, estado) VALUES ($1, $2,'Pendiente')",
+      [, id_usuario]
+    );
+    res.redirect("/registercurso");
   } catch (e) {
     console.log("Error solicitud grupo", e);
   }
+});
+
+//adeudo
+router.get("/pagosasp", async (req, res) => {
+  const id = req.user.id_aspirante;
+  const qDebt = await pool.query(
+    "SELECT * FROM pago WHERE id_aspirante = $1 AND estado = 'Pendiente';",
+    [id]
+  );
+  const cDebt = await pool.query(
+    "SELECT COUNT(*) FROM pago WHERE id_aspirante = $1 AND estado = 'Pendiente';",
+    [id]
+  );
+  const cResult = cDebt.rows[0].count;
+  const arrayDebt = qDebt.rows;
+  res.render("asp/debts", { cResult, arrayDebt });
 });
 module.exports = router;

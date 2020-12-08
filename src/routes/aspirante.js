@@ -122,6 +122,7 @@ router.get("/registercurso/edit/:id_curso", async (req, res) => {
   }
 });
 
+//adeudo
 router.post("/registercurso/debt", async (req, res) => {
   try {
     const {
@@ -134,21 +135,32 @@ router.post("/registercurso/debt", async (req, res) => {
     } = req.body;
     var id_usuario = parseInt(ID);
     const email = req.user.usser;
-    const qqa = await pool.query(
-      "INSERT INTO pago (fecha, correo, id_nivel, estado, id_aspirante) VALUES (CURRENT_DATE, $1, $2,'Pendiente',$3)",
-      [email, id_nivel, id_usuario]
+    const setch = await pool.query(
+      "SELECT COUNT(*) FROM lista_curso WHERE id_aspirante = $1 AND estado = 'Pendiente'",
+      [id_usuario]
     );
-    const qq = await pool.query(
-      "INSERT INTO lista_curso (id_curso, id_aspirante, estado) VALUES ($1, $2,'Pendiente')",
-      [, id_usuario]
-    );
-    res.redirect("/registercurso");
+    const elpepe = setch.rows[0].count;
+    console.log("pepe", elpepe);
+    if (elpepe == 0) {
+      const qqa = await pool.query(
+        "INSERT INTO pago (fecha, correo, id_nivel, estado, id_aspirante) VALUES (CURRENT_DATE, $1, $2,'Pendiente',$3) RETURNING id_pago",
+        [email, id_nivel, id_usuario]
+      );
+      const id_pago = qqa.rows[0].id_pago;
+      const qq = await pool.query(
+        "INSERT INTO lista_curso (id_curso, id_aspirante, estado, id_pago) VALUES ($1, $2,'Pendiente', $3)",
+        [id_curso, id_usuario, id_pago]
+      );
+      res.redirect("/registercurso");
+    } else {
+      req.flash("error", "Ya tienes una solicitud a grupo existente");
+      res.redirect("/registercurso");
+    }
   } catch (e) {
     console.log("Error solicitud grupo", e);
   }
 });
 
-//adeudo
 router.get("/pagosasp", async (req, res) => {
   const id = req.user.id_aspirante;
   const qDebt = await pool.query(

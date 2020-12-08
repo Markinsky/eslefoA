@@ -20,15 +20,15 @@
               {{#each arrayDebt}}
               <tr>
                 <td >{{nombre_curso}}</td>
-                <td>{{fecha}}</td>  
+                <td>{{{formatdate fecha "MM-DD-YYYY"}}}</td>  
                 <td>{{vacantes}}</td>   
                 <td>{{correo}}</td>    
                 <td>{{nivel}}</td>
                 <td>{{precio}}</td>
                 <td>{{nombre}} {{appat}}</td>
                 <td>             
-               <a href="/newcurso/edit/{{codigo}}" class = "btn btn-success">
-              <i class = "fas fa-sign-in-alt" ></i>
+               <a href="/debts/transfer/{{id_pago}}" class = "btn btn-success">
+              <i class = "fas fa-money-bill-wave" ></i>
               </a>
               </td>
               </tr>

@@ -176,4 +176,18 @@ router.get("/pagosasp", async (req, res) => {
   const arrayDebt = qDebt.rows;
   res.render("asp/debts", { cResult, arrayDebt });
 });
+
+router.get("/debts/transfer/:id_pago", async (req, res) => {
+  try {
+    const { id_pago } = req.params;
+    const sq = await pool.query(
+      "SELECT * FROM view_pago WHERE  id_pago = $1 AND estado = 'Pendiente';",
+      [id_pago]
+    );
+    const arr = sq.rows[0];
+    res.render("asp/transfer", { arr });
+  } catch (e) {
+    console.log("ERROR DEBTSS", e);
+  }
+});
 module.exports = router;

@@ -143,7 +143,7 @@ router.post("/registercurso/debt", async (req, res) => {
     console.log("pepe", elpepe);
     if (elpepe == 0) {
       const qqa = await pool.query(
-        "INSERT INTO pago (fecha, correo, id_nivel, estado, id_aspirante) VALUES (CURRENT_DATE, $1, $2,'Pendiente',$3) RETURNING id_pago",
+        "INSERT INTO pago (fecha, correo, id_nivel, id_aspirante) VALUES (CURRENT_DATE, $1, $2,$3) RETURNING id_pago",
         [email, id_nivel, id_usuario]
       );
       const id_pago = qqa.rows[0].id_pago;
@@ -161,14 +161,15 @@ router.post("/registercurso/debt", async (req, res) => {
   }
 });
 
+//pagos
 router.get("/pagosasp", async (req, res) => {
   const id = req.user.id_aspirante;
   const qDebt = await pool.query(
-    "SELECT * FROM pago WHERE id_aspirante = $1 AND estado = 'Pendiente';",
+    "SELECT * FROM view_pago WHERE id_aspirante = $1 AND estado = 'Pendiente';",
     [id]
   );
   const cDebt = await pool.query(
-    "SELECT COUNT(*) FROM pago WHERE id_aspirante = $1 AND estado = 'Pendiente';",
+    "SELECT COUNT(*) FROM lista_curso WHERE id_aspirante = $1 AND estado = 'Pendiente';",
     [id]
   );
   const cResult = cDebt.rows[0].count;

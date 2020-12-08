@@ -6,26 +6,26 @@
 <table class = "table" >
           <thead class="table-curso">
               <tr>
-                  <th>Nombre</th>
-                  <th>Maestro/a</th>
-                  <th>Estado</th>
-                  <th>Vacantes</th>
-                  <th>Horario</th>
-                  <th>Dias</th>
-                  <th>Descripcion</th>
-                <th>Acciones</th>
+                  <th>Nombre del curso</th>
+                  <th>Fecha de solicitud</th>
+                  <th>Vacante</th>
+                  <th>Correo</th>
+                  <th>Nivel</th>
+                  <th>Precio</th>
+                  <th>Nombre del maestro</th>
+                  <th>Metodos de pago</th>
               </tr>
           </thead>
           <tbody class="table-curso">
-              {{#each resCursoA}}
+              {{#each arrayDebt}}
               <tr>
                 <td >{{nombre_curso}}</td>
-                <td>{{nombre}} {{appat}}</td>
-                <td>{{estado}}</td>  
+                <td>{{fecha}}</td>  
                 <td>{{vacantes}}</td>   
-                <td>{{horario}}</td>    
-                <td>{{dias}}</td>
-                <td>{{des}}</td> 
+                <td>{{correo}}</td>    
+                <td>{{nivel}}</td>
+                <td>{{precio}}</td>
+                <td>{{nombre}} {{appat}}</td>
                 <td>             
                <a href="/newcurso/edit/{{codigo}}" class = "btn btn-success">
               <i class = "fas fa-sign-in-alt" ></i>
@@ -37,3 +37,16 @@
     </table>
     </div>
 </div>
+<script>
+    document.querySelectorAll(".accordion__button").forEach((button) => {
+        button.addEventListener("click", () => {
+            const contenido = button.nextElementSibling;
+            button.classList.toggle("accordion__button--active");
+            if (button.classList.contains("accordion__button--active")) {
+                contenido.style.maxHeight = contenido.scrollHeight + "px";
+            } else {
+                contenido.style.maxHeight = 0;
+            }
+        });
+    });
+</script>

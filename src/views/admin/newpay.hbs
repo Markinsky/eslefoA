@@ -1,0 +1,33 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-5 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3> Agregar nuevo adeudo </h3>
+                     <img src="/img/asc.png">
+                </div>
+                <div class="class-body">
+                    <form action="/verap/newpay" method="POST">
+                        <div class="cardBack letters">
+                            <label> Razón: </label>
+                            <input class="form-control" type="text" value="{{{returnasp.nombre}}}" name="razon"
+                                required="required" />
+                            <label>Servicio extra solicitado:</label>
+                            <select class="font-stuffs" id="extra" name="extra"> 
+                                <option value = "error"> -Selecciona- </option>
+                                {{#each arrExtra}}
+                                <option value = {{id_extra}}>{{extra}}  Precio: ${{precio}}</option>
+                                {{/each}}
+                            </select>
+                            <br>
+                            <label>id</label>
+                             <input class="form-control" type="text" value="{{{id_aspirante}}}" name="id"
+                                required="required" readonly />
+                            <input type="submit" class="signButton" value="Crear" />
+                        </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

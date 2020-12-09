@@ -48,6 +48,15 @@ app.engine(
         console.log("Data helper", data);
         return data;
       },
+      checkVacante: async function (id_curso) {
+        const query = await pool.query(
+          "SELECT COUNT(*) FROM lista_curso WHERE estado = 'Pagado' AND id_curso = $1",
+          [id_curso]
+        );
+        var resq = query.rows[0].count;
+        var count = parseInt(resq);
+        return count;
+      },
     },
   })
 );

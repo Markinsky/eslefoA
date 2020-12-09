@@ -193,9 +193,31 @@ router.post("/verasp/editpass/:id_aspirante", async (req, res) => {
 router.get("/verasp/newpay/:id_aspirante", async (req, res) => {
   try {
     const { id_aspirante } = req.params;
-    res.render("admin/newpay", { id_aspirante });
+    const qExtra = await pool.query("SELECT * FROM extra");
+    const arrExtra = qExtra.rows;
+    res.render("admin/newpay", { id_aspirante, arrExtra });
   } catch (e) {
     console.log("Error newpay", e);
+  }
+});
+
+router.post("/verap/newpay", async (req, res) => {
+  try {
+    const { razon, extra, id } = req.body;
+    const newquery = await pool.query(
+      "INSERT INTO otros_pagos (id_extra, razon, id_aspirante) VALUES ($1,$2,$3)",
+      [extra, razon, id]
+    );
+    const resQuery = newquery.rowCount;
+    if (resQuery > 0) {
+      req.flash("success", "Nuevo adeudo creado con exito");
+      res.redirect("/verasp");
+    } else {
+      req.flash("error", "No se ha creado nuevo adeudo");
+      res.redirect("/verasp");
+    }
+  } catch (e) {
+    console.log("Error post newpay", e);
   }
 });
 //Preguntas
@@ -477,7 +499,15 @@ var idDetalles = async () => {
 
 router.get("/verpagos", async (req, res) => {
   try {
-    res.render("admin/verpagos");
+    const querA = await pool.query(
+      "SELECT * FROM view_pagos_aspirante WHERE estado = 'Pendiente'"
+    );
+    const querCount = await pool.query(
+      "SELECT COUNT(*) FROM view_pago WHERE estado = 'Pendiente'"
+    );
+    const array = querA.rows;
+    const countPagos = querCount.rows[0].count;
+    res.render("admin/verpagos", { array, countPagos });
   } catch (e) {
     console.log("Erro verpagos", e);
   }

@@ -190,6 +190,14 @@ router.post("/verasp/editpass/:id_aspirante", async (req, res) => {
   res.redirect("/verasp");
 });
 
+router.get("/verasp/newpay/:id_aspirante", async (req, res) => {
+  try {
+    const { id_aspirante } = req.params;
+    res.render("admin/newpay", { id_aspirante });
+  } catch (e) {
+    console.log("Error newpay", e);
+  }
+});
 //Preguntas
 router.get("/adminpreg", async (req, res) => {
   const pregjson = await pool.query(
@@ -464,4 +472,14 @@ var idDetalles = async () => {
     console.log("Error idDetalles", e);
   }
 };
+
+//pagos y adeudos
+
+router.get("/verpagos", async (req, res) => {
+  try {
+    res.render("admin/verpagos");
+  } catch (e) {
+    console.log("Erro verpagos", e);
+  }
+});
 module.exports = router;

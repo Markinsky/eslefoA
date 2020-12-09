@@ -500,7 +500,7 @@ var idDetalles = async () => {
 router.get("/verpagos", async (req, res) => {
   try {
     const querA = await pool.query(
-      "SELECT * FROM view_pagos_aspirante WHERE estado = 'Pendiente'"
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Pagado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
     );
     const querCount = await pool.query(
       "SELECT COUNT(*) FROM view_pago WHERE estado = 'Pendiente'"

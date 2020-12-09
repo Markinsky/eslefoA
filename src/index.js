@@ -8,7 +8,7 @@ const passport = require("passport");
 const bodyParser = require("body-parser");
 var pg = require("pg");
 var pgSession = require("connect-pg-simple")(session);
-var { pool } = require("./keys");
+const pool = require("./db");
 var moment = require("moment");
 
 var pgPool = new pg.Pool({
@@ -47,15 +47,6 @@ app.engine(
       fulldata: function (data) {
         console.log("Data helper", data);
         return data;
-      },
-      checkVacante: async function (id_curso) {
-        const query = await pool.query(
-          "SELECT COUNT(*) FROM lista_curso WHERE estado = 'Pagado' AND id_curso = $1",
-          [id_curso]
-        );
-        var resq = query.rows[0].count;
-        var count = parseInt(resq);
-        return count;
       },
     },
   })

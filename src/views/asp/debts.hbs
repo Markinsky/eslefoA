@@ -21,7 +21,7 @@
               <tr>
                 <td >{{nombre_curso}}</td>
                 <td>{{{formatdate fecha "MM-DD-YYYY"}}}</td>  
-                <td>{{vacantes}}</td>   
+                <td>{{resultado}}/{{vacantes}}</td>   
                 <td>{{correo}}</td>    
                 <td>{{nivel}}</td>
                 <td>{{precio}}</td>
@@ -40,34 +40,30 @@
 
 <div class="container accordion para">
     <button type="button" class="accordion__button">
-       Otros: Pagos pendientes: {{cResult}}
+       Otros: Pagos pendientes: {{oResult}}
     </button>
     <div class="accordion__content">
 <table class = "table" >
           <thead class="table-curso">
               <tr>
-                  <th>Nombre del curso</th>
-                  <th>Fecha de solicitud</th>
-                  <th>Vacante</th>
-                  <th>Correo</th>
-                  <th>Nivel</th>
+                  <th>Razón del cobro</th>
+                  <th>Fecha de creacion</th>
+                  <th>Estado</th>
+                  <th>Producto</th>
                   <th>Precio</th>
-                  <th>Nombre del maestro</th>
                   <th>Metodos de pago</th>
               </tr>
           </thead>
           <tbody class="table-curso">
-              {{#each arrayDebt}}
+              {{#each arrayoDebt}}
               <tr>
-                <td >{{nombre_curso}}</td>
+                <td >{{razon}}</td>
                 <td>{{{formatdate fecha "MM-DD-YYYY"}}}</td>  
-                <td>{{vacantes}}</td>   
-                <td>{{correo}}</td>    
-                <td>{{nivel}}</td>
+                <td>{{estado}}</td>      
+                <td>{{extra}}</td>
                 <td>{{precio}}</td>
-                <td>{{nombre}} {{appat}}</td>
                 <td>             
-               <a href="/debts/transfer/{{id_pago}}" class = "btn btn-success">
+               <a href="/debts/transfer/{{id_otro_pago}}" class = "btn btn-success">
               <i class = "fas fa-money-bill-wave" ></i>
               </a>
               </td>

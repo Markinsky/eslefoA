@@ -205,7 +205,7 @@ router.post("/verap/newpay", async (req, res) => {
   try {
     const { razon, extra, id } = req.body;
     const newquery = await pool.query(
-      "INSERT INTO otros_pagos (id_extra, razon, id_aspirante) VALUES ($1,$2,$3)",
+      "INSERT INTO otros_pagos (id_extra, razon, id_aspirante, estado, fecha) VALUES ($1,$2,$3,'Pendiente',CURRENT_DATE)",
       [extra, razon, id]
     );
     const resQuery = newquery.rowCount;
@@ -500,14 +500,22 @@ var idDetalles = async () => {
 router.get("/verpagos", async (req, res) => {
   try {
     const querA = await pool.query(
-      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Pagado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
     );
     const querCount = await pool.query(
       "SELECT COUNT(*) FROM view_pago WHERE estado = 'Pendiente'"
     );
     const array = querA.rows;
     const countPagos = querCount.rows[0].count;
-    res.render("admin/verpagos", { array, countPagos });
+    const querB = await pool.query(
+      "SELECT * FROM view_otro_pago as vp WHERE estado = 'Pendiente'"
+    );
+    const querCountB = await pool.query(
+      "SELECT COUNT(*) FROM otros_pagos WHERE estado = 'Pendiente'"
+    );
+    const arrayB = querB.rows;
+    const countPagosB = querCountB.rows[0].count;
+    res.render("admin/verpagos", { array, countPagos, arrayB, countPagosB });
   } catch (e) {
     console.log("Erro verpagos", e);
   }
@@ -521,15 +529,23 @@ router.get("/debts/accept/:id_lista_curso", async (req, res) => {
       [id_lista_curso]
     );
     const querA = await pool.query(
-      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Pagado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
     );
     const querCount = await pool.query(
       "SELECT COUNT(*) FROM view_pago WHERE estado = 'Pendiente'"
     );
     const array = querA.rows;
     const countPagos = querCount.rows[0].count;
+    const querB = await pool.query(
+      "SELECT * FROM view_otro_pago as vp WHERE estado = 'Pendiente'"
+    );
+    const querCountB = await pool.query(
+      "SELECT COUNT(*) FROM otros_pagos WHERE estado = 'Pendiente'"
+    );
+    const arrayB = querB.rows;
+    const countPagosB = querCountB.rows[0].count;
     req.flash("success", "Usuario aceptado");
-    res.render("admin/verpagos", { array, countPagos });
+    res.render("admin/verpagos", { array, countPagos, arrayB, countPagosB });
   } catch (e) {
     console.log("Error aceptar pago", e);
   }
@@ -543,15 +559,83 @@ router.get("/debts/reject/:id_lista_curso", async (req, res) => {
       [id_lista_curso]
     );
     const querA = await pool.query(
-      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Pagado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
     );
     const querCount = await pool.query(
       "SELECT COUNT(*) FROM view_pago WHERE estado = 'Pendiente'"
     );
     const array = querA.rows;
     const countPagos = querCount.rows[0].count;
+    const querB = await pool.query(
+      "SELECT * FROM view_otro_pago as vp WHERE estado = 'Pendiente'"
+    );
+    const querCountB = await pool.query(
+      "SELECT COUNT(*) FROM otros_pagos WHERE estado = 'Pendiente'"
+    );
+    const arrayB = querB.rows;
+    const countPagosB = querCountB.rows[0].count;
     req.flash("success", "Usuario rechazado");
-    res.render("admin/verpagos", { array, countPagos });
+    res.render("admin/verpagos", { array, countPagos, arrayB, countPagosB });
+  } catch (e) {
+    console.log("Error aceptar pago", e);
+  }
+});
+
+router.get("/otrosdebts/accept/:id_otro_pago", async (req, res) => {
+  try {
+    const { id_otro_pago } = req.params;
+    const up = await pool.query(
+      "UPDATE otros_pagos SET estado = 'Aceptado' WHERE id_otro_pago = $1",
+      [id_otro_pago]
+    );
+    const querA = await pool.query(
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
+    );
+    const querCount = await pool.query(
+      "SELECT COUNT(*) FROM view_pago WHERE estado = 'Pendiente'"
+    );
+    const array = querA.rows;
+    const countPagos = querCount.rows[0].count;
+    const querB = await pool.query(
+      "SELECT * FROM view_otro_pago as vp WHERE estado = 'Pendiente'"
+    );
+    const querCountB = await pool.query(
+      "SELECT COUNT(*) FROM otros_pagos WHERE estado = 'Pendiente'"
+    );
+    const arrayB = querB.rows;
+    const countPagosB = querCountB.rows[0].count;
+    req.flash("success", "Pago aceptado");
+    res.render("admin/verpagos", { array, countPagos, arrayB, countPagosB });
+  } catch (e) {
+    console.log("Error aceptar pago", e);
+  }
+});
+
+router.get("/otrosdebts/reject/:id_otro_pago", async (req, res) => {
+  try {
+    const { id_otro_pago } = req.params;
+    const up = await pool.query(
+      "UPDATE otros_pagos SET estado = 'Rechazado' WHERE id_otro_pago = $1",
+      [id_otro_pago]
+    );
+    const querA = await pool.query(
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
+    );
+    const querCount = await pool.query(
+      "SELECT COUNT(*) FROM view_pago WHERE estado = 'Pendiente'"
+    );
+    const array = querA.rows;
+    const countPagos = querCount.rows[0].count;
+    const querB = await pool.query(
+      "SELECT * FROM view_otro_pago as vp WHERE estado = 'Pendiente'"
+    );
+    const querCountB = await pool.query(
+      "SELECT COUNT(*) FROM otros_pagos WHERE estado = 'Pendiente'"
+    );
+    const arrayB = querB.rows;
+    const countPagosB = querCountB.rows[0].count;
+    req.flash("success", "Pago rechazado");
+    res.render("admin/verpagos", { array, countPagos, arrayB, countPagosB });
   } catch (e) {
     console.log("Error aceptar pago", e);
   }

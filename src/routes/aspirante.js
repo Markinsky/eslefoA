@@ -136,7 +136,7 @@ router.post("/registercurso/debt", async (req, res) => {
     var id_usuario = parseInt(ID);
     const email = req.user.usser;
     const setch = await pool.query(
-      "SELECT COUNT(*) FROM lista_curso WHERE id_aspirante = $1 AND estado = 'Pendiente'",
+      "SELECT COUNT(*) FROM lista_curso WHERE id_aspirante = $1 AND estado = 'Pendiente' OR estado = 'Aceptado'",
       [id_usuario]
     );
     const elpepe = setch.rows[0].count;
@@ -153,7 +153,10 @@ router.post("/registercurso/debt", async (req, res) => {
       );
       res.redirect("/registercurso");
     } else {
-      req.flash("error", "Ya tienes una solicitud a grupo existente");
+      req.flash(
+        "error",
+        "Ya tienes una solicitud o ya pertences a un grupo existente"
+      );
       res.redirect("/registercurso");
     }
   } catch (e) {
@@ -165,7 +168,7 @@ router.post("/registercurso/debt", async (req, res) => {
 router.get("/pagosasp", async (req, res) => {
   const id = req.user.id_aspirante;
   const qDebt = await pool.query(
-    "SELECT * FROM view_pago WHERE id_aspirante = $1 AND estado = 'Pendiente'",
+    "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM view_pago as vp WHERE id_aspirante = $1 AND estado = 'Pendiente'",
     [id]
   );
   const cDebt = await pool.query(
@@ -174,7 +177,17 @@ router.get("/pagosasp", async (req, res) => {
   );
   const cResult = cDebt.rows[0].count;
   const arrayDebt = qDebt.rows;
-  res.render("asp/debts", { cResult, arrayDebt });
+  const otroDebt = await pool.query(
+    "SELECT * FROM view_otro_pago WHERE id_aspirante = $1 AND estado = 'Pendiente'",
+    [id]
+  );
+  const oDebt = await pool.query(
+    "SELECT COUNT(*) FROM otros_pagos WHERE id_aspirante = $1 AND estado = 'Pendiente';",
+    [id]
+  );
+  const oResult = oDebt.rows[0].count;
+  const arrayoDebt = otroDebt.rows;
+  res.render("asp/debts", { cResult, arrayDebt, oResult, arrayoDebt });
 });
 
 router.get("/debts/transfer/:id_pago", async (req, res) => {

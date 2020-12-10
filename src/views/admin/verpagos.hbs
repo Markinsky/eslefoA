@@ -40,6 +40,48 @@
     </table>
     </div>
 </div>
+
+<div class="container accordion para">
+    <button type="button" class="accordion__button">
+       Otros: Pagos pendientes: {{countPagosB}}
+    </button>
+    <div class="accordion__content">
+<table class = "table" >
+          <thead class="table-curso">
+              <tr>
+                  <th>Razón del cobro</th>
+                  <th>Aspirante</th>
+                  <th>Fecha de creacion</th>
+                  <th>Estado</th>
+                  <th>Producto</th>
+                  <th>Precio</th>
+                  <th>Metodos de pago</th>
+              </tr>
+          </thead>
+          <tbody class="table-curso">
+              {{#each arrayB}}
+              <tr>
+                <td >{{razon}}</td>
+                <td>{{nombre}} {{appat}}</td>
+                <td>{{{formatdate fecha "MM-DD-YYYY"}}}</td>  
+                <td>{{estado}}</td>      
+                <td>{{extra}}</td>
+                <td>{{precio}}</td>
+                <td>             
+               <a href="/otrosdebts/accept/{{id_otro_pago}}" class = "btn btn-success">
+              <i class = "fas fa-check" ></i>
+              </a>
+              <a href="/otrosdebts/reject/{{id_otro_pago}}" class = "btn btn-danger">
+              <i class = "fas fa-times" ></i>
+              </a>
+              </td>
+              </tr>
+              {{/each}}
+          </tbody>
+    </table>
+    </div>
+</div>
+
 <script>
     document.querySelectorAll(".accordion__button").forEach((button) => {
         button.addEventListener("click", () => {

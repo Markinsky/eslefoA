@@ -1,11 +1,33 @@
 <div class="container p-4">
     <div class="row">
-        <div class="col-md-4 mx-auto">
-            <div class="card-text-center">
-                <h3> Welcome {{user.nombre}}</h3>
-                <h3> You are {{user.funcion}}</h3>
-                 <h3> Your ID: {{user.usser}}</h3>
-            </div>
+        <div class="col-md-6 mx-auto" >
+                {{#if (eq user.funcion "admin")}}
+                <h1>Bienvenido! </h1>
+                {{else}}
+                <div class="card pr">
+                    <div class = "card-body letrasdark">
+                    <h3 class="card-title  text-center">Bienvenido!</h3>
+                    <h5>Tus datos: </h5>
+                    <label class = "card-text"> Nombre: {{user.nombre}}</label> 
+                    <br>  
+                    <label class = "card-text"> Apellido paterno: {{user.appat}}</label> 
+                     <br>  
+                    <label class = "card-text"> Apellido materno: {{user.apmat}}</label>   
+                     <br>  
+                    <label class = "card-text"> Fecha de nacimiento: {{{formatdate user.birthday "MM-DD-YYYY"}}}</label> 
+                    <br>  
+                    <label class = "card-text"> Numero de celular: {{user.numero}}</label> 
+                     <br>  
+                    <label class = "card-text"> Codigo: {{user.codigo}}</label> 
+                    <br>  
+                    <label class = "card-text"> Email: {{user.usser}}</label> 
+                    </div>
+                    <div class="card-footer bg-transparent border-dark">
+                         <a href="/editdata/{{user.id_aspirante}}" class = "buttonF btn btn-danger btn-lg" >Editar datos</a>
+                         <a href="/editpass/{{user.id_aspirante}}" class = "buttonF btn btn-primary btn-lg" >Editar contraseña</a>
+                    </div>
+                </div>
+                {{/if}}
         </div>
     </div>
 </div>

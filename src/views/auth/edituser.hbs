@@ -1,0 +1,33 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-5 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3> Editar aspirante </h3>
+                     <img src="/img/asc.png">
+                </div>
+                <div class="class-body">
+                    <form action="/editdata/{{arr.id_aspirante}}" method="POST">
+                        <div class="cardBack letters">
+                            <label> Nombres: </label>
+                            <input class="form-control" type="text" value="{{{arr.nombre}}}" name="nombre"
+                                required="required" />
+                            <label>Primer apellido:</label>
+                            <input class="form-control" type="text" value="{{{arr.appat}}}"
+                                name="apPat" required="required" />
+                            <label>Segundo apellido: </label>
+                            <input class="form-control" type="text" value="{{{arr.apmat}}}"
+                                name="apMat" required="required" />
+                            <label>Numero celular o telefono:</label>
+                            <input class="form-control" type="number" value="{{{arr.numero}}}"
+                                name = "numero" required="required" />
+                            <label>Fecha de nacimiento:</label>
+                            <input class="form-control" type="date"  name="date" required="required" />
+                            <input type="submit" class=" buttonF btn btn-success btn-lg" value="Actualizar" />
+                        </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

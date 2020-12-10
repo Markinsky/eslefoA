@@ -512,4 +512,48 @@ router.get("/verpagos", async (req, res) => {
     console.log("Erro verpagos", e);
   }
 });
+
+router.get("/debts/accept/:id_lista_curso", async (req, res) => {
+  try {
+    const { id_lista_curso } = req.params;
+    const up = await pool.query(
+      "UPDATE lista_curso SET estado = 'Aceptado' WHERE id_lista_curso = $1",
+      [id_lista_curso]
+    );
+    const querA = await pool.query(
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Pagado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
+    );
+    const querCount = await pool.query(
+      "SELECT COUNT(*) FROM view_pago WHERE estado = 'Pendiente'"
+    );
+    const array = querA.rows;
+    const countPagos = querCount.rows[0].count;
+    req.flash("success", "Usuario aceptado");
+    res.render("admin/verpagos", { array, countPagos });
+  } catch (e) {
+    console.log("Error aceptar pago", e);
+  }
+});
+
+router.get("/debts/reject/:id_lista_curso", async (req, res) => {
+  try {
+    const { id_lista_curso } = req.params;
+    const up = await pool.query(
+      "UPDATE lista_curso SET estado = 'Rechazado' WHERE id_lista_curso = $1",
+      [id_lista_curso]
+    );
+    const querA = await pool.query(
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Pagado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
+    );
+    const querCount = await pool.query(
+      "SELECT COUNT(*) FROM view_pago WHERE estado = 'Pendiente'"
+    );
+    const array = querA.rows;
+    const countPagos = querCount.rows[0].count;
+    req.flash("success", "Usuario rechazado");
+    res.render("admin/verpagos", { array, countPagos });
+  } catch (e) {
+    console.log("Error aceptar pago", e);
+  }
+});
 module.exports = router;

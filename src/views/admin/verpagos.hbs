@@ -1,6 +1,6 @@
 <div class="container accordion para">
     <button type="button" class="accordion__button">
-       Pagos pendientes: {{cResult}}
+       Cursos: Pagos pendientes: {{countPagos}}
     </button>
     <div class="accordion__content">
 <table class = "table" >
@@ -27,10 +27,10 @@
                 <td>{{precio}}</td>
                 <td>{{nombre}} {{appat}} {{apmat}}</td>
                 <td>             
-               <a href="/debts/accept/{{id_pago}}" class = "btn btn-success">
+               <a href="/debts/accept/{{id_lista_curso}}" class = "btn btn-success">
               <i class = "fas fa-check" ></i>
               </a>
-              <a href="/verpagos/reject/{{id_pago}}" class = "btn btn-danger">
+              <a href="/verpagos/reject/{{id_lista_curso}}" class = "btn btn-danger">
               <i class = "fas fa-times" ></i>
               </a>
               </td>

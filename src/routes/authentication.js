@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 const { isLoggedIn } = require("../lib/auth");
 const pool = require("../db");
+const helpers = require("../lib/helpers");
 
 router.get("/signup", (req, res) => {
   res.render("auth/register");
@@ -68,6 +69,46 @@ router.post("/editdata/:id_aspirante", async (req, res) => {
     }
   } catch (e) {
     console.log("Error edit jaja", e);
+  }
+});
+
+router.get("/editpass/:id_aspirante", async (req, res) => {
+  try {
+    const { id_aspirante } = req.params;
+    res.render("auth/editpass", { id_aspirante });
+  } catch (e) {
+    console.log("Error render pass ", e);
+  }
+});
+
+router.post("/editpass/:id_aspirante", async (req, res) => {
+  try {
+    const { id_aspirante } = req.params;
+    const { passA, passB } = req.body;
+    if (passA === passB) {
+      const pass = await helpers.encrypt(passA);
+      const qq = await pool.query(
+        "UPDATE login SET pass = $1  WHERE id_aspirante = $2",
+        [pass, id_aspirante]
+      );
+      const back = qq.rowCount;
+      if (back == 1) {
+        req.logOut();
+        req.flash(
+          "success",
+          "Contraseña editada favor de hacer login de nuevo"
+        );
+        res.redirect("/signin");
+      } else {
+        req.flash("error", "Ha ocurrido un error");
+        res.redirect("/profile");
+      }
+    } else {
+      req.flash("error", "Contraseñas diferentes");
+      res.redirect("/profile");
+    }
+  } catch (e) {
+    console.log("Error render pass ", e);
   }
 });
 

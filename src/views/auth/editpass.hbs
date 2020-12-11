@@ -1,0 +1,24 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3> Cambiar contraseña </h3>
+                </div>
+                <div class="class-body">
+                    <form action="/editpass/{{id_aspirante}}" method="POST">
+                        <div class="cardBack letters">
+                            <label> Contraseña: </label>
+                            <input class="form-control" type="password" placeholder="Contraseña" name="passA"
+                                required="required" />
+                            <label>Confirmar contraseña:</label>
+                            <input class="form-control" placeholder="Confirmar contraseña" type="password" 
+                                name="passB" required="required" />
+                            <input type="submit" class=" buttonF btn btn-success btn-lg" value="Actualizar" />
+                        </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

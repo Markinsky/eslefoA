@@ -126,6 +126,29 @@ router.post("/newcurso/edit/:codigo", async (req, res) => {
   }
 });
 
+router.get("/newcurso/drop/:id_detalles", async (req, res) => {
+  try {
+    const { id_detalles } = req.params;
+    const drop = await pool.query(
+      "DELETE FROM detalles_curso WHERE id_detalles = $1",
+      [id_detalles]
+    );
+    const fd = drop.rowCount;
+    if (fd == 1) {
+      const query = await pool.query("SELECT * FROM vercurso");
+      const returnCursos = query.rows;
+      req.flash("success", "Curso eliminado con exito");
+      res.redirect("/cursos", { returnCursos });
+    } else {
+      const query = await pool.query("SELECT * FROM vercurso");
+      const returnCursos = query.rows;
+      req.flash("error", "Error");
+      res.redirect("/cursos", { returnCursos });
+    }
+  } catch (e) {
+    console.log("Error drop curso", e);
+  }
+});
 //Aspirante
 router.get("/verasp", async (req, res) => {
   const ver = await pool.query(

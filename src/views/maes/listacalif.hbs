@@ -1,0 +1,31 @@
+<div class="contaier p-4">
+<div class = "row">
+    <div class = "col-md-5 mx-auto">
+         <h3> Agregar calififacion de cada aspirante:</h3>
+    <br>
+    <form action="/actcalif" method="POST">
+    <table class = "table table-bordered table-striped" >
+          <thead class="table-Color">
+              <tr>
+                  <th>ID</th>
+                  <th> Nombre completo </th>
+                  <th> Calififacion </th>
+              </tr>
+          </thead>
+          <tbody >
+              {{#each a}}
+              <tr>
+                <td style="width:16%"><input class = "form-control" value="{{id_aspirante}}" type="number" required="required" name="id[]" readonly></td>
+                <td>{{nombre}} {{appat}} {{apmat}}</td>     
+                <td style="width:25%"><input class = "form-control" value="{{calificacion}}"type="number" required="required" name="calif[]" ></td>
+              </tr>
+               <input type="hidden" value="{{id_curso}}" name="id_curso">
+              {{/each}}
+          </tbody>
+    </table>
+        <input type="submit" value="Aceptar">
+       </form>
+</div>
+</div>
+    </div>
+   

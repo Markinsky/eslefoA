@@ -30,4 +30,35 @@ router.get("/cursomaestro/verlista/:id_curso", async (req, res) => {
     console.log("Error ver lista ", e);
   }
 });
+
+router.get("/cursomaestro/cali/:id_curso", async (req, res) => {
+  try {
+    const { id_curso } = req.params;
+    const queru = await pool.query(
+      "SELECT * FROM lista_aceptados WHERE estado = 'Aceptado' AND id_curso = $1",
+      [id_curso]
+    );
+    const a = queru.rows;
+    res.render("maes/listacalif", { a });
+  } catch (e) {
+    console.log("Error ver lista ", e);
+  }
+});
+
+router.post("/actcalif", async (req, res) => {
+  try {
+    const { calif, id, id_curso } = req.body;
+    var len = id.length;
+    for (var i = 0; i <= len; i++) {
+      var a = await pool.query(
+        "UPDATE lista_curso SET calificacion = $1 WHERE id_aspirante= $2 AND id_curso = $3",
+        [calif[i], id[i], id_curso[0]]
+      );
+    }
+    req.flash("success", "Calificaciones subidas");
+    res.redirect("/cursosmaestro");
+  } catch (e) {
+    console.log("Error post nana", e);
+  }
+});
 module.exports = router;

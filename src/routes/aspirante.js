@@ -136,7 +136,7 @@ router.post("/registercurso/debt", async (req, res) => {
     var id_usuario = parseInt(ID);
     const email = req.user.usser;
     const setch = await pool.query(
-      "SELECT COUNT(*) FROM lista_curso WHERE id_aspirante = $1 AND estado = 'Pendiente' OR estado = 'Aceptado'",
+      "SELECT COUNT(*) FROM lista_curso WHERE id_aspirante = $1 AND (estado = 'Pendiente' OR estado ='Aceptado')",
       [id_usuario]
     );
     const elpepe = setch.rows[0].count;

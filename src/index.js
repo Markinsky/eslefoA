@@ -55,7 +55,7 @@ app.set("view engine", ".hbs");
 
 //Midleware
 app.use(morgan("dev"));
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(flash());
 

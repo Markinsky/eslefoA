@@ -2,16 +2,17 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../db");
 const helpers = require("../lib/helpers");
+const { adminLoggedIn } = require("../lib/auth");
 
 //Cursos
 
-router.get("/cursos", async (req, res) => {
+router.get("/cursos", adminLoggedIn, async (req, res) => {
   const query = await pool.query("SELECT * FROM vercurso");
   const returnCursos = query.rows;
   res.render("admin/vercursos", { returnCursos });
 });
 
-router.get("/newcurso", async (req, res) => {
+router.get("/newcurso", adminLoggedIn, async (req, res) => {
   const master = await pool.query(
     "SELECT id_aspirante, nombre, appat from aspirante WHERE funcion = 'maestro';"
   );
@@ -73,7 +74,7 @@ router.post("/newcurso", async (req, res) => {
   }
 });
 
-router.get("/newcurso/edit/:codigo", async (req, res) => {
+router.get("/newcurso/edit/:codigo", adminLoggedIn, async (req, res) => {
   const { codigo } = req.params;
   const search = await pool.query("SELECT * FROM vercurso WHERE codigo = $1", [
     codigo,
@@ -126,7 +127,7 @@ router.post("/newcurso/edit/:codigo", async (req, res) => {
   }
 });
 
-router.get("/newcurso/drop/:id_detalles", async (req, res) => {
+router.get("/newcurso/drop/:id_detalles", adminLoggedIn, async (req, res) => {
   try {
     const { id_detalles } = req.params;
     const drop = await pool.query(
@@ -150,7 +151,7 @@ router.get("/newcurso/drop/:id_detalles", async (req, res) => {
   }
 });
 //Aspirante
-router.get("/verasp", async (req, res) => {
+router.get("/verasp", adminLoggedIn, async (req, res) => {
   const ver = await pool.query(
     "SELECT * FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = x.id_aspirante AND x.id_aspirante = l.id_aspirante AND funcion = 'aspirante'"
   );
@@ -158,7 +159,7 @@ router.get("/verasp", async (req, res) => {
   res.render("admin/verp", { hola });
 });
 
-router.get("/verasp/edit/:id_aspirante", async (req, res) => {
+router.get("/verasp/edit/:id_aspirante", adminLoggedIn, async (req, res) => {
   const { id_aspirante } = req.params;
   const search = await pool.query(
     "SELECT l.usser,l.id_aspirante,x.nombre, x.appat, x.apmat, x.numero  FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = $1 AND x.id_aspirante = $1 AND funcion = 'aspirante'",
@@ -182,7 +183,7 @@ router.post("/verasp/edit/:id_aspirante", async (req, res) => {
   res.redirect("/verasp");
 });
 
-router.get("/verasp/drop/:id_aspirante", async (req, res) => {
+router.get("/verasp/drop/:id_aspirante", adminLoggedIn, async (req, res) => {
   try {
     const { id_aspirante } = req.params;
     const dropy = await pool.query(
@@ -196,7 +197,7 @@ router.get("/verasp/drop/:id_aspirante", async (req, res) => {
   }
 });
 
-router.get("/verasp/pass/:id_aspirante", async (req, res) => {
+router.get("/verasp/pass/:id_aspirante", adminLoggedIn, async (req, res) => {
   const { id_aspirante } = req.params;
   res.render("admin/editpassap", { id_aspirante });
 });
@@ -213,7 +214,7 @@ router.post("/verasp/editpass/:id_aspirante", async (req, res) => {
   res.redirect("/verasp");
 });
 
-router.get("/verasp/newpay/:id_aspirante", async (req, res) => {
+router.get("/verasp/newpay/:id_aspirante", adminLoggedIn, async (req, res) => {
   try {
     const { id_aspirante } = req.params;
     const qExtra = await pool.query("SELECT * FROM extra");
@@ -244,7 +245,7 @@ router.post("/verap/newpay", async (req, res) => {
   }
 });
 //Preguntas
-router.get("/adminpreg", async (req, res) => {
+router.get("/adminpreg", adminLoggedIn, async (req, res) => {
   const pregjson = await pool.query(
     "SELECT * FROM preguntasinbox WHERE estado = 'pendiente';"
   );
@@ -252,7 +253,7 @@ router.get("/adminpreg", async (req, res) => {
   res.render("admin/preg", { preg });
 });
 
-router.get("/adminpreg/respondidos", async (req, res) => {
+router.get("/adminpreg/respondidos", adminLoggedIn, async (req, res) => {
   const pregjson = await pool.query(
     "SELECT * FROM preguntasinbox WHERE estado = 'respondido'"
   );
@@ -260,7 +261,7 @@ router.get("/adminpreg/respondidos", async (req, res) => {
   res.render("admin/pregres", { preg });
 });
 
-router.get("/adminpreg/drop/:id_pregunta", async (req, res) => {
+router.get("/adminpreg/drop/:id_pregunta", adminLoggedIn, async (req, res) => {
   try {
     const { id_pregunta } = req.params;
     const dropy = await pool.query(
@@ -274,7 +275,7 @@ router.get("/adminpreg/drop/:id_pregunta", async (req, res) => {
   }
 });
 
-router.get("/adminpreg/res/:id_pregunta", async (req, res) => {
+router.get("/adminpreg/res/:id_pregunta", adminLoggedIn, async (req, res) => {
   try {
     const { id_pregunta } = req.params;
     const dropy = await pool.query(
@@ -289,7 +290,7 @@ router.get("/adminpreg/res/:id_pregunta", async (req, res) => {
 });
 
 //Maestros
-router.get("/verm", async (req, res) => {
+router.get("/verm", adminLoggedIn, async (req, res) => {
   const ver = await pool.query(
     "SELECT * FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = x.id_aspirante AND x.id_aspirante = l.id_aspirante AND funcion = 'maestro'"
   );
@@ -297,7 +298,7 @@ router.get("/verm", async (req, res) => {
   res.render("admin/verm", { hola });
 });
 
-router.get("/verm/add", (req, res) => {
+router.get("/verm/add", adminLoggedIn, (req, res) => {
   res.render("admin/vermad");
 });
 
@@ -346,7 +347,7 @@ router.post("/vermad", async (req, res) => {
   }
 });
 
-router.get("/verm/edit/:id_aspirante", async (req, res) => {
+router.get("/verm/edit/:id_aspirante", adminLoggedIn, async (req, res) => {
   const { id_aspirante } = req.params;
   const search = await pool.query(
     "SELECT l.usser,l.id_aspirante,x.nombre, x.appat, x.apmat, x.numero  FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = $1 AND x.id_aspirante = $1 AND funcion = 'maestro'",
@@ -370,7 +371,7 @@ router.post("/vermaes/edit/:id_aspirante", async (req, res) => {
   res.redirect("/verm");
 });
 
-router.get("/verm/editpass/:id_aspirante", async (req, res) => {
+router.get("/verm/editpass/:id_aspirante", adminLoggedIn, async (req, res) => {
   const { id_aspirante } = req.params;
   res.render("admin/editmaepass", { id_aspirante });
 });
@@ -387,7 +388,7 @@ router.post("/verm/editpass/:id_aspirante", async (req, res) => {
   res.redirect("/verm");
 });
 
-router.get("/verm/drop/:id_aspirante", async (req, res) => {
+router.get("/verm/drop/:id_aspirante", adminLoggedIn, async (req, res) => {
   try {
     const { id_aspirante } = req.params;
     const dropy = await pool.query(
@@ -403,13 +404,13 @@ router.get("/verm/drop/:id_aspirante", async (req, res) => {
 
 //Encuestas
 
-router.get("/verencuestas", async (req, res) => {
+router.get("/verencuestas", adminLoggedIn, async (req, res) => {
   const qEncuesta = await pool.query("SELECT * FROM encuestainbox");
   const encuesta = qEncuesta.rows;
   res.render("admin/verencuestas", { encuesta });
 });
 
-router.get("/verncuesta/drop/:id_encuesta", async (req, res) => {
+router.get("/verncuesta/drop/:id_encuesta", adminLoggedIn, async (req, res) => {
   const { id_encuesta } = req.params;
   const dropy = await pool.query(
     "DELETE FROM encuestainbox WHERE id_encuesta = $1",
@@ -520,7 +521,7 @@ var idDetalles = async () => {
 
 //pagos y adeudos
 
-router.get("/verpagos", async (req, res) => {
+router.get("/verpagos", adminLoggedIn, async (req, res) => {
   try {
     const querA = await pool.query(
       "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
@@ -544,7 +545,7 @@ router.get("/verpagos", async (req, res) => {
   }
 });
 
-router.get("/debts/accept/:id_lista_curso", async (req, res) => {
+router.get("/debts/accept/:id_lista_curso", adminLoggedIn, async (req, res) => {
   try {
     const { id_lista_curso } = req.params;
     const up = await pool.query(
@@ -574,7 +575,7 @@ router.get("/debts/accept/:id_lista_curso", async (req, res) => {
   }
 });
 
-router.get("/debts/reject/:id_lista_curso", async (req, res) => {
+router.get("/debts/reject/:id_lista_curso", adminLoggedIn, async (req, res) => {
   try {
     const { id_lista_curso } = req.params;
     const up = await pool.query(
@@ -604,63 +605,132 @@ router.get("/debts/reject/:id_lista_curso", async (req, res) => {
   }
 });
 
-router.get("/otrosdebts/accept/:id_otro_pago", async (req, res) => {
+router.get(
+  "/otrosdebts/accept/:id_otro_pago",
+  adminLoggedIn,
+  async (req, res) => {
+    try {
+      const { id_otro_pago } = req.params;
+      const up = await pool.query(
+        "UPDATE otros_pagos SET estado = 'Aceptado' WHERE id_otro_pago = $1",
+        [id_otro_pago]
+      );
+      const querA = await pool.query(
+        "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
+      );
+      const querCount = await pool.query(
+        "SELECT COUNT(*) FROM view_pago WHERE estado = 'Pendiente'"
+      );
+      const array = querA.rows;
+      const countPagos = querCount.rows[0].count;
+      const querB = await pool.query(
+        "SELECT * FROM view_otro_pago as vp WHERE estado = 'Pendiente'"
+      );
+      const querCountB = await pool.query(
+        "SELECT COUNT(*) FROM otros_pagos WHERE estado = 'Pendiente'"
+      );
+      const arrayB = querB.rows;
+      const countPagosB = querCountB.rows[0].count;
+      req.flash("success", "Pago aceptado");
+      res.render("admin/verpagos", { array, countPagos, arrayB, countPagosB });
+    } catch (e) {
+      console.log("Error aceptar pago", e);
+    }
+  }
+);
+
+router.get(
+  "/otrosdebts/reject/:id_otro_pago",
+  adminLoggedIn,
+  async (req, res) => {
+    try {
+      const { id_otro_pago } = req.params;
+      const up = await pool.query(
+        "UPDATE otros_pagos SET estado = 'Rechazado' WHERE id_otro_pago = $1",
+        [id_otro_pago]
+      );
+      const querA = await pool.query(
+        "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
+      );
+      const querCount = await pool.query(
+        "SELECT COUNT(*) FROM view_pago WHERE estado = 'Pendiente'"
+      );
+      const array = querA.rows;
+      const countPagos = querCount.rows[0].count;
+      const querB = await pool.query(
+        "SELECT * FROM view_otro_pago as vp WHERE estado = 'Pendiente'"
+      );
+      const querCountB = await pool.query(
+        "SELECT COUNT(*) FROM otros_pagos WHERE estado = 'Pendiente'"
+      );
+      const arrayB = querB.rows;
+      const countPagosB = querCountB.rows[0].count;
+      req.flash("success", "Pago rechazado");
+      res.render("admin/verpagos", { array, countPagos, arrayB, countPagosB });
+    } catch (e) {
+      console.log("Error aceptar pago", e);
+    }
+  }
+);
+
+//publicaciones
+router.get("/publi", adminLoggedIn, async (req, res) => {
   try {
-    const { id_otro_pago } = req.params;
-    const up = await pool.query(
-      "UPDATE otros_pagos SET estado = 'Aceptado' WHERE id_otro_pago = $1",
-      [id_otro_pago]
-    );
-    const querA = await pool.query(
-      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
-    );
-    const querCount = await pool.query(
-      "SELECT COUNT(*) FROM view_pago WHERE estado = 'Pendiente'"
-    );
-    const array = querA.rows;
-    const countPagos = querCount.rows[0].count;
-    const querB = await pool.query(
-      "SELECT * FROM view_otro_pago as vp WHERE estado = 'Pendiente'"
-    );
-    const querCountB = await pool.query(
-      "SELECT COUNT(*) FROM otros_pagos WHERE estado = 'Pendiente'"
-    );
-    const arrayB = querB.rows;
-    const countPagosB = querCountB.rows[0].count;
-    req.flash("success", "Pago aceptado");
-    res.render("admin/verpagos", { array, countPagos, arrayB, countPagosB });
+    const dr = await pool.query("SELECT * FROM publi");
+    const requiem = dr.rows;
+    res.render("admin/publi", { requiem });
   } catch (e) {
-    console.log("Error aceptar pago", e);
+    console.log("Error publi", e);
   }
 });
 
-router.get("/otrosdebts/reject/:id_otro_pago", async (req, res) => {
+router.get("/publi/add", adminLoggedIn, async (req, res) => {
   try {
-    const { id_otro_pago } = req.params;
-    const up = await pool.query(
-      "UPDATE otros_pagos SET estado = 'Rechazado' WHERE id_otro_pago = $1",
-      [id_otro_pago]
-    );
-    const querA = await pool.query(
-      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM view_pagos_aspirante as vp WHERE estado = 'Pendiente'"
-    );
-    const querCount = await pool.query(
-      "SELECT COUNT(*) FROM view_pago WHERE estado = 'Pendiente'"
-    );
-    const array = querA.rows;
-    const countPagos = querCount.rows[0].count;
-    const querB = await pool.query(
-      "SELECT * FROM view_otro_pago as vp WHERE estado = 'Pendiente'"
-    );
-    const querCountB = await pool.query(
-      "SELECT COUNT(*) FROM otros_pagos WHERE estado = 'Pendiente'"
-    );
-    const arrayB = querB.rows;
-    const countPagosB = querCountB.rows[0].count;
-    req.flash("success", "Pago rechazado");
-    res.render("admin/verpagos", { array, countPagos, arrayB, countPagosB });
+    res.render("admin/newpubli");
   } catch (e) {
-    console.log("Error aceptar pago", e);
+    console.log("Error publi add", e);
+  }
+});
+
+router.post("/publi/add", async (req, res) => {
+  try {
+    const { titulo, contenido } = req.body;
+    const the = await pool.query(
+      "INSERT INTO publi (titulo, contenido, fecha) VALUES ($1, $2, CURRENT_DATE)",
+      [titulo, contenido]
+    );
+    req.flash("success", "Publicacion agregada");
+    res.redirect("/publi");
+  } catch (e) {
+    console.log("Error publi add", e);
+  }
+});
+
+router.get("/publi/edit/:id_publi", adminLoggedIn, async (req, res) => {
+  try {
+    const { id_publi } = req.params;
+    const dr = await pool.query("SELECT * FROM publi WHERE id_publi = $1", [
+      id_publi,
+    ]);
+    const ziggy = dr.rows[0];
+    res.render("admin/editpubli", { ziggy });
+  } catch (e) {
+    console.log("Error publi add", e);
+  }
+});
+
+router.post("/publi/edit/:id_publi", async (req, res) => {
+  try {
+    const { id_publi } = req.params;
+    const { titulo, contenido } = req.body;
+    const dr = await pool.query(
+      "UPDATE publi SET titulo = $1, contenido = $2",
+      [titulo, contenido]
+    );
+    req.flash("success", "Publicacion editada");
+    res.redirect("/publi");
+  } catch (e) {
+    console.log("Error publi add", e);
   }
 });
 module.exports = router;

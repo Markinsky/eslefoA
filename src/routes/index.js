@@ -11,9 +11,24 @@ router.get("/", async (req, res) => {
   var arriba = parseInt(count);
   var countB = countCursos.rows[0].count;
   var existen = parseInt(countB);
-  res.render("index", { existen, arriba });
+  const estero = await pool.query(
+    "SELECT * FROM publi ORDER BY id_publi DESC limit 4"
+  );
+  const publis = estero.rows;
+  res.render("index", { existen, arriba, publis });
 });
 
-router.post("/", (req, res) => {});
+router.post("/read/:id_publi", async (req, res) => {
+  try {
+    const { id_publi } = req.params;
+    const aaaa = await pool.query("SELECT * FROM publi WHERE id_publi = $1", [
+      id_publi,
+    ]);
+    const nos = aaaa.rows[0];
+    res.render("publi", { nos });
+  } catch (e) {
+    console.log("ERROR PUBKU ", e);
+  }
+});
 
 module.exports = router;

@@ -158,4 +158,28 @@ router.get("/watchcursos", async (req, res) => {
 router.get("/ubication", async (req, res) => {
   res.render("links/ubication");
 });
+
+//calif
+router.get("/calif", async (req, res) => {
+  try {
+    res.render("links/searchcalif");
+  } catch (e) {
+    console.log("Error calif", e);
+  }
+});
+
+router.post("/calif", async (req, res) => {
+  try {
+    const { code } = req.body;
+    const aa = await pool.query(
+      "SELECT * FROM lista_aceptados WHERE codigo =$1 AND estado ='Aceptado'",
+      [code]
+    );
+    const sears = aa.rows;
+    res.render("links/searchcalif", { sears });
+  } catch (e) {
+    console.log("Error calif", e);
+  }
+});
+
 module.exports = router;

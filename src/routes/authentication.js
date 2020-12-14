@@ -72,7 +72,7 @@ router.post("/editdata/:id_aspirante", async (req, res) => {
   }
 });
 
-router.get("/editpass/:id_aspirante", async (req, res) => {
+router.get("/editpass/:id_aspirante", isLoggedIn, async (req, res) => {
   try {
     const { id_aspirante } = req.params;
     res.render("auth/editpass", { id_aspirante });

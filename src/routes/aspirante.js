@@ -1,14 +1,36 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../db");
+const { aspiranteLoggedIn } = require("../lib/auth");
 
 //calificaciones
-router.get("/calif", (req, res) => {
-  res.render("asp/calif");
+router.get("/aspcalif", aspiranteLoggedIn, async (req, res) => {
+  const code = req.user.codigo;
+  const aa = await pool.query(
+    "SELECT * FROM lista_aceptados WHERE codigo =$1 AND estado ='Aceptado'",
+    [code]
+  );
+  console.log("Codigo", code);
+  const sears = aa.rows;
+  res.render("asp/calif", { sears });
+});
+
+router.post("/aspcalif", aspiranteLoggedIn, async (req, res) => {
+  try {
+    const { code } = req.body;
+    const aa = await pool.query(
+      "SELECT * FROM lista_aceptados WHERE codigo =$1 AND estado ='Aceptado'",
+      [code]
+    );
+    const sears = aa.rows;
+    res.render("asp/calif", { sears });
+  } catch (e) {
+    console.log("Error calif", e);
+  }
 });
 
 //preguntas
-router.get("/ask", (req, res) => {
+router.get("/ask", aspiranteLoggedIn, (req, res) => {
   res.render("asp/ask");
 });
 
@@ -29,7 +51,7 @@ router.post("/ask", async (req, res) => {
 });
 
 //Cursos
-router.get("/registercurso", async (req, res) => {
+router.get("/registercurso", aspiranteLoggedIn, async (req, res) => {
   //A
   const countCursosA = await pool.query(
     "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 1"
@@ -106,21 +128,25 @@ router.get("/registercurso", async (req, res) => {
   });
 });
 
-router.get("/registercurso/edit/:id_curso", async (req, res) => {
-  try {
-    const { id_curso } = req.params;
-    const id_aspirante = req.user.id_aspirante;
-    const qA = await pool.query(
-      "SELECT * FROM vercurso_espe WHERE id_curso = $1",
-      [id_curso]
-    );
-    const cursBack = qA.rows[0];
-    console.log("cursBack", cursBack);
-    res.render("asp/showcurso", { id_aspirante, id_curso, cursBack });
-  } catch (e) {
-    console.log("ERROR REGISTER CURSO SOLICITAR", e);
+router.get(
+  "/registercurso/edit/:id_curso",
+  aspiranteLoggedIn,
+  async (req, res) => {
+    try {
+      const { id_curso } = req.params;
+      const id_aspirante = req.user.id_aspirante;
+      const qA = await pool.query(
+        "SELECT * FROM vercurso_espe WHERE id_curso = $1",
+        [id_curso]
+      );
+      const cursBack = qA.rows[0];
+      console.log("cursBack", cursBack);
+      res.render("asp/showcurso", { id_aspirante, id_curso, cursBack });
+    } catch (e) {
+      console.log("ERROR REGISTER CURSO SOLICITAR", e);
+    }
   }
-});
+);
 
 //adeudo
 router.post("/registercurso/debt", async (req, res) => {
@@ -165,7 +191,7 @@ router.post("/registercurso/debt", async (req, res) => {
 });
 
 //pagos
-router.get("/pagosasp", async (req, res) => {
+router.get("/pagosasp", aspiranteLoggedIn, async (req, res) => {
   const id = req.user.id_aspirante;
   const qDebt = await pool.query(
     "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM view_pago as vp WHERE id_aspirante = $1 AND estado = 'Pendiente'",
@@ -190,7 +216,7 @@ router.get("/pagosasp", async (req, res) => {
   res.render("asp/debts", { cResult, arrayDebt, oResult, arrayoDebt });
 });
 
-router.get("/debts/transfer/:id_pago", async (req, res) => {
+router.get("/debts/transfer/:id_pago", aspiranteLoggedIn, async (req, res) => {
   try {
     const { id_pago } = req.params;
     const sq = await pool.query(
@@ -205,7 +231,7 @@ router.get("/debts/transfer/:id_pago", async (req, res) => {
 });
 
 //mi curso
-router.get("/miscursos", async (req, res) => {
+router.get("/miscursos", aspiranteLoggedIn, async (req, res) => {
   try {
     const id = req.user.id_aspirante;
     const insom = await pool.query(
@@ -230,16 +256,20 @@ router.get("/miscursos", async (req, res) => {
   }
 });
 
-router.get("/micurso/bitacora/:id_curso", async (req, res) => {
-  try {
-    const { id_curso } = req.params;
-    const s = await pool.query("SELECT * FROM bitacora WHERE id_curso = $1", [
-      id_curso,
-    ]);
-    const sa = s.rows;
-    res.render("asp/bitacora", { sa, id_curso });
-  } catch (e) {
-    console.log("Error bitcaora qwq", e);
+router.get(
+  "/micurso/bitacora/:id_curso",
+  aspiranteLoggedIn,
+  async (req, res) => {
+    try {
+      const { id_curso } = req.params;
+      const s = await pool.query("SELECT * FROM bitacora WHERE id_curso = $1", [
+        id_curso,
+      ]);
+      const sa = s.rows;
+      res.render("asp/bitacora", { sa, id_curso });
+    } catch (e) {
+      console.log("Error bitcaora qwq", e);
+    }
   }
-});
+);
 module.exports = router;

@@ -67,17 +67,32 @@
     <div class = "col-md-4" style="padding: 2;">
       <div class = "card cardColor">
         <div class = "card-body text-center">
-          <form action = "#">
+          <form action = "/links/watchcursos">
             <p class = "card-text">
               Contamos con {{existen}} cursos <br>
               de los cuales {{arriba}} estan disponibles.
             </p>
-             <input type="submit" class="normalButton" value="Ver cursos" />
+             <input type="submit"  class="normalButton" value="Ver cursos" />
           </form>
         </div>
       </div>
     </div>
 </div>
-
+<div div = "row ">
+      {{#each publis}}
+       <div class ="col-md-9 mx-auto p-4">
+      <div class= "card text-center">
+        <div class = "card-title">
+          <form action = "read/{{id_publi}}" method="POST">
+             <h3 >{{titulo}} </h3>
+            <h4>{{formatdate fecha "MM-DD-YYYY"}} </h4>
+            <input type="submit"  class="normalButton" value="Leer" />
+          </form>
+            <div class="card-footer bg-transparent border-dark"></div>
+        </div>
+      </div>
+        </div>
+      {{/each}}
+</div>
 
 </div>

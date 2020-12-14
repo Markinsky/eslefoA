@@ -1,0 +1,41 @@
+<div class="contaier p-4">
+    <div class ="row m-2">
+                <a href="/publi/add" class = "btn btn-success">
+              <i class = "fas fa-user-plus" ></i>
+            <label> Nueva publicacion</label>
+        </a>
+
+    </div>
+    {{#if requiem}}
+    <div class = "row">
+    <table class = "table table-bordered table-striped" >
+          <thead class="table-Color">
+              <tr>
+                  <th> ID </th>
+                  <th>Titulo</th>
+                  <th> Contenido</th>
+                  <th> Fecha</th>
+                  <th> Acciones </th>
+              </tr>
+          </thead>
+          <tbody >
+              {{#each requiem}}
+              <tr>
+                <td>{{id_publi}}</td>  
+                <td >{{titulo}}</td>
+                <td>{{contenido}}</td>                   
+               <td>{{{formatdate fecha "MM-DD-YYYY"}}} </td>   
+                 <td>
+              <a href="/publi/edit/{{id_publi}}" class = "btn btn-warning">
+              <i class = "fas fa-user-edit" ></i>
+            </td>
+              </tr>
+              {{/each}}
+          </tbody>
+    </table>
+</div>
+    {{else}}
+        <h3> No hay Publicaciones</h3>
+    {{/if}}
+
+</div>

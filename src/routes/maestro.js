@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../db");
-
+const { maestroLoggedIn } = require("../lib/auth");
 //Ver cursos
-router.get("/cursosmaestro", async (req, res) => {
+router.get("/cursosmaestro", maestroLoggedIn, async (req, res) => {
   try {
     const id_aspirante = req.user.id_aspirante;
     const a = await pool.query(
@@ -17,33 +17,41 @@ router.get("/cursosmaestro", async (req, res) => {
   }
 });
 
-router.get("/cursomaestro/verlista/:id_curso", async (req, res) => {
-  try {
-    const { id_curso } = req.params;
-    const queru = await pool.query(
-      "SELECT * FROM lista_aceptados WHERE estado = 'Aceptado' AND id_curso = $1",
-      [id_curso]
-    );
-    const a = queru.rows;
-    res.render("maes/lista", { a });
-  } catch (e) {
-    console.log("Error ver lista ", e);
+router.get(
+  "/cursomaestro/verlista/:id_curso",
+  maestroLoggedIn,
+  async (req, res) => {
+    try {
+      const { id_curso } = req.params;
+      const queru = await pool.query(
+        "SELECT * FROM lista_aceptados WHERE estado = 'Aceptado' AND id_curso = $1",
+        [id_curso]
+      );
+      const a = queru.rows;
+      res.render("maes/lista", { a });
+    } catch (e) {
+      console.log("Error ver lista ", e);
+    }
   }
-});
+);
 
-router.get("/cursomaestro/cali/:id_curso", async (req, res) => {
-  try {
-    const { id_curso } = req.params;
-    const queru = await pool.query(
-      "SELECT * FROM lista_aceptados WHERE estado = 'Aceptado' AND id_curso = $1",
-      [id_curso]
-    );
-    const a = queru.rows;
-    res.render("maes/listacalif", { a });
-  } catch (e) {
-    console.log("Error ver lista ", e);
+router.get(
+  "/cursomaestro/cali/:id_curso",
+  maestroLoggedIn,
+  async (req, res) => {
+    try {
+      const { id_curso } = req.params;
+      const queru = await pool.query(
+        "SELECT * FROM lista_aceptados WHERE estado = 'Aceptado' AND id_curso = $1",
+        [id_curso]
+      );
+      const a = queru.rows;
+      res.render("maes/listacalif", { a });
+    } catch (e) {
+      console.log("Error ver lista ", e);
+    }
   }
-});
+);
 
 router.post("/actcalif", async (req, res) => {
   try {
@@ -62,20 +70,24 @@ router.post("/actcalif", async (req, res) => {
   }
 });
 
-router.get("/cursomaestro/bitacora/:id_curso", async (req, res) => {
-  try {
-    const { id_curso } = req.params;
-    const s = await pool.query("SELECT * FROM bitacora WHERE id_curso = $1", [
-      id_curso,
-    ]);
-    const sa = s.rows;
-    res.render("maes/bitacoramaes", { sa, id_curso });
-  } catch (e) {
-    console.log("Error bitcaora qwq", e);
+router.get(
+  "/cursomaestro/bitacora/:id_curso",
+  maestroLoggedIn,
+  async (req, res) => {
+    try {
+      const { id_curso } = req.params;
+      const s = await pool.query("SELECT * FROM bitacora WHERE id_curso = $1", [
+        id_curso,
+      ]);
+      const sa = s.rows;
+      res.render("maes/bitacoramaes", { sa, id_curso });
+    } catch (e) {
+      console.log("Error bitcaora qwq", e);
+    }
   }
-});
+);
 
-router.get("/bita/add/:id_curso", async (req, res) => {
+router.get("/bita/add/:id_curso", maestroLoggedIn, async (req, res) => {
   try {
     const { id_curso } = req.params;
     res.render("maes/bitaadd", { id_curso });
@@ -99,7 +111,7 @@ router.post("/bita/add/:id_curso", async (req, res) => {
   }
 });
 
-router.get("/bita/edit/:id_bitacora", async (req, res) => {
+router.get("/bita/edit/:id_bitacora", maestroLoggedIn, async (req, res) => {
   try {
     const { id_bitacora } = req.params;
     const a = await pool.query(

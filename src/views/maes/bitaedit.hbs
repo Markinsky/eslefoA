@@ -1,0 +1,23 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-5 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3> Editar entrada en la bitacora </h3>
+                </div>
+                <div class="class-body">
+                    <form action="/bita/edit/{{megumin.id_bitacora}}" method="POST">
+                        <div class="cardBack letters">
+                            <label> Titulo: </label>
+                            <input class="form-control" type="text" value="{{megumin.titulo}}" name="titulo" required="required" />
+                               <label> Contenido: </label>
+                            <input class="form-control" type="text" value="{{megumin.contenido}}" name="contenido"
+                                required="required" /> 
+                            <input type="submit" class="signButton" value="Editar" />
+                        </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

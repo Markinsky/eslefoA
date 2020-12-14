@@ -203,4 +203,43 @@ router.get("/debts/transfer/:id_pago", async (req, res) => {
     console.log("ERROR DEBTSS", e);
   }
 });
+
+//mi curso
+router.get("/miscursos", async (req, res) => {
+  try {
+    const id = req.user.id_aspirante;
+    const insom = await pool.query(
+      "SELECT * FROM lista_curso WHERE id_aspirante = $1 AND estado = 'Aceptado'",
+      [id]
+    );
+    var choco = insom.rows[0].id_curso;
+    const dara = insom.rowCount;
+    if (dara > 0) {
+      const etoit = await pool.query(
+        "SELECT * FROM vercurso_espe WHERE id_curso = $1",
+        [choco]
+      );
+      const et = etoit.rows[0];
+      res.render("asp/micurso", { et });
+    } else {
+      req.flash("error", "No tienes ningun curso activo");
+      res.redirect("/profile");
+    }
+  } catch (e) {
+    console.log("Error mi curso", e);
+  }
+});
+
+router.get("/micurso/bitacora/:id_curso", async (req, res) => {
+  try {
+    const { id_curso } = req.params;
+    const s = await pool.query("SELECT * FROM bitacora WHERE id_curso = $1", [
+      id_curso,
+    ]);
+    const sa = s.rows;
+    res.render("asp/bitacora", { sa, id_curso });
+  } catch (e) {
+    console.log("Error bitcaora qwq", e);
+  }
+});
 module.exports = router;

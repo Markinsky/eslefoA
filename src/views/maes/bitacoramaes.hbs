@@ -1,0 +1,39 @@
+<div class="contaier p-4">
+    <div class ="row m-2">
+                <a href="/bita/add/{{id_curso}}" class = "btn btn-success">
+              <i class = "fas fa-user-plus" ></i>
+            <label> Nueva entrada en la bitacora</label>
+        </a>
+
+    </div>
+<div class = "row">
+    <table class = "table table-bordered table-striped" >
+          <thead class="table-Color">
+              <tr>
+                  <th> ID </th>
+                  <th>Titulo</th>
+                  <th> Contenido</th>
+                  <th> Fecha</th>
+                  <th> Id del curso</th>
+                  <th> Acciones </th>
+              </tr>
+          </thead>
+          <tbody >
+              {{#each sa}}
+              <tr>
+                <td>{{id_bitacora}}</td>  
+                <td >{{titulo}}</td>
+                <td>{{contenido}}</td>                   
+               <td>{{{formatdate fecha "MM-DD-YYYY"}}} </td>   
+                <td>{{id_curso}}</td>
+                 <td>
+              <a href="/bita/edit/{{id_bitacora}}" class = "btn btn-warning">
+              <i class = "fas fa-user-edit" ></i>
+            </td>
+              </tr>
+              {{/each}}
+          </tbody>
+    </table>
+
+</div>
+</div>

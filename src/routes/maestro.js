@@ -61,4 +61,72 @@ router.post("/actcalif", async (req, res) => {
     console.log("Error post nana", e);
   }
 });
+
+router.get("/cursomaestro/bitacora/:id_curso", async (req, res) => {
+  try {
+    const { id_curso } = req.params;
+    const s = await pool.query("SELECT * FROM bitacora WHERE id_curso = $1", [
+      id_curso,
+    ]);
+    const sa = s.rows;
+    res.render("maes/bitacoramaes", { sa, id_curso });
+  } catch (e) {
+    console.log("Error bitcaora qwq", e);
+  }
+});
+
+router.get("/bita/add/:id_curso", async (req, res) => {
+  try {
+    const { id_curso } = req.params;
+    res.render("maes/bitaadd", { id_curso });
+  } catch (e) {
+    console.log("Error bitadd", e);
+  }
+});
+
+router.post("/bita/add/:id_curso", async (req, res) => {
+  try {
+    const { id_curso } = req.params;
+    const { titulo, contenido } = req.body;
+    const sd = await pool.query(
+      "INSERT INTO bitacora (titulo, contenido, fecha, id_curso) VALUES ($1,$2, CURRENT_DATE, $3)",
+      [titulo, contenido, id_curso]
+    );
+    req.flash("success", "Entrada de la bitacora agregada con exito");
+    res.redirect("/cursomaestro");
+  } catch (e) {
+    console.log("Error bitadd", e);
+  }
+});
+
+router.get("/bita/edit/:id_bitacora", async (req, res) => {
+  try {
+    const { id_bitacora } = req.params;
+    const a = await pool.query(
+      "SELECT * FROM bitacora WHERE id_bitacora = $1",
+      [id_bitacora]
+    );
+    const megumin = a.rows[0];
+    console.log("id", megumin);
+    res.render("maes/bitaedit", { megumin });
+  } catch (e) {
+    console.log("Error edit", e);
+  }
+});
+
+router.post("/bita/edit/:id_bitacora", async (req, res) => {
+  try {
+    const { id_bitacora } = req.params;
+    const { titulo, contenido } = req.body;
+    const upd = await pool.query(
+      "UPDATE bitacora SET titulo= $1, contenido=$2 WHERE id_bitacora = $3",
+      [titulo, contenido, id_bitacora]
+    );
+    req.flash("success", "Entrada de la bitacora editada con exito");
+    res.redirect("/cursomaestro");
+  } catch (e) {
+    console.log("Error post edit bita", e);
+  }
+});
+
 module.exports = router;

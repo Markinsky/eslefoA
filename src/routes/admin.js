@@ -724,8 +724,8 @@ router.post("/publi/edit/:id_publi", async (req, res) => {
     const { id_publi } = req.params;
     const { titulo, contenido } = req.body;
     const dr = await pool.query(
-      "UPDATE publi SET titulo = $1, contenido = $2",
-      [titulo, contenido]
+      "UPDATE publi SET titulo = $1, contenido = $2 WHERE id_publi = $3",
+      [titulo, contenido, id_publi]
     );
     req.flash("success", "Publicacion editada");
     res.redirect("/publi");

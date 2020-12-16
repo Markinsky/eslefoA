@@ -105,7 +105,7 @@ router.post("/bita/add/:id_curso", async (req, res) => {
       [titulo, contenido, id_curso]
     );
     req.flash("success", "Entrada de la bitacora agregada con exito");
-    res.redirect("/cursomaestro");
+    res.redirect("/cursosmaestro");
   } catch (e) {
     console.log("Error bitadd", e);
   }
@@ -135,7 +135,7 @@ router.post("/bita/edit/:id_bitacora", async (req, res) => {
       [titulo, contenido, id_bitacora]
     );
     req.flash("success", "Entrada de la bitacora editada con exito");
-    res.redirect("/cursomaestro");
+    res.redirect("/cursosmaestro");
   } catch (e) {
     console.log("Error post edit bita", e);
   }

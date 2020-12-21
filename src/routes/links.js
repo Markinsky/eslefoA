@@ -182,4 +182,8 @@ router.post("/calif", async (req, res) => {
   }
 });
 
+//videos
+router.get("/videos", (req, res) => {
+  res.render("links/videos");
+});
 module.exports = router;

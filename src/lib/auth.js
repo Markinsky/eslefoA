@@ -7,7 +7,6 @@ module.exports = {
   },
   adminLoggedIn(req, res, next) {
     const funcion = req.user.funcion;
-    console.log("Func", funcion);
     if (funcion === "admin") {
       if (req.isAuthenticated()) {
         return next();

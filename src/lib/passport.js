@@ -48,16 +48,11 @@ passport.use(
         const passA = req.body.contraA;
         const passB = req.body.contraB;
         if (passA === passB) {
-          const email = req.body.email;
+          const { email, nombre, apMat, apPat, nacimiento, numero } = req.body;
           var verE = await verEmail(email);
           if (verE === true) {
-            const numero = req.body.numero;
             var numeroLenght = numero.length;
             if (numeroLenght == 10) {
-              const nombre = req.body.nombre;
-              const apPat = req.body.apPat;
-              const apMat = req.body.apMat;
-              const nacimiento = req.body.nacimiento;
               const pass = await helpers.encrypt(passA);
               const funcion = "aspirante";
               const codigo = await newCode();

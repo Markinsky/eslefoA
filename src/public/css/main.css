@@ -390,3 +390,17 @@ input[name="r"] {
 .pr {
   background: #d0d0d0;
 }
+
+.randomButton {
+  margin-bottom: 2%;
+  background-color: #d72921;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  font-size: 14px;
+}
+
+.randomButton:hover {
+  background: #d0a1a0;
+  color: black;
+}

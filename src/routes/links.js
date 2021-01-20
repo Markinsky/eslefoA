@@ -44,9 +44,10 @@ router.post("/encuesta", async (req, res) => {
       res.redirect("/links/encuesta");
     } else {
       const data = [calificacion, respuesta, check];
-      const query =
-        "INSERT INTO encuestainbox (calificacion, respuesta, checkbox) VALUES ($1, $2, $3)";
-      const rest = await pool.query(query, data);
+      const query = await pool.query(
+        "INSERT INTO encuestainbox (calificacion, respuesta, checkbox) VALUES ($1, $2, $3)",
+        [calificacion, respuesta, check]
+      );
       req.flash("success", "Encuesta enviada con exito");
       res.redirect("/links/encuesta");
     }
@@ -61,13 +62,11 @@ router.get("/askus", (req, res) => {
 
 router.post("/askus", async (req, res) => {
   try {
-    const nombre = req.body.nombre;
-    const pregunta = req.body.pregunta;
-    const email = req.body.email;
-    const data = [pregunta, email, nombre];
-    const query =
-      "INSERT INTO preguntasinbox (pregunta, correo,estado,nombre) VALUES ($1, $2,'pendiente',$3)";
-    const rest = await pool.query(query, data);
+    const { pregunta, email, nombre } = req.body;
+    const query = await pool.query(
+      "INSERT INTO preguntasinbox (pregunta, correo,estado,nombre) VALUES ($1, $2,'pendiente',$3)",
+      [pregunta, email, nombre]
+    );
     req.flash("success", "La pregunta ha sido enviada con exito!");
     res.redirect("/links/askus");
   } catch (e) {

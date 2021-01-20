@@ -10,7 +10,10 @@
                  <label>Nombre del curso: </label>
                  <input type="text" placeholder="Nombre del curso" class="form-control" name="nombre" required="required" />
                 <label>Codigo:</label>
-                 <input type="text"  placeholder="Codigo" class="form-control" name="codigo" required="required" />
+                <div>
+                <input class = "randomButton" type="button" onclick="kata()" value="Codigo aleatorio"></input>
+                </div>
+                 <input type="text"  placeholder="Codigo" class="form-control" name="codigo" id="demo" required="required" />
                 <label>Maestro:</label>
                 <select class="font-stuffs" id="maestro" name="maestro"> 
                     <option value = "error"> -Selecciona maestro- </option>
@@ -45,3 +48,12 @@
     </div>
 </div>
 
+<script>
+    async function kata(){
+        try{
+            document.getElementById("demo").value = Math.floor(100000 + Math.random() * 900000);
+        }catch(e){
+            document.getElementById("demo").value = e;
+        }
+    }
+</script>

@@ -36,6 +36,8 @@ router.post("/newcurso", async (req, res) => {
     } = req.body;
     const verCodigoCurso = await verCodigo(codigo);
     const verNombreCurso = await verNombre(nombre);
+    const codigoSecreto = await secretCode();
+    console.log("AQUI", codigoSecreto);
     if (
       verNombreCurso === true &&
       verCodigoCurso === true &&
@@ -50,8 +52,16 @@ router.post("/newcurso", async (req, res) => {
       if (queryDetalleCurso.rowCount > 0) {
         const id_Detalles = await idDetalles();
         const queryCurso = await pool.query(
-          "INSERT INTO curso (codigo, nombre_curso, id_maestro, estado, vacantes, id_detalles) VALUES ($1, $2, $3, $4, $5, $6)",
-          [codigo, nombre, maestro, "abierto", vacantes, id_Detalles]
+          "INSERT INTO curso (codigo, nombre_curso, id_maestro, estado, vacantes, id_detalles, secret) VALUES ($1, $2, $3, $4, $5, $6,$7)",
+          [
+            codigo,
+            nombre,
+            maestro,
+            "abierto",
+            vacantes,
+            id_Detalles,
+            codigoSecreto,
+          ]
         );
         if (queryCurso.rowCount > 0) {
           req.flash("success", "Curso agregado con exito");
@@ -134,18 +144,8 @@ router.get("/newcurso/drop/:id_detalles", adminLoggedIn, async (req, res) => {
       "DELETE FROM detalles_curso WHERE id_detalles = $1",
       [id_detalles]
     );
-    const fd = drop.rowCount;
-    if (fd == 1) {
-      const query = await pool.query("SELECT * FROM vercurso");
-      const returnCursos = query.rows;
-      req.flash("success", "Curso eliminado con exito");
-      res.redirect("/cursos", { returnCursos });
-    } else {
-      const query = await pool.query("SELECT * FROM vercurso");
-      const returnCursos = query.rows;
-      req.flash("error", "Error");
-      res.redirect("/cursos", { returnCursos });
-    }
+    req.flash("success", "Borrado con exito");
+    res.redirect("/verasp");
   } catch (e) {
     console.log("Error drop curso", e);
   }
@@ -503,6 +503,27 @@ var verCodigo = async (codigo) => {
     }
   } catch (e) {
     console.log("Error verNombre", e);
+  }
+};
+
+var secretCode = async () => {
+  try {
+    const data = (+new Date() * Math.random()).toString(36).substring(0, 6);
+    console.log("SECRETO:", data);
+    const ququ = await pool.query(
+      "SELECT count(*) FROM curso WHERE secreto = $1",
+      [data]
+    );
+    const count = ququ.rows[0].count;
+    var res = parseInt(count);
+    //if(res !=0){
+    //  console.log("NO ES IGUAL A 0");
+    //}else{
+    //  console.log("IGUAL A 0")
+    //}
+    return data;
+  } catch (e) {
+    console.log("Error secretCode", e);
   }
 };
 

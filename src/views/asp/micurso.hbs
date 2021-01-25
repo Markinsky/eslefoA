@@ -1,6 +1,9 @@
 <div class="container p-4">
     <div class="row">
-        <div class="col-md-6 mx-auto" >
+        {{#if (eq et "Nada")}}
+                 <h1>NO HAy cursos! </h1>    
+        {{else}}
+                    <div class="col-md-6 mx-auto" >
                 <h1>Bienvenido! </h1>
                 <div class="card pr">
                     <div class = "card-body letrasdark">
@@ -26,5 +29,7 @@
                     </div>
                 </div>
         </div>
+        {{/if}}
+
     </div>
 </div>

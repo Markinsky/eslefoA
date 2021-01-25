@@ -235,12 +235,13 @@ router.get("/miscursos", aspiranteLoggedIn, async (req, res) => {
   try {
     const id = req.user.id_aspirante;
     const insom = await pool.query(
-      "SELECT * FROM lista_curso WHERE id_aspirante = $1 AND estado = 'Aceptado'",
+      "SELECT * FROM lista_curso WHERE id_aspirante = $1",
       [id]
     );
-    var choco = insom.rows[0].id_curso;
-    const dara = insom.rowCount;
-    if (dara > 0) {
+    var cont = insom.rowCount;
+    console.log("cont", cont);
+    if (cont != 0) {
+      var choco = insom.rows[0].id_curso;
       const etoit = await pool.query(
         "SELECT * FROM vercurso_espe WHERE id_curso = $1",
         [choco]
@@ -248,8 +249,8 @@ router.get("/miscursos", aspiranteLoggedIn, async (req, res) => {
       const et = etoit.rows[0];
       res.render("asp/micurso", { et });
     } else {
-      req.flash("error", "No tienes ningun curso activo");
-      res.redirect("/profile");
+      const et = "Nada";
+      res.render("asp/micurso", { et });
     }
   } catch (e) {
     console.log("Error mi curso", e);

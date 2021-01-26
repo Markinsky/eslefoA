@@ -5,7 +5,6 @@ const helpers = require("../lib/helpers");
 const { adminLoggedIn } = require("../lib/auth");
 
 //Cursos
-
 router.get("/cursos", adminLoggedIn, async (req, res) => {
   const query = await pool.query("SELECT * FROM vercurso");
   const returnCursos = query.rows;
@@ -145,7 +144,7 @@ router.get("/newcurso/drop/:id_detalles", adminLoggedIn, async (req, res) => {
       [id_detalles]
     );
     req.flash("success", "Borrado con exito");
-    res.redirect("/verasp");
+    res.redirect("/cursos");
   } catch (e) {
     console.log("Error drop curso", e);
   }
@@ -506,22 +505,25 @@ var verCodigo = async (codigo) => {
   }
 };
 
-var secretCode = async () => {
+var secretCode = async (req, res) => {
   try {
     const data = (+new Date() * Math.random()).toString(36).substring(0, 6);
     console.log("SECRETO:", data);
     const ququ = await pool.query(
-      "SELECT count(*) FROM curso WHERE secreto = $1",
+      "SELECT count(*) FROM curso WHERE secret = $1",
       [data]
     );
     const count = ququ.rows[0].count;
     var res = parseInt(count);
-    //if(res !=0){
-    //  console.log("NO ES IGUAL A 0");
-    //}else{
-    //  console.log("IGUAL A 0")
-    //}
-    return data;
+    if (res != 0) {
+      //console.log("NO ES IGUAL A 0");
+      console.log("no es igual:", data);
+      await secretCode();
+    } else {
+      //console.log("IGUAL A 0")
+      console.log("return:", data);
+      return data;
+    }
   } catch (e) {
     console.log("Error secretCode", e);
   }

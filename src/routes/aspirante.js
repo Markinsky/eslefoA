@@ -239,7 +239,6 @@ router.get("/miscursos", aspiranteLoggedIn, async (req, res) => {
       [id]
     );
     var cont = insom.rowCount;
-    console.log("cont", cont);
     if (cont != 0) {
       var choco = insom.rows[0].id_curso;
       const etoit = await pool.query(

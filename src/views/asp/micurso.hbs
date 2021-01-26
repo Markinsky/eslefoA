@@ -1,35 +1,35 @@
 <div class="container p-4">
     <div class="row">
         {{#if (eq et "Nada")}}
-                 <h1>NO HAy cursos! </h1>    
+        <form>
+             <h1>¡No Estas inscrito en ningún curso! </h1>    
+              <label class = "courseFont"> Actualmente no estas activo en ningún curso.</label> 
+        </form>
         {{else}}
-                    <div class="col-md-6 mx-auto" >
-                <h1>Bienvenido! </h1>
-                <div class="card pr">
-                    <div class = "card-body letrasdark">
-                    <h3 class="card-title  text-center">Bienvenido!</h3>
-                    <h5>Tus datos: </h5>
-                    <label class = "card-text"> Nombre del curso: {{et.nombre_curso}}</label> 
-                    <br>  
-                    <label class = "card-text"> Codigo: {{et.codigo}}</label> 
+                <div class="col-md-6 mx-auto" >
+                <h2>¡Bienvenido! </h2>
+                <label class = "courseFont"> Actualmente estas activo en el siguiente curso:</label> 
+                <br>  
+                <label class = "courseFont"> <span class = "negritas">Nombre del curso:</span> {{et.nombre_curso}}</label> 
+                <br>  
+                <label class = "courseFont"> <span class = "negritas">Codigo:</span> {{et.codigo}}</label> 
+                <br>  
+                <label class = "courseFont"> <span class = "negritas">Maestro:</span> {{et.nombre}} {{et.appat}}</label> 
+                <br> 
+                <label class = "courseFont"> <span class = "negritas">Descripción:</span>  {{et.des}}</label>                   
+                </div>
+                 
+                     <div class="col-md-6 mx-auto" >
+                    <label class = "courseFont"><span class = "negritas">Estado:</span>  {{et.estado}}</label>   
                      <br>  
-                    <label class = "card-text"> Estado: {{et.estado}}</label>   
-                     <br>  
-                    <label class = "card-text"> Horario: {{et.horario}}</label> 
+                    <label class = "courseFont"><span class = "negritas">Horario:</span>  {{et.horario}}</label> 
                     <br>  
-                    <label class = "card-text"> Dias: {{et.dias}}</label> 
-                     <br>  
-                    <label class = "card-text"> Descripcion: {{et.des}}</label> 
-                    <br>  
-                    <label class = "card-text"> Maestro: {{et.nombre}} {{et.appat}}</label> 
-                    <br>
-                    </div>
+                    <label class = "courseFont"> <span class = "negritas">Días:</span> {{et.dias}}</label> 
+                     <br>   
                     <div class="card-footer bg-transparent border-dark">
                          <a href="/micurso/bitacora/{{et.id_curso}}" class = "buttonF btn btn-primary btn-lg" >Ver bitacora</a>
-                    </div>
-                </div>
-        </div>
+                    </div>     
+                     </div>     
         {{/if}}
-
     </div>
 </div>

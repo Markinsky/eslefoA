@@ -3,6 +3,28 @@ const router = express.Router();
 const pool = require("../db");
 const { aspiranteLoggedIn } = require("../lib/auth");
 
+//codigo para unirse a un grupo al toke mi rey
+router.get("/coursecode", aspiranteLoggedIn, async (req, res) => {
+  try {
+    res.render("asp/coursecode");
+  } catch (e) {
+    console.log("Error coursecode", e);
+  }
+});
+
+router.post("/coursecode", aspiranteLoggedIn, async (req, res) => {
+  try {
+    const { id } = req.user.id_aspirante;
+    const { code } = req.body;
+    const qq = await pool.query(
+      "SELECT COUNT(*) FROM curso WHERE secret = $1",
+      [code](req, (res) => {})
+    );
+    res.render("asp/coursecode");
+  } catch (e) {
+    console.log("Error coursecode", e);
+  }
+});
 //calificaciones
 router.get("/aspcalif", aspiranteLoggedIn, async (req, res) => {
   const code = req.user.codigo;

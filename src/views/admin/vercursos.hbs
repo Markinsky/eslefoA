@@ -15,8 +15,9 @@
                   <th> Estado</th>
                   <th> Vacantes</th>
                   <th> Horario</th>
-                  <th> Dias</th>
-                  <th> Descripcion</th>
+                  <th style="width: 70px;"> Dias</th>
+                  <th style="width: 200px;" > Descripcion</th>
+                  <th> Secret </th>
                   <th> Acciones </th>
               </tr>
           </thead>
@@ -31,6 +32,7 @@
                 <td>{{horario}}</td>    
                 <td>{{dias}}</td>
                 <td>{{des}}</td> 
+                <td >{{secret}}</td> 
                  <td>
               <a href="/newcurso/edit/{{codigo}}" class = "btn btn-success">
               <i class = "fas fa-edit" ></i>
@@ -38,6 +40,9 @@
              <a href="/newcurso/drop/{{id_detalles}}" class = "btn btn-danger">
               <i class = "far fa-trash-alt" ></i>
               </a>
+              <button onclick="copypaste()" class = "btn btn-primary">
+              <i class = "fas fa-copy" ></i>
+              </button>
             </td>
               </tr>
               {{/each}}
@@ -46,3 +51,4 @@
 
 </div>
 </div>
+

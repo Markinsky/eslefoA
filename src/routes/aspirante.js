@@ -17,17 +17,15 @@ router.post("/coursecode", aspiranteLoggedIn, async (req, res) => {
     const { id } = req.user.id_aspirante;
     const { code } = req.body;
     const qq = await pool.query(
-      "SELECT * , (SELECT COUNT(*) FROM curso WHERE secret = $1) FROM curso WHERE secret = $1",
-      [code],
-      (err, result) => {
-        if (err || result.rows[0].count == 0) {
-          req.flash("error", "Error en el codigo o no existe");
-          res.redirect("/coursecode");
-        }
-        const dataCurso = result.rows[0];
-      }
+      "SELECT * FROM curso WHERE secret = $1 AND estado = 'abierto'",
+      [code]
     );
-    const nombre = dataCurso.nombre_curso;
+    if (typeof qq.rows[0] === "undefined") {
+      req.flash("error", "Error en el codigo o no existe");
+      res.redirect("/coursecode");
+    }
+    console.log("qqqq", qq.rows[0]);
+    const nombre = qq.nombre_curso;
     console.log("NOMBRE: ", nombre);
     req.flash("success", "Error en el codigo o no existe", nombre);
     res.redirect("/coursecode");

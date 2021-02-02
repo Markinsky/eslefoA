@@ -25,7 +25,7 @@ router.post("/coursecode", aspiranteLoggedIn, async (req, res) => {
       res.redirect("/coursecode");
     }
     console.log("qqqq", qq.rows[0]);
-    const nombre = qq.nombre_curso;
+    const nombre = qq.rows[0].nombre_curso;
     console.log("NOMBRE: ", nombre);
     req.flash("success", "Error en el codigo o no existe", nombre);
     res.redirect("/coursecode");

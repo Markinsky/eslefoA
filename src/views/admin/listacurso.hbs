@@ -1,0 +1,47 @@
+<div class="contaier p-4">
+            {{#if (eq listCourse "")}}
+        <form>
+             <h1>¡Nadie se ha inscrito a este curso! </h1>    
+              <label class = "courseFont"> No hay nadie activo por el momento.</label> 
+        </form>
+        {{else}}
+            <div class = "row">
+            <h2>Lista del curso </h2>
+    </div>
+<div class = "row p-2">
+    <table class = "table table-bordered table-striped" >
+          <thead class="table-Color">
+              <tr>
+                  <th >Nombre completo</th>
+                  <th> Email</th>
+                  <th> Primera calificación </th>
+                  <th> Segunda calificación</th>
+                  <th> Tercera calificación</th>
+                  <th> Cuarta calificación</th>
+                  <th> Promedio </th>
+                  <th> Acciones </th>
+              </tr>
+          </thead>
+          <tbody >
+              {{#each listCourse}}
+              <tr>
+                <td >{{nombre}} {{appat}} {{apmat}}</td>
+                <td>{{usser}}</td>  
+                <td>{{first}}</td>   
+                <td>{{second}}</td>    
+                <td>{{third}}</td>
+                <td>{{fourth}}</td> 
+                <td >{{promedio}}</td> 
+                 <td>
+             <a href="/listacurso/drop/{{id_lista_curso}}" class = "btn btn-danger">
+              <i class = "far fa-trash-alt" ></i>
+              </a>
+            </td>
+              </tr>
+              {{/each}}
+          </tbody>
+    </table>
+{{/if}}
+</div>
+</div>
+

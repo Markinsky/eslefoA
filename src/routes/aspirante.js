@@ -14,7 +14,7 @@ router.get("/coursecode", aspiranteLoggedIn, async (req, res) => {
 
 router.post("/coursecode", aspiranteLoggedIn, async (req, res) => {
   try {
-    const { id } = req.user.id_aspirante;
+    const id = req.user.id_aspirante;
     const { code } = req.body;
     const qq = await pool.query(
       "SELECT * FROM curso WHERE secret = $1 AND estado = 'abierto'",
@@ -24,9 +24,31 @@ router.post("/coursecode", aspiranteLoggedIn, async (req, res) => {
       req.flash("error", "Error en el codigo o no existe");
       res.redirect("/coursecode");
     }
-    console.log("qqqq", qq.rows[0]);
     const nombre = qq.rows[0].nombre_curso;
-    console.log("NOMBRE: ", nombre);
+    const id_curso = qq.rows[0].id_curso;
+    const disponibles = qq.rows[0].vacantes;
+    const check = await pool.query(
+      "SELECT COUNT(*),(SELECT count(*) FROM lista_curso WHERE id_curso = $1 AND estado = 'Aceptado') AS ocupado FROM lista_curso WHERE id_aspirante = $2 AND estado = 'Aceptado'",
+      [id_curso, id]
+    );
+    const existe = parseInt(check.rows[0].count);
+    const ocupado = parseInt(check.rows[0].ocupado);
+    if (existe >= 1) {
+      req.flash("error", "No puedes pertenecer a más de un curso.");
+      res.redirect("/coursecode");
+    }
+    if (disponibles === ocupado) {
+      req.flash("error", "Grupo lleno");
+      res.redirect("/coursecode");
+    }
+    const newBoleta = await pool.query(
+      "INSERT INTO calif (first, second, third, fourth, promedio) VALUES (0,0,0,0,0) RETURNING id_calif"
+    );
+    const id_calif = newBoleta.rows[0].id_calif;
+    const newList = await pool.query(
+      "INSERT INTO lista_curso (id_curso, id_aspirante, estado, id_calif) VALUES ($1, $2, $3, $4)",
+      [id_curso, id, "Aceptado", id_calif]
+    );
     req.flash("success", "Error en el codigo o no existe", nombre);
     res.redirect("/coursecode");
   } catch (e) {

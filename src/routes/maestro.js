@@ -24,7 +24,7 @@ router.get(
     try {
       const { id_curso } = req.params;
       const queru = await pool.query(
-        "SELECT * FROM lista_aceptados WHERE estado = 'Aceptado' AND id_curso = $1",
+        "SELECT * FROM lista_aspirantes WHERE estado = 'Aceptado' AND id_curso = $1",
         [id_curso]
       );
       const a = queru.rows;
@@ -42,7 +42,7 @@ router.get(
     try {
       const { id_curso } = req.params;
       const queru = await pool.query(
-        "SELECT * FROM lista_aceptados WHERE estado = 'Aceptado' AND id_curso = $1",
+        "SELECT * FROM lista_aspirantes WHERE estado = 'Aceptado' AND id_curso = $1",
         [id_curso]
       );
       const a = queru.rows;

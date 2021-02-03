@@ -149,6 +149,39 @@ router.get("/newcurso/drop/:id_detalles", adminLoggedIn, async (req, res) => {
     console.log("Error drop curso", e);
   }
 });
+
+router.get("/newcurso/check/:id_curso", adminLoggedIn, async (req, res) => {
+  try {
+    const { id_curso } = req.params;
+    const aver = await pool.query(
+      "SELECT * FROM lista_aspirantes WHERE id_curso = $1 AND estado = 'Aceptado'",
+      [id_curso]
+    );
+    const listCourse = aver.rows;
+    res.render("admin/listacurso", { listCourse });
+  } catch (e) {
+    console.log("Error ver lista", e);
+  }
+});
+
+router.get(
+  "/listacurso/drop/:id_lista_curso",
+  adminLoggedIn,
+  async (req, res) => {
+    try {
+      const { id_lista_curso } = req.params;
+      const drop = await pool.query(
+        "DELETE FROM lista_curso WHERE id_lista_curso = $1",
+        [id_lista_curso]
+      );
+      req.flash("success", "Borrado con exito");
+      res.redirect("/cursos");
+    } catch (e) {
+      console.log("Error drop curso", e);
+    }
+  }
+);
+
 //Aspirante
 router.get("/verasp", adminLoggedIn, async (req, res) => {
   const ver = await pool.query(

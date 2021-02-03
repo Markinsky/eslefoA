@@ -1,6 +1,12 @@
 <div class="contaier p-4">
+                    {{#if (eq a "")}}
+        <form>
+             <h1>¡Nadie se ha inscrito a este curso! </h1>    
+              <label class = "courseFont"> No hay nadie activo por el momento.</label> 
+        </form>
+        {{else}}
 <div class = "row">
-    <div class = "col-md-5 mx-auto">
+    <div class = "col-md-9 mx-auto">
          <h3> Agregar calififacion de cada aspirante:</h3>
     <br>
     <form action="/actcalif" method="POST">
@@ -9,15 +15,24 @@
               <tr>
                   <th>ID</th>
                   <th> Nombre completo </th>
-                  <th> Calififacion </th>
+                  <th> Primera </th>
+                  <th> Segunda </th>
+                  <th> Tercera </th>
+                  <th> Cuarta </th>
+                  <th> Promedio </th>
               </tr>
           </thead>
           <tbody >
               {{#each a}}
               <tr>
-                <td style="width:16%"><input class = "form-control" value="{{id_aspirante}}" type="number" required="required" name="id[]" readonly></td>
-                <td>{{nombre}} {{appat}} {{apmat}}</td>     
-                <td style="width:25%"><input class = "form-control" value="{{calificacion}}"type="number" required="required" name="calif[]" ></td>
+                <td style="width:10%"><input class = "form-control" value="{{id_aspirante}}" type="number" required="required" name="id[]" readonly></td>
+                <td style="width:30%">{{nombre}} {{appat}} {{apmat}}</td>
+                <input type="hidden" value="{{id_calif}}" name="id_calif[]">     
+                <td style="width:10%"><input class = "form-control" value="{{first}}"type="number" required="required" name="first[]" ></td>
+                <td style="width:10%"><input class = "form-control" value="{{second}}"type="number" required="required" name="second[]" ></td>
+                <td style="width:10%"><input class = "form-control" value="{{third}}"type="number" required="required" name="third[]" ></td>
+                <td style="width:10%"><input class = "form-control" value="{{fourth}}"type="number" required="required" name="fourth[]" ></td>
+                <td style="width:10%"><input class = "form-control" value="{{promedio}}"type="number" required="required" name="promedio[]" ></td>
               </tr>
                <input type="hidden" value="{{id_curso}}" name="id_curso">
               {{/each}}
@@ -26,6 +41,7 @@
         <input type="submit" class="btn btn-success btn-lg" value="Aceptar">
        </form>
 </div>
+{{/if}}
 </div>
     </div>
    

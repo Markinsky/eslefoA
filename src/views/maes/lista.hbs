@@ -1,4 +1,10 @@
 <div class="contaier p-4">
+                {{#if (eq a "")}}
+        <form>
+             <h1>¡Nadie se ha inscrito a este curso! </h1>    
+              <label class = "courseFont"> No hay nadie activo por el momento.</label> 
+        </form>
+        {{else}}
 <div class = "row">
     <h3>Lista de aspirantes en este curso:</h3>
     <br>
@@ -6,10 +12,9 @@
           <thead class="table-Color">
               <tr>
                   <th> Nombre completo </th>
-                  <th> Numero</th>
+                  <th> Número</th>
                   <th> Email</th>
                   <th> Estado</th>
-                  <th> Calififacion </th>
               </tr>
           </thead>
           <tbody >
@@ -19,11 +24,10 @@
                 <td >{{numero}}</td>
                 <td>{{usser}}</td>                  
                 <td>{{estado}}</td>    
-                <td>{{calificacion}}</td>
               </tr>
               {{/each}}
           </tbody>
     </table>
-
+{{/if}}
 </div>
 </div>

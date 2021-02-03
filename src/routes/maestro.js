@@ -55,18 +55,25 @@ router.get(
 
 router.post("/actcalif", async (req, res) => {
   try {
-    const { calif, id, id_curso } = req.body;
-    var len = id.length;
-    for (var i = 0; i <= len; i++) {
+    const { first, id_calif, second, third, fourth } = req.body;
+    var len = id_calif.length;
+    console.log("LEN", len);
+    for (var i = 0; i < len; i++) {
+      const sum =
+        Number(first[i]) +
+        Number(second[i]) +
+        Number(third[i]) +
+        Number(fourth[i]);
+      const promedio = sum / 4;
       var a = await pool.query(
-        "UPDATE lista_curso SET calificacion = $1 WHERE id_aspirante= $2 AND id_curso = $3",
-        [calif[i], id[i], id_curso[0]]
+        "UPDATE calif SET first = $1, second = $2, third =$3, fourth = $4, promedio = $5 WHERE id_calif= $6",
+        [first[i], second[i], third[i], fourth[i], promedio, id_calif[i]]
       );
     }
     req.flash("success", "Calificaciones subidas");
     res.redirect("/cursosmaestro");
   } catch (e) {
-    console.log("Error post nana", e);
+    console.log("Error post actcalif", e);
   }
 });
 

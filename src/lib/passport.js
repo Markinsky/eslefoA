@@ -55,7 +55,8 @@ passport.use(
             if (numeroLenght == 10) {
               const pass = await helpers.encrypt(passA);
               const funcion = "aspirante";
-              const codigo = await newCode();
+              const codigo = await GAC();
+              console.log("CODIGO:", codigo);
               const insertAspirante = await pool.query(
                 "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,codigo, funcion) values ($1, $2, $3, $4, $5, $6, $7)",
                 [nombre, apPat, apMat, nacimiento, numero, codigo, funcion]
@@ -116,7 +117,7 @@ passport.deserializeUser(async (id, done) => {
   done(null, sel.rows[0]);
 });
 
-const newCode = async (req, res) => {
+const GAC = async (req, res) => {
   try {
     const getCode = await pool.query(
       "SELECT codigo from aspirante ORDER BY id_aspirante DESC LIMIT 1"
@@ -124,9 +125,22 @@ const newCode = async (req, res) => {
     var count = getCode.rows[0].codigo;
     var sum = parseInt(count);
     var code = sum + 1;
-    return code;
+    //var code = 1000;
+    var date = new Date();
+    var año = date.getFullYear();
+    if (code == 1000) {
+      code = 1;
+    }
+    if (code.toString().length === 1) {
+      code = "" + 0 + 0 + code;
+    }
+    if (code.toString().length === 2) {
+      code = "" + 0 + code;
+    }
+    const codigo = "" + año + 0 + code;
+    return codigo;
   } catch (e) {
-    console.log("error newCode", e);
+    console.log("error GAC", e);
   }
 };
 

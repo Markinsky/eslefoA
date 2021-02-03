@@ -49,7 +49,7 @@ router.post("/coursecode", aspiranteLoggedIn, async (req, res) => {
       "INSERT INTO lista_curso (id_curso, id_aspirante, estado, id_calif) VALUES ($1, $2, $3, $4)",
       [id_curso, id, "Aceptado", id_calif]
     );
-    req.flash("success", "Error en el codigo o no existe", nombre);
+    req.flash("success", "Has sido añadido con exito al grupo", nombre);
     res.redirect("/coursecode");
   } catch (e) {
     console.log("Error coursecode", e);

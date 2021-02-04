@@ -56,7 +56,7 @@ passport.use(
               const pass = await helpers.encrypt(passA);
               const funcion = "aspirante";
               const codigo = await GAC();
-              console.log("CODIGO:", pass);
+              console.log("CODIGO:", codigo);
               const insertAspirante = await pool.query(
                 "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,codigo, funcion) values ($1, $2, $3, $4, $5, $6, $7)",
                 [nombre, apPat, apMat, nacimiento, numero, codigo, funcion]
@@ -123,22 +123,26 @@ const GAC = async (req, res) => {
       "SELECT codigo from aspirante ORDER BY id_aspirante DESC LIMIT 1"
     );
     var count = getCode.rows[0].codigo;
+    //var countString = count.toString();
+    //console.log("code A:", countString);
+    //var digits = countString.substr(3);
+    //console.log("code:", digits);
     var sum = parseInt(count);
     var code = sum + 1;
     //var code = 1000;
-    var date = new Date();
-    var año = date.getFullYear();
-    if (code == 1000) {
-      code = 1;
-    }
-    if (code.toString().length === 1) {
-      code = "" + 0 + 0 + code;
-    }
-    if (code.toString().length === 2) {
-      code = "" + 0 + code;
-    }
-    const codigo = "" + año + 0 + code;
-    return codigo;
+    //var date = new Date();
+    //var año = date.getFullYear();
+    //if (code == 1000) {
+    //  code = 1;
+    //}
+    //if (code.toString().length === 1) {
+    //  code = "" + 0 + 0 + code;
+    //}
+    //if (code.toString().length === 2) {
+    //  code = "" + 0 + code;
+    //}
+    //const codigo = "" + año + 0 + code;
+    return code;
   } catch (e) {
     console.log("error GAC", e);
   }

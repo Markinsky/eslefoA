@@ -57,16 +57,16 @@ passport.use(
               const funcion = "aspirante";
               const codigo = await GAC();
               console.log("CODIGO:", pass);
-              //const insertAspirante = await pool.query(
-              // "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,codigo, funcion) values ($1, $2, $3, $4, $5, $6, $7)",
-              // [nombre, apPat, apMat, nacimiento, numero, codigo, funcion]
-              //);
+              const insertAspirante = await pool.query(
+                "INSERT INTO aspirante(nombre,appat,apmat,birthday,numero,codigo, funcion) values ($1, $2, $3, $4, $5, $6, $7)",
+                [nombre, apPat, apMat, nacimiento, numero, codigo, funcion]
+              );
               if (insertAspirante.rowCount > 0) {
                 const id = await lastID();
-                //const insertLogin = await pool.query(
-                //  "INSERT INTO login (usser, pass, id_aspirante) VALUES ($1, $2, $3)",
-                //  [email, pass, id]
-                //);
+                const insertLogin = await pool.query(
+                  "INSERT INTO login (usser, pass, id_aspirante) VALUES ($1, $2, $3)",
+                  [email, pass, id]
+                );
                 if (insertLogin.rowCount > 0) {
                   const last = await lastID();
                   const selectLogin = await pool.query(

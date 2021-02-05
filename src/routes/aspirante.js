@@ -59,7 +59,7 @@ router.post("/coursecode", aspiranteLoggedIn, async (req, res) => {
 router.get("/aspcalif", aspiranteLoggedIn, async (req, res) => {
   const code = req.user.codigo;
   const aa = await pool.query(
-    "SELECT * FROM lista_aceptados WHERE codigo =$1 AND estado ='Aceptado'",
+    "SELECT * FROM lista_aspirantes WHERE codigo = $1 AND estado ='Aceptado'",
     [code]
   );
   console.log("Codigo", code);
@@ -71,7 +71,7 @@ router.post("/aspcalif", aspiranteLoggedIn, async (req, res) => {
   try {
     const { code } = req.body;
     const aa = await pool.query(
-      "SELECT * FROM lista_aceptados WHERE codigo =$1 AND estado ='Aceptado'",
+      "SELECT * FROM lista_aspirantes WHERE codigo = $1 AND estado ='Aceptado'",
       [code]
     );
     const sears = aa.rows;

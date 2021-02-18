@@ -16,10 +16,9 @@ router.post("/coursecode", aspiranteLoggedIn, async (req, res) => {
   try {
     const id = req.user.id_aspirante;
     const { code } = req.body;
-    const qq = await pool.query(
-      "SELECT * FROM curso WHERE secret = $1 AND estado = 'abierto'",
-      [code]
-    );
+    const qq = await pool.query("SELECT * FROM curso WHERE secret = $1", [
+      code,
+    ]);
     if (typeof qq.rows[0] === "undefined") {
       req.flash("error", "Error en el codigo o no existe");
       res.redirect("/coursecode");

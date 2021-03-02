@@ -2,17 +2,17 @@
     <div class="row">
         {{#if (eq et "Nada")}}
         <form>
-             <h1>¡No Estas inscrito en ningún curso! </h1>    
-              <label class = "courseFont"> Actualmente no estas activo en ningún curso.</label> 
+             <h1>¡No estás inscrito en ningún curso! </h1>    
+              <label class = "courseFont"> Actualmente no estás activo en ningún curso.</label> 
         </form>
         {{else}}
                 <div class="col-md-6 mx-auto" >
                 <h2>¡Bienvenido! </h2>
-                <label class = "courseFont"> Actualmente estas activo en el siguiente curso:</label> 
+                <label class = "courseFont"> Actualmente estás activo en el siguiente curso:</label> 
                 <br>  
                 <label class = "courseFont"> <span class = "negritas">Nombre del curso:</span> {{et.nombre_curso}}</label> 
                 <br>  
-                <label class = "courseFont"> <span class = "negritas">Codigo:</span> {{et.codigo}}</label> 
+                <label class = "courseFont"> <span class = "negritas">Código:</span> {{et.codigo}}</label> 
                 <br>  
                 <label class = "courseFont"> <span class = "negritas">Maestro:</span> {{et.nombre}} {{et.appat}}</label> 
                 <br> 
@@ -27,7 +27,7 @@
                     <label class = "courseFont"> <span class = "negritas">Días:</span> {{et.dias}}</label> 
                      <br>   
                     <div class="card-footer bg-transparent border-dark">
-                         <a href="/micurso/bitacora/{{et.id_curso}}" class = "buttonF btn btn-primary btn-lg" >Ver bitacora</a>
+                         <a href="/micurso/bitacora/{{et.id_curso}}" class = "buttonF btn btn-primary btn-lg" >Ver bitácora</a>
                     </div>     
                      </div>     
         {{/if}}

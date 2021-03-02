@@ -20,7 +20,7 @@ router.post("/coursecode", aspiranteLoggedIn, async (req, res) => {
       code,
     ]);
     if (typeof qq.rows[0] === "undefined") {
-      req.flash("error", "Error en el codigo o no existe");
+      req.flash("error", "Error en el código o no existe");
       res.redirect("/coursecode");
     }
     const nombre = qq.rows[0].nombre_curso;
@@ -48,7 +48,7 @@ router.post("/coursecode", aspiranteLoggedIn, async (req, res) => {
       "INSERT INTO lista_curso (id_curso, id_aspirante, estado, id_calif) VALUES ($1, $2, $3, $4)",
       [id_curso, id, "Aceptado", id_calif]
     );
-    req.flash("success", "Has sido añadido con exito al grupo", nombre);
+    req.flash("success", "Has sido añadido con éxito al grupo", nombre);
     res.redirect("/coursecode");
   } catch (e) {
     console.log("Error coursecode", e);

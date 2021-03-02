@@ -9,7 +9,7 @@
              <form action ="/newcurso/edit/{{{vista.codigo}}}" method="POST" autocomplete="off">
                  <label>Nombre del curso: </label>
                  <input type="text" value="{{vista.nombre_curso}}" class="form-control" name="nombre" required="required" />
-                <label>Codigo:</label>
+                <label>Código:</label>
                  <input type="text" value="{{vista.codigo}}" class="form-control" name="codigo" required="required" disabled />
                 <label>Maestro:</label>
                 <select class="font-stuffs" id="maestro" name="maestro"> 
@@ -23,7 +23,7 @@
                  <input type="number" value={{{vista.vacantes}}} class="form-control" name="vacantes" required="required" />  
                   <label>Horario:</label>
                  <input type="text" value="{{vista.horario}}" class="form-control" name="horario" required="required" />
-                  <label>Dias:</label>
+                  <label>Días:</label>
                  <input type="text" value="{{vista.dias}}" class="form-control" name="dias" required="required" />
                   <label>Estado:</label>
                 <select class="font-stuffs" id="estado" name="estado"> 
@@ -35,7 +35,7 @@
                     <option value = "finalizado">Finalizado</option>
                    </select>
                    <br>
-                  <label>Descripcion:</label>
+                  <label>Descripción:</label>
                  <input type="text" value="{{vista.des}}" class="form-control" name="descripcion" required="required" />
                     <label>Nivel:</label>
                      <select class="font-stuffs" id="nivel" name="nivel"> 

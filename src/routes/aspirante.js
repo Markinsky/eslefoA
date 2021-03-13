@@ -56,14 +56,18 @@ router.post("/coursecode", aspiranteLoggedIn, async (req, res) => {
 });
 //calificaciones
 router.get("/aspcalif", aspiranteLoggedIn, async (req, res) => {
-  const code = req.user.codigo;
-  const aa = await pool.query(
-    "SELECT * FROM lista_aspirantes WHERE codigo = $1 AND estado ='Aceptado'",
-    [code]
-  );
-  console.log("Codigo", code);
-  const sears = aa.rows;
-  res.render("asp/calif", { sears });
+  try {
+    const code = req.user.codigo;
+    const aa = await pool.query(
+      "SELECT * FROM lista_aspirantes WHERE codigo = $1 AND estado ='Aceptado'",
+      [code]
+    );
+    console.log("Codigo", code);
+    const sears = aa.rows;
+    res.render("asp/calif", { sears });
+  } catch (e) {
+    console.log("error aspcalif");
+  }
 });
 
 router.post("/aspcalif", aspiranteLoggedIn, async (req, res) => {
@@ -82,7 +86,11 @@ router.post("/aspcalif", aspiranteLoggedIn, async (req, res) => {
 
 //preguntas
 router.get("/ask", aspiranteLoggedIn, (req, res) => {
-  res.render("asp/ask");
+  try {
+    res.render("asp/ask");
+  } catch (e) {
+    console.log("error ask");
+  }
 });
 
 router.post("/ask", async (req, res) => {
@@ -103,80 +111,84 @@ router.post("/ask", async (req, res) => {
 
 //Cursos
 router.get("/registercurso", aspiranteLoggedIn, async (req, res) => {
-  //A
-  const countCursosA = await pool.query(
-    "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 1"
-  );
-  const getCursosA = await pool.query(
-    "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM vercurso_espe as vp WHERE id_nivel = 1"
-  );
-  var countA = countCursosA.rows[0].count;
-  var cursosA = parseInt(countA);
-  const resCursoA = getCursosA.rows;
-  //B
-  const countCursosB = await pool.query(
-    "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 2"
-  );
-  const getCursosB = await pool.query(
-    "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM vercurso_espe as vp WHERE id_nivel = 2"
-  );
-  var countB = countCursosB.rows[0].count;
-  var cursosB = parseInt(countB);
-  const resCursoB = getCursosB.rows;
-  //C
-  const countCursosC = await pool.query(
-    "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 3"
-  );
-  const getCursosC = await pool.query(
-    "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM vercurso_espe as vp WHERE id_nivel = 3"
-  );
-  var countC = countCursosC.rows[0].count;
-  var cursosC = parseInt(countC);
-  const resCursoC = getCursosC.rows;
-  //D
-  const countCursosD = await pool.query(
-    "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 4"
-  );
-  const getCursosD = await pool.query(
-    "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM vercurso_espe as vp WHERE id_nivel = 4"
-  );
-  var countD = countCursosD.rows[0].count;
-  var cursosD = parseInt(countD);
-  const resCursoD = getCursosD.rows;
-  //E
-  const countCursosE = await pool.query(
-    "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 5"
-  );
-  const getCursosE = await pool.query(
-    "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM vercurso_espe as vp WHERE id_nivel = 5"
-  );
-  var countE = countCursosE.rows[0].count;
-  var cursosE = parseInt(countE);
-  const resCursoE = getCursosE.rows;
-  //F
-  const countCursosF = await pool.query(
-    "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 6"
-  );
-  const getCursosF = await pool.query(
-    "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM vercurso_espe as vp WHERE id_nivel = 6"
-  );
-  var countF = countCursosF.rows[0].count;
-  var cursosF = parseInt(countF);
-  const resCursoF = getCursosF.rows;
-  res.render("asp/registercurso", {
-    cursosA,
-    resCursoA,
-    cursosB,
-    resCursoB,
-    cursosC,
-    resCursoC,
-    cursosD,
-    resCursoD,
-    cursosE,
-    resCursoE,
-    cursosF,
-    resCursoF,
-  });
+  try {
+    //A
+    const countCursosA = await pool.query(
+      "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 1"
+    );
+    const getCursosA = await pool.query(
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM vercurso_espe as vp WHERE id_nivel = 1"
+    );
+    var countA = countCursosA.rows[0].count;
+    var cursosA = parseInt(countA);
+    const resCursoA = getCursosA.rows;
+    //B
+    const countCursosB = await pool.query(
+      "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 2"
+    );
+    const getCursosB = await pool.query(
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM vercurso_espe as vp WHERE id_nivel = 2"
+    );
+    var countB = countCursosB.rows[0].count;
+    var cursosB = parseInt(countB);
+    const resCursoB = getCursosB.rows;
+    //C
+    const countCursosC = await pool.query(
+      "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 3"
+    );
+    const getCursosC = await pool.query(
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM vercurso_espe as vp WHERE id_nivel = 3"
+    );
+    var countC = countCursosC.rows[0].count;
+    var cursosC = parseInt(countC);
+    const resCursoC = getCursosC.rows;
+    //D
+    const countCursosD = await pool.query(
+      "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 4"
+    );
+    const getCursosD = await pool.query(
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM vercurso_espe as vp WHERE id_nivel = 4"
+    );
+    var countD = countCursosD.rows[0].count;
+    var cursosD = parseInt(countD);
+    const resCursoD = getCursosD.rows;
+    //E
+    const countCursosE = await pool.query(
+      "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 5"
+    );
+    const getCursosE = await pool.query(
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM vercurso_espe as vp WHERE id_nivel = 5"
+    );
+    var countE = countCursosE.rows[0].count;
+    var cursosE = parseInt(countE);
+    const resCursoE = getCursosE.rows;
+    //F
+    const countCursosF = await pool.query(
+      "SELECT COUNT(*) FROM detalles_curso WHERE id_nivel = 6"
+    );
+    const getCursosF = await pool.query(
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM vercurso_espe as vp WHERE id_nivel = 6"
+    );
+    var countF = countCursosF.rows[0].count;
+    var cursosF = parseInt(countF);
+    const resCursoF = getCursosF.rows;
+    res.render("asp/registercurso", {
+      cursosA,
+      resCursoA,
+      cursosB,
+      resCursoB,
+      cursosC,
+      resCursoC,
+      cursosD,
+      resCursoD,
+      cursosE,
+      resCursoE,
+      cursosF,
+      resCursoF,
+    });
+  } catch (e) {
+    console.log("error registercurso");
+  }
 });
 
 router.get(
@@ -243,28 +255,32 @@ router.post("/registercurso/debt", async (req, res) => {
 
 //pagos
 router.get("/pagosasp", aspiranteLoggedIn, async (req, res) => {
-  const id = req.user.id_aspirante;
-  const qDebt = await pool.query(
-    "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM view_pago as vp WHERE id_aspirante = $1 AND estado = 'Pendiente'",
-    [id]
-  );
-  const cDebt = await pool.query(
-    "SELECT COUNT(*) FROM lista_curso WHERE id_aspirante = $1 AND estado = 'Pendiente';",
-    [id]
-  );
-  const cResult = cDebt.rows[0].count;
-  const arrayDebt = qDebt.rows;
-  const otroDebt = await pool.query(
-    "SELECT * FROM view_otro_pago WHERE id_aspirante = $1 AND estado = 'Pendiente'",
-    [id]
-  );
-  const oDebt = await pool.query(
-    "SELECT COUNT(*) FROM otros_pagos WHERE id_aspirante = $1 AND estado = 'Pendiente';",
-    [id]
-  );
-  const oResult = oDebt.rows[0].count;
-  const arrayoDebt = otroDebt.rows;
-  res.render("asp/debts", { cResult, arrayDebt, oResult, arrayoDebt });
+  try {
+    const id = req.user.id_aspirante;
+    const qDebt = await pool.query(
+      "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM view_pago as vp WHERE id_aspirante = $1 AND estado = 'Pendiente'",
+      [id]
+    );
+    const cDebt = await pool.query(
+      "SELECT COUNT(*) FROM lista_curso WHERE id_aspirante = $1 AND estado = 'Pendiente';",
+      [id]
+    );
+    const cResult = cDebt.rows[0].count;
+    const arrayDebt = qDebt.rows;
+    const otroDebt = await pool.query(
+      "SELECT * FROM view_otro_pago WHERE id_aspirante = $1 AND estado = 'Pendiente'",
+      [id]
+    );
+    const oDebt = await pool.query(
+      "SELECT COUNT(*) FROM otros_pagos WHERE id_aspirante = $1 AND estado = 'Pendiente';",
+      [id]
+    );
+    const oResult = oDebt.rows[0].count;
+    const arrayoDebt = otroDebt.rows;
+    res.render("asp/debts", { cResult, arrayDebt, oResult, arrayoDebt });
+  } catch (e) {
+    console.log("pago");
+  }
 });
 
 router.get("/debts/transfer/:id_pago", aspiranteLoggedIn, async (req, res) => {

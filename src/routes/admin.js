@@ -184,35 +184,47 @@ router.get(
 
 //Aspirante
 router.get("/verasp", adminLoggedIn, async (req, res) => {
-  const ver = await pool.query(
-    "SELECT * FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = x.id_aspirante AND x.id_aspirante = l.id_aspirante AND funcion = 'aspirante'"
-  );
-  const hola = ver.rows;
-  res.render("admin/verp", { hola });
+  try {
+    const ver = await pool.query(
+      "SELECT * FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = x.id_aspirante AND x.id_aspirante = l.id_aspirante AND funcion = 'aspirante'"
+    );
+    const hola = ver.rows;
+    res.render("admin/verp", { hola });
+  } catch (e) {
+    console.log("Errro verasp");
+  }
 });
 
 router.get("/verasp/edit/:id_aspirante", adminLoggedIn, async (req, res) => {
-  const { id_aspirante } = req.params;
-  const search = await pool.query(
-    "SELECT l.usser,l.id_aspirante,x.nombre, x.appat, x.apmat, x.numero  FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = $1 AND x.id_aspirante = $1 AND funcion = 'aspirante'",
-    [id_aspirante]
-  );
-  const returnasp = search.rows[0];
-  res.render("admin/editasp", { returnasp });
+  try {
+    const { id_aspirante } = req.params;
+    const search = await pool.query(
+      "SELECT l.usser,l.id_aspirante,x.nombre, x.appat, x.apmat, x.numero  FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = $1 AND x.id_aspirante = $1 AND funcion = 'aspirante'",
+      [id_aspirante]
+    );
+    const returnasp = search.rows[0];
+    res.render("admin/editasp", { returnasp });
+  } catch (e) {
+    console.log("Error verasp edit");
+  }
 });
 
 router.post("/verasp/edit/:id_aspirante", async (req, res) => {
-  const { id_aspirante } = req.params;
-  const { nombre, apPat, apMat, numero, email, nacimiento } = req.body;
-  const editquery = await pool.query(
-    "UPDATE aspirante SET nombre = $1, appat=$2, apmat=$3, birthday=$4,numero=$5 WHERE id_aspirante = $6",
-    [nombre, apPat, apMat, nacimiento, numero, id_aspirante]
-  );
-  const editlogin = await pool.query(
-    "UPDATE login SET usser = $1 WHERE id_aspirante = $2",
-    [email, id_aspirante]
-  );
-  res.redirect("/verasp");
+  try {
+    const { id_aspirante } = req.params;
+    const { nombre, apPat, apMat, numero, email, nacimiento } = req.body;
+    const editquery = await pool.query(
+      "UPDATE aspirante SET nombre = $1, appat=$2, apmat=$3, birthday=$4,numero=$5 WHERE id_aspirante = $6",
+      [nombre, apPat, apMat, nacimiento, numero, id_aspirante]
+    );
+    const editlogin = await pool.query(
+      "UPDATE login SET usser = $1 WHERE id_aspirante = $2",
+      [email, id_aspirante]
+    );
+    res.redirect("/verasp");
+  } catch (e) {
+    console.log("verasp edit post");
+  }
 });
 
 router.get("/verasp/drop/:id_aspirante", adminLoggedIn, async (req, res) => {
@@ -230,20 +242,28 @@ router.get("/verasp/drop/:id_aspirante", adminLoggedIn, async (req, res) => {
 });
 
 router.get("/verasp/pass/:id_aspirante", adminLoggedIn, async (req, res) => {
-  const { id_aspirante } = req.params;
-  res.render("admin/editpassap", { id_aspirante });
+  try {
+    const { id_aspirante } = req.params;
+    res.render("admin/editpassap", { id_aspirante });
+  } catch (e) {
+    console.log("verasp pass");
+  }
 });
 
 router.post("/verasp/editpass/:id_aspirante", async (req, res) => {
-  const { id_aspirante } = req.params;
-  const contra = req.body.pass;
-  const pass = await helpers.encrypt(contra);
-  const hul = await pool.query(
-    "UPDATE login SET pass = $1  WHERE id_aspirante = $2",
-    [pass, id_aspirante]
-  );
-  req.flash("success", "Contraseña cambiada correctamente");
-  res.redirect("/verasp");
+  try {
+    const { id_aspirante } = req.params;
+    const contra = req.body.pass;
+    const pass = await helpers.encrypt(contra);
+    const hul = await pool.query(
+      "UPDATE login SET pass = $1  WHERE id_aspirante = $2",
+      [pass, id_aspirante]
+    );
+    req.flash("success", "Contraseña cambiada correctamente");
+    res.redirect("/verasp");
+  } catch (e) {
+    console.log("Verasp edit post");
+  }
 });
 
 router.get("/verasp/newpay/:id_aspirante", adminLoggedIn, async (req, res) => {
@@ -278,19 +298,27 @@ router.post("/verap/newpay", async (req, res) => {
 });
 //Preguntas
 router.get("/adminpreg", adminLoggedIn, async (req, res) => {
-  const pregjson = await pool.query(
-    "SELECT * FROM preguntasinbox WHERE estado = 'pendiente';"
-  );
-  const preg = pregjson.rows;
-  res.render("admin/preg", { preg });
+  try {
+    const pregjson = await pool.query(
+      "SELECT * FROM preguntasinbox WHERE estado = 'pendiente';"
+    );
+    const preg = pregjson.rows;
+    res.render("admin/preg", { preg });
+  } catch (e) {
+    console.log("error admin preg");
+  }
 });
 
 router.get("/adminpreg/respondidos", adminLoggedIn, async (req, res) => {
-  const pregjson = await pool.query(
-    "SELECT * FROM preguntasinbox WHERE estado = 'respondido'"
-  );
-  const preg = pregjson.rows;
-  res.render("admin/pregres", { preg });
+  try {
+    const pregjson = await pool.query(
+      "SELECT * FROM preguntasinbox WHERE estado = 'respondido'"
+    );
+    const preg = pregjson.rows;
+    res.render("admin/pregres", { preg });
+  } catch (e) {
+    console.log("Error admin preg respondidos");
+  }
 });
 
 router.get("/adminpreg/drop/:id_pregunta", adminLoggedIn, async (req, res) => {
@@ -323,15 +351,23 @@ router.get("/adminpreg/res/:id_pregunta", adminLoggedIn, async (req, res) => {
 
 //Maestros
 router.get("/verm", adminLoggedIn, async (req, res) => {
-  const ver = await pool.query(
-    "SELECT * FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = x.id_aspirante AND x.id_aspirante = l.id_aspirante AND funcion = 'maestro'"
-  );
-  const hola = ver.rows;
-  res.render("admin/verm", { hola });
+  try {
+    const ver = await pool.query(
+      "SELECT * FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = x.id_aspirante AND x.id_aspirante = l.id_aspirante AND funcion = 'maestro'"
+    );
+    const hola = ver.rows;
+    res.render("admin/verm", { hola });
+  } catch (e) {
+    console.log("Erro verm");
+  }
 });
 
 router.get("/verm/add", adminLoggedIn, (req, res) => {
-  res.render("admin/vermad");
+  try {
+    res.render("admin/vermad");
+  } catch (e) {
+    console.log("Erro verm");
+  }
 });
 
 router.post("/vermad", async (req, res) => {
@@ -380,44 +416,60 @@ router.post("/vermad", async (req, res) => {
 });
 
 router.get("/verm/edit/:id_aspirante", adminLoggedIn, async (req, res) => {
-  const { id_aspirante } = req.params;
-  const search = await pool.query(
-    "SELECT l.usser,l.id_aspirante,x.nombre, x.appat, x.apmat, x.numero  FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = $1 AND x.id_aspirante = $1 AND funcion = 'maestro'",
-    [id_aspirante]
-  );
-  const returnasp = search.rows[0];
-  res.render("admin/editmae", { returnasp });
+  try {
+    const { id_aspirante } = req.params;
+    const search = await pool.query(
+      "SELECT l.usser,l.id_aspirante,x.nombre, x.appat, x.apmat, x.numero  FROM login as l INNER JOIN aspirante as x ON l.id_aspirante = $1 AND x.id_aspirante = $1 AND funcion = 'maestro'",
+      [id_aspirante]
+    );
+    const returnasp = search.rows[0];
+    res.render("admin/editmae", { returnasp });
+  } catch (e) {
+    console.log("Errro verm edit");
+  }
 });
 
 router.post("/vermaes/edit/:id_aspirante", async (req, res) => {
-  const { id_aspirante } = req.params;
-  const { nombre, apPat, apMat, numero, email, nacimiento } = req.body;
-  const editquery = await pool.query(
-    "UPDATE aspirante SET nombre = $1, appat=$2, apmat=$3, birthday=$4,numero=$5 WHERE id_aspirante = $6",
-    [nombre, apPat, apMat, nacimiento, numero, id_aspirante]
-  );
-  const editlogin = await pool.query(
-    "UPDATE login SET usser = $1 WHERE id_aspirante = $2",
-    [email, id_aspirante]
-  );
-  res.redirect("/verm");
+  try {
+    const { id_aspirante } = req.params;
+    const { nombre, apPat, apMat, numero, email, nacimiento } = req.body;
+    const editquery = await pool.query(
+      "UPDATE aspirante SET nombre = $1, appat=$2, apmat=$3, birthday=$4,numero=$5 WHERE id_aspirante = $6",
+      [nombre, apPat, apMat, nacimiento, numero, id_aspirante]
+    );
+    const editlogin = await pool.query(
+      "UPDATE login SET usser = $1 WHERE id_aspirante = $2",
+      [email, id_aspirante]
+    );
+    res.redirect("/verm");
+  } catch (e) {
+    console.log("vermaes edit post");
+  }
 });
 
 router.get("/verm/editpass/:id_aspirante", adminLoggedIn, async (req, res) => {
-  const { id_aspirante } = req.params;
-  res.render("admin/editmaepass", { id_aspirante });
+  try {
+    const { id_aspirante } = req.params;
+    res.render("admin/editmaepass", { id_aspirante });
+  } catch (e) {
+    console.log("error verm editpass");
+  }
 });
 
 router.post("/verm/editpass/:id_aspirante", async (req, res) => {
-  const { id_aspirante } = req.params;
-  const contra = req.body.pass;
-  const pass = await helpers.encrypt(contra);
-  const hul = await pool.query(
-    "UPDATE login SET pass = $1  WHERE id_aspirante = $2",
-    [pass, id_aspirante]
-  );
-  req.flash("success", "Contraseña cambiada correctamentee");
-  res.redirect("/verm");
+  try {
+    const { id_aspirante } = req.params;
+    const contra = req.body.pass;
+    const pass = await helpers.encrypt(contra);
+    const hul = await pool.query(
+      "UPDATE login SET pass = $1  WHERE id_aspirante = $2",
+      [pass, id_aspirante]
+    );
+    req.flash("success", "Contraseña cambiada correctamentee");
+    res.redirect("/verm");
+  } catch (e) {
+    console.log("erro verm editpass post aspirante");
+  }
 });
 
 router.get("/verm/drop/:id_aspirante", adminLoggedIn, async (req, res) => {
@@ -437,19 +489,27 @@ router.get("/verm/drop/:id_aspirante", adminLoggedIn, async (req, res) => {
 //Encuestas
 
 router.get("/verencuestas", adminLoggedIn, async (req, res) => {
-  const qEncuesta = await pool.query("SELECT * FROM encuestainbox");
-  const encuesta = qEncuesta.rows;
-  res.render("admin/verencuestas", { encuesta });
+  try {
+    const qEncuesta = await pool.query("SELECT * FROM encuestainbox");
+    const encuesta = qEncuesta.rows;
+    res.render("admin/verencuestas", { encuesta });
+  } catch (e) {
+    console.log("error verencuesta");
+  }
 });
 
 router.get("/verncuesta/drop/:id_encuesta", adminLoggedIn, async (req, res) => {
-  const { id_encuesta } = req.params;
-  const dropy = await pool.query(
-    "DELETE FROM encuestainbox WHERE id_encuesta = $1",
-    [id_encuesta]
-  );
-  req.flash("success", "Borrado con exito");
-  res.redirect("/verencuestas");
+  try {
+    const { id_encuesta } = req.params;
+    const dropy = await pool.query(
+      "DELETE FROM encuestainbox WHERE id_encuesta = $1",
+      [id_encuesta]
+    );
+    req.flash("success", "Borrado con exito");
+    res.redirect("/verencuestas");
+  } catch (e) {
+    console.log("error verencuesta");
+  }
 });
 
 //Extras

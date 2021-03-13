@@ -3,19 +3,23 @@ const router = express.Router();
 const pool = require("../db");
 
 router.get("/", async (req, res) => {
-  const countAbiertos = await pool.query(
-    "SELECT COUNT(*) FROM curso WHERE estado = 'abierto'"
-  );
-  const countCursos = await pool.query("SELECT COUNT(*) FROM curso");
-  var count = countAbiertos.rows[0].count;
-  var arriba = parseInt(count);
-  var countB = countCursos.rows[0].count;
-  var existen = parseInt(countB);
-  const estero = await pool.query(
-    "SELECT * FROM publi ORDER BY id_publi DESC limit 4"
-  );
-  const publis = estero.rows;
-  res.render("index", { existen, arriba, publis });
+  try{
+    const countAbiertos = await pool.query(
+      "SELECT COUNT(*) FROM curso WHERE estado = 'abierto'"
+    );
+    const countCursos = await pool.query("SELECT COUNT(*) FROM curso");
+    var count = countAbiertos.rows[0].count;
+    var arriba = parseInt(count);
+    var countB = countCursos.rows[0].count;
+    var existen = parseInt(countB);
+    const estero = await pool.query(
+      "SELECT * FROM publi ORDER BY id_publi DESC limit 4"
+    );
+    const publis = estero.rows;
+    res.render("index", { existen, arriba, publis });
+  }catch(e){
+    console.log("Error en el index")
+  }
 });
 
 router.post("/read/:id_publi", async (req, res) => {

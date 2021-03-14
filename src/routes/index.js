@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require("../db");
 
 router.get("/", async (req, res) => {
-  try{
+  try {
     const countAbiertos = await pool.query(
       "SELECT COUNT(*) FROM curso WHERE estado = 'abierto'"
     );
@@ -17,8 +17,8 @@ router.get("/", async (req, res) => {
     );
     const publis = estero.rows;
     res.render("index", { existen, arriba, publis });
-  }catch(e){
-    console.log("Error en el index")
+  } catch (e) {
+    console.log("Error en el index", e);
   }
 });
 

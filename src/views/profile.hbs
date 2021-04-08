@@ -3,7 +3,29 @@
         <div class="col-md-6 mx-auto" >
                 {{#if (eq user.funcion "admin")}}
                 <h1>Bienvenido! </h1>
+                {{/if}}
+              {{#if (eq user.funcion "maestro")}}
+                <h1>Bienvenido maestro </h1>
+                 <div class="card pr">
+                    <div class = "card-body letrasdark">
+                    <h3 class="card-title  text-center" style="color: black;" >¡Bienvenido(a)!</h3>
+                    <h3 style="color: black;">Tus datos: </h3>
+                    <label class = "card-text"> Nombre: {{user.nombre}}</label> 
+                    <br>  
+                    <label class = "card-text"> Apellido paterno: {{user.appat}}</label> 
+                     <br>  
+                    <label class = "card-text"> Apellido materno: {{user.apmat}}</label>   
+                     <br>  
+                    <div class="card-footer bg-transparent border-dark">
+                         <a href="/editdata/{{user.id_aspirante}}" class = "buttonF btn btn-danger btn-lg" >Editar datos</a>
+                         <a href="/editpass/{{user.id_aspirante}}" class = "buttonF btn btn-primary btn-lg" >Editar contraseña</a>
+                    </div>
+                </div>
                 {{else}}
+                <body onload="fecha_de_hoy()">
+                    <div class = "mx-auto">
+                    <label id="countdown"></label>
+                </div>
                 <div class="card pr">
                     <div class = "card-body letrasdark">
                     <h3 class="card-title  text-center" style="color: black;" >¡Bienvenido(a)!</h3>
@@ -27,7 +49,17 @@
                          <a href="/editpass/{{user.id_aspirante}}" class = "buttonF btn btn-primary btn-lg" >Editar contraseña</a>
                     </div>
                 </div>
+                </body>
                 {{/if}}
         </div>
     </div>
 </div>
+</div>
+
+<script>
+
+    function fecha_de_hoy(){
+        var hoy = new Date();
+         document.getElementById("countdown").innerHTML = hoy;
+    }
+</script>

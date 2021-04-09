@@ -60,6 +60,13 @@
 
     function fecha_de_hoy(){
         var hoy = new Date();
-         document.getElementById("countdown").innerHTML = hoy;
+        var mes_Siguiente = new Date();
+        mes_Siguiente.setMonth(mes_Siguiente.getMonth()+1, 1);
+        mes_Siguiente.setHours(0,0,0);
+        hoy.setHours(0,0,0);
+        const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        const diffDays = Math.round(Math.abs((hoy - mes_Siguiente) / oneDay));
+       document.getElementById("countdown").innerHTML =  "<span style='color: red;'>**Message</span>";
+        //document.getElementById("countdown").innerHTML = diffDays;
     }
 </script>

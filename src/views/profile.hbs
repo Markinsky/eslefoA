@@ -24,7 +24,7 @@
                 {{else}}
                 <body onload="fecha_de_hoy()">
                     <div class = "mx-auto">
-                    <label id="countdown"></label>
+                    <label id="countdown"> </label>
                 </div>
                 <div class="card pr">
                     <div class = "card-body letrasdark">
@@ -66,7 +66,17 @@
         hoy.setHours(0,0,0);
         const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
         const diffDays = Math.round(Math.abs((hoy - mes_Siguiente) / oneDay));
-       document.getElementById("countdown").innerHTML =  "<span style='color: red;'>**Message</span>";
-        //document.getElementById("countdown").innerHTML = diffDays;
+        if(diffDays <= 2){
+         document.getElementById("countdown").style.color =  'green';
+        document.getElementById("countdown").innerHTML = diffDays;
+        }if(diffDays >= 3 && diffDays < 8){
+         document.getElementById("countdown").style.color =  'yelllow';
+        document.getElementById("countdown").innerHTML = diffDays;
+        }
+        else{
+        document.getElementById("countdown").style.color =  'red';
+        document.getElementById("countdown").innerHTML = diffDays;  
+        }
+        //return diffDays;
     }
 </script>

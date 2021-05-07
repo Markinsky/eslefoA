@@ -1,10 +1,12 @@
 <div class="container p-4">
-    <div class="row">
-        <div class="col-md-6 mx-auto" >
+        <div class="row">
                 {{#if (eq user.funcion "admin")}}
+                <div class="col-md-6 mx-auto" >
                 <h1>Bienvenido! </h1>
+                </div>
                 {{/if}}
               {{#if (eq user.funcion "maestro")}}
+             <div class="col-md-6 mx-auto" >
                 <h1>Bienvenido maestro </h1>
                  <div class="card pr">
                     <div class = "card-body letrasdark">
@@ -21,11 +23,23 @@
                          <a href="/editpass/{{user.id_aspirante}}" class = "buttonF btn btn-primary btn-lg" >Editar contraseña</a>
                     </div>
                 </div>
-                {{else}}
-                <body onload="fecha_de_hoy()">
-                    <div class = "mx-auto">
-                    <label id="countdown"> </label>
                 </div>
+                 </div>
+                 {{/if}}
+                 {{#if (eq user.funcion "aspirante")}}
+               
+                <body onload="fecha_de_hoy()">
+        <div class = "col-md-3 " style="padding: 2;">
+        <div class = "card">
+         <div class = "card-header cardColor">
+              <p class = "card-text">Días faltantes para pagar mensualidad:</p>
+           </div>
+               <div class = "card-body">
+                 <label id="countdown"> </label>
+                   </div>
+                </div>
+              </div>
+               <div class="col-md-6 mx-auto" >
                 <div class="card pr">
                     <div class = "card-body letrasdark">
                     <h3 class="card-title  text-center" style="color: black;" >¡Bienvenido(a)!</h3>
@@ -49,10 +63,10 @@
                          <a href="/editpass/{{user.id_aspirante}}" class = "buttonF btn btn-primary btn-lg" >Editar contraseña</a>
                     </div>
                 </div>
+                </div>
                 </body>
                 {{/if}}
         </div>
-    </div>
 </div>
 </div>
 
@@ -67,14 +81,17 @@
         const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
         const diffDays = Math.round(Math.abs((hoy - mes_Siguiente) / oneDay));
         if(diffDays <= 2){
-         document.getElementById("countdown").style.color =  'green';
+         document.getElementById("countdown").style.color =  'red';
+         document.getElementById("countdown").style.fontSize =  '30px';
         document.getElementById("countdown").innerHTML = diffDays;
         }if(diffDays >= 3 && diffDays < 8){
          document.getElementById("countdown").style.color =  'yelllow';
+         document.getElementById("countdown").style.fontSize =  '30px';
         document.getElementById("countdown").innerHTML = diffDays;
         }
         else{
-        document.getElementById("countdown").style.color =  'red';
+        document.getElementById("countdown").style.color =  'green';
+         document.getElementById("countdown").style.fontSize =  '30px';
         document.getElementById("countdown").innerHTML = diffDays;  
         }
         //return diffDays;

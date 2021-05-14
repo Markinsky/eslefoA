@@ -6,11 +6,9 @@
                   <th> Código </th>
                   <th>Nombre</th>
                   <th> Estado</th>
-                  <th> Vacantes</th>
                   <th style="width: 165px;"> Horario</th>
                   <th style="width: 70px;"> Días</th>
-                  <th> Descripción</th>
-                  <th> Acciones </th>
+                  <th> Ver curso </th>
               </tr>
           </thead>
           <tbody>
@@ -19,19 +17,11 @@
                 <td>{{codigo}}</td>  
                 <td >{{nombre_curso}}</td>
                 <td>{{estado}}</td>                  
-                <td>{{resultado}}/{{vacantes}}</td>   
                 <td>{{horario}}</td>    
                 <td>{{dias}}</td>
-                <td>{{des}}</td> 
                  <td>
-              <a href="/cursomaestro/verlista/{{id_curso}}" class = "btn btn-info">
+              <a href="/cursomaestro/verdetalle/{{id_curso}}" class = "btn btn-info">
               <i class = "fas fa-eye" ></i>
-              </a>
-             <a href="/cursomaestro/bitacora/{{id_curso}}" class = "btn btn-success">
-              <i class = "fas fa-plus-square" ></i>
-              </a>
-               <a href="/cursomaestro/cali/{{id_curso}}" class = "btn btn-primary">
-              <i class = "fas fa-marker" ></i>
               </a>
             </td>
               </tr>

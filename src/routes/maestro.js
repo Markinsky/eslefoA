@@ -18,6 +18,23 @@ router.get("/cursosmaestro", maestroLoggedIn, async (req, res) => {
 });
 
 router.get(
+  "/cursomaestro/verdetalle/:id_curso",
+  maestroLoggedIn,
+  async (req, res) => {
+    try {
+      const { id_curso } = req.params;
+      const queru = await pool.query(
+        "SELECT *, (SELECT COUNT(*) FROM lista_curso WHERE estado = 'Aceptado' AND id_curso = vp.id_curso) AS resultado FROM vercurso_espe AS vp WHERE id_curso = $1",
+        [id_curso]
+      );
+      const a = queru.rows;
+      res.render("maes/cursodetalle", { a });
+    } catch (e) {
+      console.log("Error ver curso detalle", e);
+    }
+  }
+);
+router.get(
   "/cursomaestro/verlista/:id_curso",
   maestroLoggedIn,
   async (req, res) => {

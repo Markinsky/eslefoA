@@ -1,0 +1,28 @@
+<div class="container p-4">
+    <div class="row">
+                <div class="col-md-6 mx-auto" >
+                <h2>¡Bienvenido! </h2>
+                <label class = "courseFont"> Más datos sobre este curso:</label> 
+                <br>  
+                <label class = "courseFont"> <span class = "negritas">Nombre del curso:</span> {{a.nombre_curso}}</label> 
+                <br>  
+                <label class = "courseFont"> <span class = "negritas">Código:</span> {{codigo}}</label> 
+                <br>  
+                <label class = "courseFont"> <span class = "negritas">Maestro:</span> {{nombre}} {{appat}}</label> 
+                <br> 
+                <label class = "courseFont"> <span class = "negritas">Descripción:</span>  {{des}}</label>                   
+                </div>
+                 
+                     <div class="col-md-6 mx-auto" >
+                    <label class = "courseFont"><span class = "negritas">Estado:</span>  {{estado}}</label>   
+                     <br>  
+                    <label class = "courseFont"><span class = "negritas">Horario:</span>  {{horario}}</label> 
+                    <br>  
+                    <label class = "courseFont"> <span class = "negritas">Días:</span> {{dias}}</label> 
+                     <br>   
+                    <div class="card-footer bg-transparent border-dark">
+                         <a href="/micurso/bitacora/{{et.id_curso}}" class = "buttonF btn btn-primary btn-lg" >Ver bitácora</a>
+                    </div>     
+                     </div>     
+    </div>
+</div>
